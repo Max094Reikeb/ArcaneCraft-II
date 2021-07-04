@@ -1,0 +1,32 @@
+{
+  "group": "arcanecraft",
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "012",
+    "345"
+  ],
+  "key": {
+    "0": {
+      "item": "arcanecraft:runic_stone"
+    },
+    "1": {
+      "item": "arcanecraft:runic_stone"
+    },
+    "2": {
+      "item": "arcanecraft:runic_stone"
+    },
+    "3": {
+      "item": "arcanecraft:runic_stone"
+    },
+    "4": {
+      "item": "arcanecraft:runic_stone"
+    },
+    "5": {
+      "item": "arcanecraft:runic_stone"
+    }
+  },
+  "result": {
+    "item": "arcanecraft:runic_stone_wall",
+    "count": 6
+  }
+}

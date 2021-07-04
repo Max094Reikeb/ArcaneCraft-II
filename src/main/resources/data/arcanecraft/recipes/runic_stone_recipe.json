@@ -1,0 +1,30 @@
+{
+  "group": "arcanecraft",
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " 1 ",
+    "345",
+    " 7 "
+  ],
+  "key": {
+    "1": {
+      "item": "minecraft:stone"
+    },
+    "3": {
+      "item": "minecraft:stone"
+    },
+    "4": {
+      "item": "arcanecraft:crystal_dust"
+    },
+    "5": {
+      "item": "minecraft:stone"
+    },
+    "7": {
+      "item": "minecraft:stone"
+    }
+  },
+  "result": {
+    "item": "arcanecraft:runic_stone",
+    "count": 4
+  }
+}

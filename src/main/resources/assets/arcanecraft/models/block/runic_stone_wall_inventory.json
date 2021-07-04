@@ -1,0 +1,7 @@
+{
+  "parent": "block/wall_inventory",
+  "textures": {
+    "wall": "arcanecraft:blocks/rune_stone",
+    "particle": "arcanecraft:blocks/rune_stone"
+  }
+}

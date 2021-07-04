@@ -1,0 +1,27 @@
+{
+  "group": "arcanecraft",
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "01",
+    "2 ",
+    "4 "
+  ],
+  "key": {
+    "0": {
+      "item": "minecraft:gold_ingot"
+    },
+    "1": {
+      "item": "arcanecraft:crystal"
+    },
+    "2": {
+      "item": "minecraft:stick"
+    },
+    "4": {
+      "item": "minecraft:gold_ingot"
+    }
+  },
+  "result": {
+    "item": "arcanecraft:wand",
+    "count": 1
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "group": "arcanecraft",
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "arcanecraft:ink_vial"
+    },
+    {
+      "item": "arcanecraft:crystal_dust"
+    },
+    {
+      "item": "minecraft:ink_sac"
+    },
+    {
+      "item": "minecraft:quartz"
+    }
+  ],
+  "result": {
+    "item": "arcanecraft:arcane_scroll_focus_evoker",
+    "count": 1
+  }
+}

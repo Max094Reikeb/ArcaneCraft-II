@@ -1,0 +1,7 @@
+{
+  "parent": "arcanecraft:custom/wand_life_drain",
+  "textures": {
+    "0": "arcanecraft:blocks/wand_life_drain",
+    "1": "arcanecraft:blocks/wand_life_drain2"
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "parent": "arcanecraft:custom/altar",
+  "textures": {
+    "all": "arcanecraft:blocks/rune_stone",
+    "particle": "arcanecraft:blocks/rune_stone",
+    "0": "arcanecraft:blocks/altar"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "group": "arcanecraft",
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "minecraft:feather"
+    },
+    {
+      "item": "minecraft:glass_bottle"
+    }
+  ],
+  "result": {
+    "item": "arcanecraft:ink_vial",
+    "count": 1
+  }
+}

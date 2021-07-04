@@ -1,0 +1,7 @@
+{
+  "parent": "arcanecraft:custom/wand_lighting",
+  "textures": {
+    "0": "arcanecraft:blocks/wand_lighting",
+    "1": "arcanecraft:blocks/wand_lighting2"
+  }
+}

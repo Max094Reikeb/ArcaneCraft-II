@@ -1,0 +1,12 @@
+{
+  "group": "arcanecraft",
+  "type": "minecraft:smelting",
+  "experience": 1,
+  "cookingtime": 200,
+  "ingredient": {
+    "item": "arcanecraft:crystal"
+  },
+  "result": {
+    "item": "arcanecraft:crystal_dust"
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "display": {
+    "icon": {
+      "item": "arcanecraft:wand_evoker"
+    },
+    "title": {
+      "translate": "advancements.woo_magic.title"
+    },
+    "description": {
+      "translate": "advancements.woo_magic.descr"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "woo_magic": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "rewards": {
+    "experience": 1
+  },
+  "parent": "arcanecraft:magical_stick"
+}
