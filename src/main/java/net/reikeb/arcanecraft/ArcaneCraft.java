@@ -3,6 +3,8 @@ package net.reikeb.arcanecraft;
 import net.minecraftforge.common.*;
 import net.minecraftforge.fml.common.*;
 
+import net.reikeb.arcanecraft.setup.RegistryHandler;
+
 import org.apache.logging.log4j.*;
 
 @Mod(ArcaneCraft.MODID)
@@ -17,7 +19,7 @@ public class ArcaneCraft {
     public ArcaneCraft() {
 
         // Init the RegistryHandler class
-        // RegistryHandler.init();
+        RegistryHandler.init();
 
         // Registers an event with the mod specific event bus. This is needed to register new stuff.
         // FMLJavaModLoadingContext.get().getModEventBus().addListener(ClientSetup::init);
