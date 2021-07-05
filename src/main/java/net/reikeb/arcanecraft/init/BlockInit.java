@@ -14,5 +14,6 @@ public class BlockInit {
             ArcaneCraft.MODID);
 
     public static final RegistryObject<CrystalOre> CRYSTAL_ORE = BLOCKS.register("crystal_ore", CrystalOre::new);
+    public static final RegistryObject<CrystalBlock> CRYSTAL_BLOCK = BLOCKS.register("crystal_block", CrystalBlock::new);
     public static final RegistryObject<RunicStone> RUNIC_STONE = BLOCKS.register("runic_stone", RunicStone::new);
 }
