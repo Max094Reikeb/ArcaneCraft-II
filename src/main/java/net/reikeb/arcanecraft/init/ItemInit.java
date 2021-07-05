@@ -15,10 +15,13 @@ public class ItemInit {
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS,
             ArcaneCraft.MODID);
 
-    // Items
     public static final RegistryObject<Item> CRYSTAL = ITEMS.register("crystal", Crystal::new);
 
-    // BlockItems
+    public static final RegistryObject<Item> CRYSTAL_DUST = ITEMS.register("crystal_dust", CrystalDust::new);
+
+    public static final RegistryObject<Item> CRYSTAL_ORE_ITEM = ITEMS.register("crystal_ore", () ->
+            new BlockItem(BlockInit.CRYSTAL_ORE.get(), new Item.Properties().tab(ItemGroups.ARCANECRAFT)));
+
     public static final RegistryObject<Item> RUNIC_STONE_ITEM = ITEMS.register("runic_stone", () ->
             new BlockItem(BlockInit.RUNIC_STONE.get(), new Item.Properties().tab(ItemGroups.ARCANECRAFT)));
 }
