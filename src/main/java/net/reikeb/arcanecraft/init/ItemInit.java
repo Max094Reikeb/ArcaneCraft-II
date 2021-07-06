@@ -32,6 +32,10 @@ public class ItemInit {
 
     public static final RegistryObject<Item> CRYSTAL_HOE = ITEMS.register("crystal_hoe", CrystalHoe::new);
 
+    public static final RegistryObject<Item> SACRIFICIAL_DAGGER = ITEMS.register("sacrificial_dagger", SacrificialDagger::new);
+
+    public static final RegistryObject<Item> SOUL = ITEMS.register("soul", Soul::new);
+
     public static final RegistryObject<Item> CRYSTAL_BLOCK_ITEM = ITEMS.register("crystal_block", () ->
             new BlockItem(BlockInit.CRYSTAL_BLOCK.get(), new Item.Properties().tab(ItemGroups.ARCANECRAFT)));
 
