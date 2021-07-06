@@ -36,6 +36,8 @@ public class ItemInit {
 
     public static final RegistryObject<Item> SOUL = ITEMS.register("soul", Soul::new);
 
+    public static final RegistryObject<Item> INK_VIAL = ITEMS.register("ink_vial", InkVial::new);
+
     public static final RegistryObject<Item> CRYSTAL_BLOCK_ITEM = ITEMS.register("crystal_block", () ->
             new BlockItem(BlockInit.CRYSTAL_BLOCK.get(), new Item.Properties().tab(ItemGroups.ARCANECRAFT)));
 
