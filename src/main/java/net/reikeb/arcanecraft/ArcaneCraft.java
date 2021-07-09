@@ -2,7 +2,6 @@ package net.reikeb.arcanecraft;
 
 import net.minecraftforge.common.*;
 import net.minecraftforge.fml.common.*;
-
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 

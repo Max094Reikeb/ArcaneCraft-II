@@ -1,8 +1,0 @@
-{
-  "parent": "arcanecraft:custom/runic_pillar",
-  "textures": {
-    "all": "arcanecraft:blocks/rune_stone",
-    "particle": "arcanecraft:blocks/rune_stone",
-    "0": "arcanecraft:blocks/runic_pillar"
-  }
-}

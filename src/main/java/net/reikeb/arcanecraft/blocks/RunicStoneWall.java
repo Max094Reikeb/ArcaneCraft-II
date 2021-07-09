@@ -9,14 +9,15 @@ import net.minecraftforge.common.ToolType;
 
 import java.util.*;
 
-public class RunicStone extends Block {
+public class RunicStoneWall extends WallBlock {
 
-    public RunicStone() {
+    public RunicStoneWall() {
         super(Properties.of(Material.STONE)
                 .sound(SoundType.STONE)
                 .strength(1.1f, 17.5f)
                 .lightLevel(s -> 0)
                 .harvestLevel(0)
+                .noOcclusion()
                 .harvestTool(ToolType.PICKAXE));
     }
 
