@@ -1,0 +1,38 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "arcanecraft:items/blank_scroll"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "spell": 1
+      },
+      "model": "arcanecraft:item/arcane_scroll_evoker"
+    },
+    {
+      "predicate": {
+        "spell": 2
+      },
+      "model": "arcanecraft:item/arcane_scroll_fire_bolt"
+    },
+    {
+      "predicate": {
+        "spell": 3
+      },
+      "model": "arcanecraft:item/arcane_scroll_ice"
+    },
+    {
+      "predicate": {
+        "spell": 4
+      },
+      "model": "arcanecraft:item/arcane_scroll_life_drain"
+    },
+    {
+      "predicate": {
+        "spell": 5
+      },
+      "model": "arcanecraft:item/arcane_scroll_lightning"
+    }
+  ]
+}

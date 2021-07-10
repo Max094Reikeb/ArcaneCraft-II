@@ -1,0 +1,32 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "arcanecraft:items/vial_evoker"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "spell": 1
+      },
+      "model": "arcanecraft:item/arcane_scroll_focus_fire"
+    },
+    {
+      "predicate": {
+        "spell": 2
+      },
+      "model": "arcanecraft:item/arcane_scroll_focus_ice"
+    },
+    {
+      "predicate": {
+        "spell": 3
+      },
+      "model": "arcanecraft:item/arcane_scroll_focus_life_drain"
+    },
+    {
+      "predicate": {
+        "spell": 4
+      },
+      "model": "arcanecraft:item/arcane_scroll_focus_lightning"
+    }
+  ]
+}

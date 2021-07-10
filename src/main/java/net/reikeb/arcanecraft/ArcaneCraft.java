@@ -6,6 +6,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
 import net.reikeb.arcanecraft.setup.RegistryHandler;
+import net.reikeb.arcanecraft.setup.client.ClientSetup;
 import net.reikeb.arcanecraft.world.gen.features.ConfiguredFeatures;
 
 import org.apache.logging.log4j.*;
@@ -26,6 +27,7 @@ public class ArcaneCraft {
 
         // Registers an event with the mod specific event bus. This is needed to register new stuff.
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
+        FMLJavaModLoadingContext.get().getModEventBus().addListener(ClientSetup::init);
 
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);

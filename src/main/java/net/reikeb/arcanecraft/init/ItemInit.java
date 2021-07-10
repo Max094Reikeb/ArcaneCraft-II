@@ -38,6 +38,12 @@ public class ItemInit {
 
     public static final RegistryObject<Item> INK_VIAL = ITEMS.register("ink_vial", InkVial::new);
 
+    public static final RegistryObject<Item> ARCANE_SCROLL_FOCUS = ITEMS.register("arcane_scroll_focus", ArcaneScrollFocus::new);
+
+    public static final RegistryObject<Item> BLANK_SCROLL = ITEMS.register("blank_scroll", BlankScroll::new);
+
+    public static final RegistryObject<Item> ARCANE_SCROLL = ITEMS.register("arcane_scroll", ArcaneScroll::new);
+
     public static final RegistryObject<Item> CRYSTAL_BLOCK_ITEM = ITEMS.register("crystal_block", () ->
             new BlockItem(BlockInit.CRYSTAL_BLOCK.get(), new Item.Properties().tab(ItemGroups.ARCANECRAFT)));
 
