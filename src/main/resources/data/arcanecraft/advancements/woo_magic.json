@@ -1,7 +1,7 @@
 {
   "display": {
     "icon": {
-      "item": "arcanecraft:wand_evoker"
+      "item": "arcanecraft:wand"
     },
     "title": {
       "translate": "advancements.woo_magic.title"

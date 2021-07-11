@@ -1,6 +1,6 @@
 {
   "display": {
-    "background": "arcanecraft:textures/rune_stone.png",
+    "background": "arcanecraft:textures/blocks/rune_stone.png",
     "icon": {
       "item": "arcanecraft:crystal"
     },
