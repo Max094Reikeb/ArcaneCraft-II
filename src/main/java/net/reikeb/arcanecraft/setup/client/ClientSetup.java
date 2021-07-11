@@ -1,9 +1,15 @@
 package net.reikeb.arcanecraft.setup.client;
 
+import net.minecraft.client.renderer.entity.MobRenderer;
+import net.minecraft.client.renderer.entity.model.SlimeModel;
+import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemModelsProperties;
 import net.minecraft.util.ResourceLocation;
 
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.event.ModelRegistryEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 
@@ -52,6 +58,34 @@ public class ClientSetup {
                 }
                 return 0.0F;
             });
+
+            ItemModelsProperties.register(ItemInit.WAND.get(), new ResourceLocation("spell"), (p_239426_0_, p_239426_1_, p_239426_2_) -> {
+                for (SpellInstance spellInstance : SpellUtils.getSpell(p_239426_0_)) {
+                    if (spellInstance.getSpell() == SpellInit.EVOKER.get()) {
+                        return 1.0F;
+                    } else if (spellInstance.getSpell() == SpellInit.FIRE.get()) {
+                        return 2.0F;
+                    } else if (spellInstance.getSpell() == SpellInit.ICE.get()) {
+                        return 3.0F;
+                    } else if (spellInstance.getSpell() == SpellInit.LIFE_DRAIN.get()) {
+                        return 4.0F;
+                    } else if (spellInstance.getSpell() == SpellInit.LIGHTNING.get()) {
+                        return 5.0F;
+                    }
+                }
+                return 0.0F;
+            });
         });
+    }
+
+    @SubscribeEvent
+    public static void registerModels(ModelRegistryEvent event) {
+        RenderingRegistry.registerEntityRenderingHandler(EntityInit.FIRE_SPLASH_ENTITY_ENTITY_TYPE,
+                renderManager -> new MobRenderer(renderManager, new SlimeModel(0), 0f) {
+                    @Override
+                    public ResourceLocation getTextureLocation(Entity entity) {
+                        return new ResourceLocation("arcanecraft:textures/air.png");
+                    }
+                });
     }
 }
