@@ -1,5 +1,6 @@
 package net.reikeb.arcanecraft.items;
 
+import net.minecraft.block.BlockState;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.*;
 import net.minecraft.util.text.*;
@@ -19,8 +20,19 @@ public class BlankScroll extends Item {
                 .tab(ItemGroups.ARCANECRAFT));
     }
 
-    public int getUseDuration(ItemStack stack) {
+    @Override
+    public int getEnchantmentValue() {
         return 0;
+    }
+
+    @Override
+    public int getUseDuration(ItemStack itemstack) {
+        return 0;
+    }
+
+    @Override
+    public float getDestroySpeed(ItemStack par1ItemStack, BlockState par2Block) {
+        return 1F;
     }
 
     @Override
