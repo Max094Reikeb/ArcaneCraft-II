@@ -1,7 +1,39 @@
 {
   "parent": "arcanecraft:custom/wand",
   "textures": {
-    "0": "arcanecraft:blocks/wand",
-    "1": "arcanecraft:blocks/wand2"
-  }
+    "0": "arcanecraft:items/wand",
+    "1": "arcanecraft:items/wand2"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "spell": 1
+      },
+      "model": "arcanecraft:item/wand_evoker"
+    },
+    {
+      "predicate": {
+        "spell": 2
+      },
+      "model": "arcanecraft:item/wand_fire"
+    },
+    {
+      "predicate": {
+        "spell": 3
+      },
+      "model": "arcanecraft:item/wand_ice"
+    },
+    {
+      "predicate": {
+        "spell": 4
+      },
+      "model": "arcanecraft:item/wand_life_drain"
+    },
+    {
+      "predicate": {
+        "spell": 5
+      },
+      "model": "arcanecraft:item/wand_lightning"
+    }
+  ]
 }

@@ -1,0 +1,7 @@
+{
+  "parent": "arcanecraft:custom/wand_lightning",
+  "textures": {
+    "0": "arcanecraft:items/wand_lightning",
+    "1": "arcanecraft:items/wand_lightning2"
+  }
+}

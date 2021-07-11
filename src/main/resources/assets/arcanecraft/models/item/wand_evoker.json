@@ -1,7 +1,7 @@
 {
   "parent": "arcanecraft:custom/wand_evoker",
   "textures": {
-    "0": "arcanecraft:blocks/wand_evoker",
-    "1": "arcanecraft:blocks/wand_evoker2"
+    "0": "arcanecraft:items/wand_evoker",
+    "1": "arcanecraft:items/wand_evoker2"
   }
 }
