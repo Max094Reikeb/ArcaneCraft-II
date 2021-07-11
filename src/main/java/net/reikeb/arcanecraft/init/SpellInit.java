@@ -1,9 +1,8 @@
 package net.reikeb.arcanecraft.init;
 
 import net.minecraft.util.ResourceLocation;
-
 import net.minecraft.util.text.TextFormatting;
-import net.minecraftforge.common.util.Lazy;
+
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.*;
 

@@ -107,7 +107,6 @@ public class FireSplashEntity extends CreatureEntity {
             double d0 = (this.getX() + random.nextFloat());
             double d1 = (this.getY() + random.nextFloat());
             double d2 = (this.getZ() + random.nextFloat());
-            int i1 = random.nextInt(2) * 2 - 1;
             double d3 = (random.nextFloat() - 0.5D) * 0.4000000014901161D;
             double d4 = (random.nextFloat() - 0.5D) * 0.4000000014901161D;
             double d5 = (random.nextFloat() - 0.5D) * 0.4000000014901161D;
