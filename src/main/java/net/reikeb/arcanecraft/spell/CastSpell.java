@@ -41,7 +41,8 @@ public class CastSpell {
     }
 
     public static void doIce(World world, PlayerEntity playerEntity) {
-
+        ArrowIceEntity arrowIceEntity = shootIceArrow(world, playerEntity, world.random, 0.7000000000000001f, 2, 0);
+        arrowIceEntity.pickup = AbstractArrowEntity.PickupStatus.DISALLOWED;
     }
 
     public static ArrowEvokerEntity shootEvokerArrow(World world, LivingEntity entity, Random random, float power, double damage, int knockback) {
@@ -70,5 +71,19 @@ public class CastSpell {
                 ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.blaze.shoot")),
                 SoundCategory.PLAYERS, 1, 1f / (random.nextFloat() * 0.5f + 1) + (power / 2));
         return arrowFireEntity;
+    }
+
+    public static ArrowIceEntity shootIceArrow(World world, LivingEntity entity, Random random, float power, double damage, int knockback) {
+        ArrowIceEntity arrowIceEntity = new ArrowIceEntity(EntityInit.ARROW_ICE_ENTITY_ENTITY_TYPE, entity, world);
+        arrowIceEntity.shoot(entity.getLookAngle().x, entity.getLookAngle().y, entity.getLookAngle().z, power * 2, 0);
+        arrowIceEntity.setSilent(true);
+        arrowIceEntity.setCritArrow(false);
+        arrowIceEntity.setBaseDamage(damage);
+        arrowIceEntity.setKnockback(knockback);
+        world.addFreshEntity(arrowIceEntity);
+        world.playSound(null, entity.getX(), entity.getY(), entity.getZ(),
+                ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.evoker.cast_spell")),
+                SoundCategory.PLAYERS, 1, 1f / (random.nextFloat() * 0.5f + 1) + (power / 2));
+        return arrowIceEntity;
     }
 }
