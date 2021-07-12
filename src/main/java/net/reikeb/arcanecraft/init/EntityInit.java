@@ -49,6 +49,15 @@ public class EntityInit {
             .sized(0.5f, 0.5f)
             .build("arrow_life");
 
+    public static final EntityType<ArrowLightningEntity> ARROW_LIGHTNING_ENTITY_ENTITY_TYPE = EntityType.Builder
+            .<ArrowLightningEntity>of(ArrowLightningEntity::new, EntityClassification.MISC)
+            .setShouldReceiveVelocityUpdates(true)
+            .setTrackingRange(64)
+            .setUpdateInterval(1)
+            .setCustomClientFactory(ArrowLightningEntity::new)
+            .sized(0.5f, 0.5f)
+            .build("arrow_lightning");
+
     public static final EntityType<FireSplashEntity> FIRE_SPLASH_ENTITY_ENTITY_TYPE = EntityType.Builder
             .<FireSplashEntity>of(FireSplashEntity::new, EntityClassification.MISC)
             .setShouldReceiveVelocityUpdates(true)
@@ -62,5 +71,6 @@ public class EntityInit {
     public static final RegistryObject<EntityType<ArrowFireEntity>> ARROW_FIRE = ENTITIES.register("arrow_fire", () -> ARROW_FIRE_ENTITY_ENTITY_TYPE);
     public static final RegistryObject<EntityType<ArrowIceEntity>> ARROW_ICE = ENTITIES.register("arrow_ice", () -> ARROW_ICE_ENTITY_ENTITY_TYPE);
     public static final RegistryObject<EntityType<ArrowLifeEntity>> ARROW_LIFE = ENTITIES.register("arrow_life", () -> ARROW_LIFE_ENTITY_ENTITY_TYPE);
+    public static final RegistryObject<EntityType<ArrowLightningEntity>> ARROW_LIGHTNING = ENTITIES.register("arrow_lightning", () -> ARROW_LIGHTNING_ENTITY_ENTITY_TYPE);
     public static final RegistryObject<EntityType<FireSplashEntity>> FIRE_SPLASH = ENTITIES.register("fire_splash", () -> FIRE_SPLASH_ENTITY_ENTITY_TYPE);
 }

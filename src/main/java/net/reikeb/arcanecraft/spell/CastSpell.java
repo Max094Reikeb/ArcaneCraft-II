@@ -29,6 +29,8 @@ public class CastSpell {
             doIce(world, playerEntity);
         } else if (SpellUtils.getWand(itemStack) == WandInit.LIFE_DRAIN.get()) {
             doLifeDrain(world, playerEntity);
+        } else if (SpellUtils.getWand(itemStack) == WandInit.LIGHTNING.get()) {
+            doLightning(world, playerEntity);
         }
     }
 
@@ -48,8 +50,13 @@ public class CastSpell {
     }
 
     public static void doLifeDrain(World world, PlayerEntity playerEntity) {
-        ArrowLifeEntity arrowLifeEntity = shootLifeArrow(world, playerEntity, world.random, 0.4f, 2, 0);
+        ArrowLifeEntity arrowLifeEntity = shootLifeArrow(world, playerEntity,0.4f, 2, 0);
         arrowLifeEntity.pickup = AbstractArrowEntity.PickupStatus.DISALLOWED;
+    }
+
+    public static void doLightning(World world, PlayerEntity playerEntity) {
+        ArrowLightningEntity arrowLightningEntity = shootLightningArrow(world, playerEntity, world.random, 0.6f, 3, 0);
+        arrowLightningEntity.pickup = AbstractArrowEntity.PickupStatus.DISALLOWED;
     }
 
     public static ArrowEvokerEntity shootEvokerArrow(World world, LivingEntity entity, Random random, float power, double damage, int knockback) {
@@ -94,7 +101,7 @@ public class CastSpell {
         return arrowIceEntity;
     }
 
-    public static ArrowLifeEntity shootLifeArrow(World world, LivingEntity entity, Random random, float power, double damage, int knockback) {
+    public static ArrowLifeEntity shootLifeArrow(World world, LivingEntity entity, float power, double damage, int knockback) {
         ArrowLifeEntity arrowLifeEntity = new ArrowLifeEntity(EntityInit.ARROW_LIFE_ENTITY_ENTITY_TYPE, entity, world);
         arrowLifeEntity.shoot(entity.getLookAngle().x, entity.getLookAngle().y, entity.getLookAngle().z, power * 2, 0);
         arrowLifeEntity.setSilent(true);
@@ -103,5 +110,19 @@ public class CastSpell {
         arrowLifeEntity.setKnockback(knockback);
         world.addFreshEntity(arrowLifeEntity);
         return arrowLifeEntity;
+    }
+
+    public static ArrowLightningEntity shootLightningArrow(World world, LivingEntity entity, Random random, float power, double damage, int knockback) {
+        ArrowLightningEntity arrowLightningEntity = new ArrowLightningEntity(EntityInit.ARROW_LIGHTNING_ENTITY_ENTITY_TYPE, entity, world);
+        arrowLightningEntity.shoot(entity.getLookAngle().x, entity.getLookAngle().y, entity.getLookAngle().z, power * 2, 0);
+        arrowLightningEntity.setSilent(true);
+        arrowLightningEntity.setCritArrow(false);
+        arrowLightningEntity.setBaseDamage(damage);
+        arrowLightningEntity.setKnockback(knockback);
+        world.addFreshEntity(arrowLightningEntity);
+        world.playSound(null, entity.getX(), entity.getY(), entity.getZ(),
+                ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.illusioner.cast_spell")),
+                SoundCategory.PLAYERS, 1, 1f / (random.nextFloat() * 0.5f + 1) + (power / 2));
+        return arrowLightningEntity;
     }
 }

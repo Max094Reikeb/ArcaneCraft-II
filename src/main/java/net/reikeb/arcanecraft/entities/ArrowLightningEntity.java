@@ -2,11 +2,12 @@ package net.reikeb.arcanecraft.entities;
 
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.*;
+import net.minecraft.entity.effect.LightningBoltEntity;
 import net.minecraft.entity.projectile.AbstractArrowEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.IPacket;
 import net.minecraft.particles.ParticleTypes;
-import net.minecraft.potion.*;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 
 import net.minecraftforge.api.distmarker.*;
@@ -15,21 +16,21 @@ import net.minecraftforge.fml.network.*;
 import net.reikeb.arcanecraft.init.EntityInit;
 
 @OnlyIn(value = Dist.CLIENT, _interface = IRendersAsItem.class)
-public class ArrowLifeEntity extends AbstractArrowEntity implements IRendersAsItem {
+public class ArrowLightningEntity extends AbstractArrowEntity implements IRendersAsItem {
 
-    public ArrowLifeEntity(FMLPlayMessages.SpawnEntity packet, World world) {
-        super(EntityInit.ARROW_LIFE_ENTITY_ENTITY_TYPE, world);
+    public ArrowLightningEntity(FMLPlayMessages.SpawnEntity packet, World world) {
+        super(EntityInit.ARROW_LIGHTNING_ENTITY_ENTITY_TYPE, world);
     }
 
-    public ArrowLifeEntity(EntityType<? extends ArrowLifeEntity> type, World world) {
+    public ArrowLightningEntity(EntityType<? extends ArrowLightningEntity> type, World world) {
         super(type, world);
     }
 
-    public ArrowLifeEntity(EntityType<? extends ArrowLifeEntity> type, double x, double y, double z, World world) {
+    public ArrowLightningEntity(EntityType<? extends ArrowLightningEntity> type, double x, double y, double z, World world) {
         super(type, x, y, z, world);
     }
 
-    public ArrowLifeEntity(EntityType<? extends ArrowLifeEntity> type, LivingEntity entity, World world) {
+    public ArrowLightningEntity(EntityType<? extends ArrowLightningEntity> type, LivingEntity entity, World world) {
         super(type, entity, world);
     }
 
@@ -53,15 +54,17 @@ public class ArrowLifeEntity extends AbstractArrowEntity implements IRendersAsIt
     protected void doPostHurtEffects(LivingEntity entity) {
         super.doPostHurtEffects(entity);
         entity.setArrowCount(entity.getArrowCount() - 1);
-        Entity shooter = this.getOwner();
-        if (!(shooter instanceof LivingEntity)) return;
-        ((LivingEntity) shooter).addEffect(new EffectInstance(Effects.REGENERATION, 30, 3));
+
+        LightningBoltEntity lightningBoltEntity = EntityType.LIGHTNING_BOLT.create(this.level);
+        lightningBoltEntity.moveTo(Vector3d.atBottomCenterOf(this.blockPosition()));
+        lightningBoltEntity.setVisualOnly(false);
+        this.level.addFreshEntity(lightningBoltEntity);
     }
 
     @Override
     public void tick() {
         super.tick();
-        this.level.addParticle(ParticleTypes.DAMAGE_INDICATOR, this.getX(), this.getY(), this.getZ(),
+        this.level.addParticle(ParticleTypes.SWEEP_ATTACK, this.getX(), this.getY(), this.getZ(),
                 1, 1, 1);
         if (this.inGround) {
             this.remove();
