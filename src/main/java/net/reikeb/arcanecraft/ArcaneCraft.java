@@ -50,5 +50,7 @@ public class ArcaneCraft {
                 renderManager -> new SpriteRenderer<>(renderManager, Minecraft.getInstance().getItemRenderer()));
         RenderingRegistry.registerEntityRenderingHandler(EntityInit.ARROW_ICE_ENTITY_ENTITY_TYPE,
                 renderManager -> new SpriteRenderer<>(renderManager, Minecraft.getInstance().getItemRenderer()));
+        RenderingRegistry.registerEntityRenderingHandler(EntityInit.ARROW_LIFE_ENTITY_ENTITY_TYPE,
+                renderManager -> new SpriteRenderer<>(renderManager, Minecraft.getInstance().getItemRenderer()));
     }
 }

@@ -27,6 +27,8 @@ public class CastSpell {
             doFire(world, playerEntity);
         } else if (SpellUtils.getWand(itemStack) == WandInit.ICE.get()) {
             doIce(world, playerEntity);
+        } else if (SpellUtils.getWand(itemStack) == WandInit.LIFE_DRAIN.get()) {
+            doLifeDrain(world, playerEntity);
         }
     }
 
@@ -43,6 +45,11 @@ public class CastSpell {
     public static void doIce(World world, PlayerEntity playerEntity) {
         ArrowIceEntity arrowIceEntity = shootIceArrow(world, playerEntity, world.random, 0.7000000000000001f, 2, 0);
         arrowIceEntity.pickup = AbstractArrowEntity.PickupStatus.DISALLOWED;
+    }
+
+    public static void doLifeDrain(World world, PlayerEntity playerEntity) {
+        ArrowLifeEntity arrowLifeEntity = shootLifeArrow(world, playerEntity, world.random, 0.4f, 2, 0);
+        arrowLifeEntity.pickup = AbstractArrowEntity.PickupStatus.DISALLOWED;
     }
 
     public static ArrowEvokerEntity shootEvokerArrow(World world, LivingEntity entity, Random random, float power, double damage, int knockback) {
@@ -85,5 +92,16 @@ public class CastSpell {
                 ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.evoker.cast_spell")),
                 SoundCategory.PLAYERS, 1, 1f / (random.nextFloat() * 0.5f + 1) + (power / 2));
         return arrowIceEntity;
+    }
+
+    public static ArrowLifeEntity shootLifeArrow(World world, LivingEntity entity, Random random, float power, double damage, int knockback) {
+        ArrowLifeEntity arrowLifeEntity = new ArrowLifeEntity(EntityInit.ARROW_LIFE_ENTITY_ENTITY_TYPE, entity, world);
+        arrowLifeEntity.shoot(entity.getLookAngle().x, entity.getLookAngle().y, entity.getLookAngle().z, power * 2, 0);
+        arrowLifeEntity.setSilent(true);
+        arrowLifeEntity.setCritArrow(false);
+        arrowLifeEntity.setBaseDamage(damage);
+        arrowLifeEntity.setKnockback(knockback);
+        world.addFreshEntity(arrowLifeEntity);
+        return arrowLifeEntity;
     }
 }
