@@ -64,7 +64,7 @@ public class Wand extends ShootableItem {
         if (!world.isClientSide && entity instanceof ServerPlayerEntity) {
             ServerPlayerEntity playerEntity = (ServerPlayerEntity) entity;
             stack.hurtAndBreak(1, entity, e -> e.broadcastBreakEvent(playerEntity.getUsedItemHand()));
-            CastSpell.doCastSpell((PlayerEntity) entity, world, stack);
+            new CastSpell(world, (PlayerEntity) entity, stack);
             playerEntity.stopUsingItem();
         }
     }

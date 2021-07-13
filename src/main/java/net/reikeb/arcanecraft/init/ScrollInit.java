@@ -28,7 +28,7 @@ public class ScrollInit {
     public static final RegistryObject<ScrollObject> ICE = SCROLL_DEFERRED_REGISTER.register("ice", () -> new ScrollObject(Lazy.of(() -> new SpellInstance(SpellInit.ICE.get()))));
     public static final RegistryObject<ScrollObject> LIFE_DRAIN = SCROLL_DEFERRED_REGISTER.register("life_drain", () -> new ScrollObject(Lazy.of(() -> new SpellInstance(SpellInit.LIFE_DRAIN.get()))));
     public static final RegistryObject<ScrollObject> LIGHTNING = SCROLL_DEFERRED_REGISTER.register("lightning", () -> new ScrollObject(Lazy.of(() -> new SpellInstance(SpellInit.LIGHTNING.get()))));
-
+    public static final RegistryObject<ScrollObject> BOLT = SCROLL_DEFERRED_REGISTER.register("bolt", () -> new ScrollObject(Lazy.of(() -> new SpellInstance(SpellInit.BOLT.get()))));
 
     public static <T extends IForgeRegistryEntry<?>> ResourceLocation getName(T type) {
         return Objects.requireNonNull(type.getRegistryName());

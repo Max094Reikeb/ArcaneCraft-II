@@ -27,6 +27,7 @@ public class SpellInit {
     public static final RegistryObject<Spell> ICE = SPELLS_DEFERRED_REGISTER.register("ice", () -> new Spell(TextFormatting.AQUA));
     public static final RegistryObject<Spell> LIFE_DRAIN = SPELLS_DEFERRED_REGISTER.register("life_drain", () -> new Spell(TextFormatting.DARK_RED));
     public static final RegistryObject<Spell> LIGHTNING = SPELLS_DEFERRED_REGISTER.register("lightning", () -> new Spell(TextFormatting.YELLOW));
+    public static final RegistryObject<Spell> BOLT = SPELLS_DEFERRED_REGISTER.register("bolt", () -> new Spell(TextFormatting.WHITE));
 
     public static <T extends IForgeRegistryEntry<?>> ResourceLocation getName(T type) {
         return Objects.requireNonNull(type.getRegistryName());
