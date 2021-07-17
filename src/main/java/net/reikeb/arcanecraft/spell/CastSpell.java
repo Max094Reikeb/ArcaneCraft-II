@@ -72,7 +72,7 @@ public class CastSpell {
             return;
         }
 
-        DumbShulkerBullet dumbShulkerBullet = new DumbShulkerBullet(EntityType.SHULKER_BULLET, world, this.playerEntity);
+        DumbShulkerBullet dumbShulkerBullet = new DumbShulkerBullet(EntityType.SHULKER_BULLET, this.world, this.playerEntity);
         dumbShulkerBullet.shootFromRotation(this.playerEntity, this.playerEntity.xRot, this.playerEntity.yRot, 1.0F, 1.0F, 1.0F);
         dumbShulkerBullet.setDeltaMovement(MathHelper.cos((float) Math.toRadians(this.playerEntity.yRot + 90)) * this.playerEntity.getBbWidth(), 0, MathHelper.sin((float) Math.toRadians(this.playerEntity.yRot + 90)) * this.playerEntity.getBbWidth());
         this.world.addFreshEntity(dumbShulkerBullet);
