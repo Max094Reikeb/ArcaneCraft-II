@@ -15,6 +15,7 @@ public class BlockInit {
 
     public static final RegistryObject<CrystalOre> CRYSTAL_ORE = BLOCKS.register("crystal_ore", CrystalOre::new);
     public static final RegistryObject<CrystalBlock> CRYSTAL_BLOCK = BLOCKS.register("crystal_block", CrystalBlock::new);
+    public static final RegistryObject<Altar> ALTAR = BLOCKS.register("altar", Altar::new);
     public static final RegistryObject<RunicPillar> RUNIC_PILLAR = BLOCKS.register("runic_pillar", RunicPillar::new);
     public static final RegistryObject<RunicStone> RUNIC_STONE = BLOCKS.register("runic_stone", RunicStone::new);
     public static final RegistryObject<RunicStoneSlab> RUNIC_STONE_SLAB = BLOCKS.register("runic_stone_slab", RunicStoneSlab::new);

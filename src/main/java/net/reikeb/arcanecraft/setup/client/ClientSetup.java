@@ -1,5 +1,6 @@
 package net.reikeb.arcanecraft.setup.client;
 
+import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.client.renderer.entity.model.SlimeModel;
 import net.minecraft.entity.Entity;
@@ -14,15 +15,18 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 
 import net.reikeb.arcanecraft.ArcaneCraft;
+import net.reikeb.arcanecraft.guis.*;
 import net.reikeb.arcanecraft.init.*;
 import net.reikeb.arcanecraft.spell.*;
+
+import static net.reikeb.arcanecraft.init.ContainerInit.*;
 
 @Mod.EventBusSubscriber(modid = ArcaneCraft.MODID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ClientSetup {
 
     public static void init(final FMLClientSetupEvent event) {
         // Connect Containers and Windows
-        // ScreenManager.register(BATTERY_CONTAINER.get(), BatteryWindow::new);
+        ScreenManager.register(ALTAR_CONTAINER.get(), AltarWindow::new);
 
         // Make this deferred for unsafe threads
         event.enqueueWork(() -> {

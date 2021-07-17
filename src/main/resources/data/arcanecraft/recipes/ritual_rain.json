@@ -1,0 +1,12 @@
+{
+  "type": "arcanecraft:ritual",
+  "input": {
+    "item": "minecraft:prismarine_shard"
+  },
+  "input2": {
+    "item": "minecraft:lapis_lazuli"
+  },
+  "output": {
+    "item": "minecraft:stone"
+  }
+}

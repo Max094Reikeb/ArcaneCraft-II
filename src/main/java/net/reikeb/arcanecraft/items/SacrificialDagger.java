@@ -5,6 +5,8 @@ import net.minecraft.item.*;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.ActionResultType;
 
+import net.reikeb.arcanecraft.init.BlockInit;
+import net.reikeb.arcanecraft.misc.vm.CastRitual;
 import net.reikeb.arcanecraft.setup.ItemGroups;
 
 public class SacrificialDagger extends SwordItem {
@@ -47,7 +49,13 @@ public class SacrificialDagger extends SwordItem {
     public ActionResultType useOn(ItemUseContext context) {
         ActionResultType actionResultType = super.useOn(context);
 
-        // Use on block Altar
+        if (context.getLevel().isClientSide) return actionResultType;
+        if (context.getPlayer() == null) return actionResultType;
+
+        if ((context.getLevel().getBlockState(context.getClickedPos()).getBlock() == BlockInit.ALTAR.get())
+                && (context.getPlayer().isShiftKeyDown())) {
+            new CastRitual(context.getLevel(), context.getClickedPos(), true);
+        }
 
         return actionResultType;
     }
