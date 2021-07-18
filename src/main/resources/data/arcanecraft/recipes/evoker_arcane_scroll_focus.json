@@ -12,11 +12,12 @@
       "item": "minecraft:ink_sac"
     },
     {
-      "item": "minecraft:ghast_tear"
+      "item": "minecraft:quartz"
     }
   ],
   "result": {
-    "item": "arcanecraft:arcane_scroll_focus_life_drain",
-    "count": 1
+    "item": "arcanecraft:arcane_scroll_focus",
+    "count": 1,
+    "tag": "{ScrollFocus:\"arcanecraft:evoker\"}"
   }
 }

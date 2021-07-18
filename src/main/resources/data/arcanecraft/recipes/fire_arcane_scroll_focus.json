@@ -16,7 +16,8 @@
     }
   ],
   "result": {
-    "item": "arcanecraft:arcane_scroll_focus_fire",
-    "count": 1
+    "item": "arcanecraft:arcane_scroll_focus",
+    "count": 1,
+    "tag": "{ScrollFocus:\"arcanecraft:fire\"}"
   }
 }
