@@ -4,11 +4,12 @@ license="All rights reserved"
 
 [[mods]]
 modId="arcanecraft"
-version="1.16.5-r1.0"
+version="Beta v3"
 displayName="ArcaneCraft II"
 credits="Credits are on mod's page."
 displayURL="https://github.com/Max094Reikeb/ArcaneCraft-II"
-authors="Max094_Reikeb"
+logoFile="logo.png"
+authors="Max094_Reikeb and Fredzik22"
 description='''
 ArcaneCraft 2 is the recreation of ArcaneCraft.
 '''
