@@ -1,8 +1,0 @@
-{
-  "parent": "arcanecraft:custom/scrolling_table",
-  "textures": {
-    "all": "arcanecraft:blocks/scrolling_table",
-    "particle": "arcanecraft:blocks/scrolling_table",
-    "0": "arcanecraft:blocks/scrolling_table"
-  }
-}

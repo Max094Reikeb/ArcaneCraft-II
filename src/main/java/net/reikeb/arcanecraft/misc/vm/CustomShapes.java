@@ -17,4 +17,15 @@ public class CustomShapes {
     ).reduce((v1, v2) -> {
         return VoxelShapes.join(v1, v2, IBooleanFunction.OR);
     }).get();
+
+    /**
+     * VoxelShape of the Scroll Table
+     */
+    public static VoxelShape ScrollTable = Stream.of(
+            Block.box(3, 3, 3, 13, 9, 13),
+            Block.box(0, 9, 0, 16, 13, 16),
+            Block.box(0, 0, 0, 16, 3, 16)
+    ).reduce((v1, v2) -> {
+        return VoxelShapes.join(v1, v2, IBooleanFunction.OR);
+    }).get();
 }

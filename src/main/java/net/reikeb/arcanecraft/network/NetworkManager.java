@@ -26,5 +26,6 @@ public class NetworkManager {
         int index = 0;
         INSTANCE.registerMessage(index++, WooMagicPacket.class, WooMagicPacket::encode, WooMagicPacket::decode, WooMagicPacket::whenThisPacketIsReceived);
         INSTANCE.registerMessage(index++, MagicSummoningPacket.class, MagicSummoningPacket::encode, MagicSummoningPacket::decode, MagicSummoningPacket::whenThisPacketIsReceived);
+        INSTANCE.registerMessage(index++, ScrollWritingPacket.class, ScrollWritingPacket::encode, ScrollWritingPacket::decode, ScrollWritingPacket::whenThisPacketIsReceived);
     }
 }

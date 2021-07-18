@@ -1,6 +1,7 @@
 package net.reikeb.arcanecraft.setup.client;
 
 import net.minecraft.client.gui.ScreenManager;
+import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.client.renderer.entity.model.SlimeModel;
 import net.minecraft.entity.Entity;
@@ -27,9 +28,19 @@ public class ClientSetup {
     public static void init(final FMLClientSetupEvent event) {
         // Connect Containers and Windows
         ScreenManager.register(ALTAR_CONTAINER.get(), AltarWindow::new);
+        ScreenManager.register(SCROLL_TABLE_CONTAINER.get(), ScrollTableWindow::new);
 
         // Make this deferred for unsafe threads
         event.enqueueWork(() -> {
+            // Cutout
+            RenderTypeLookup.setRenderLayer(BlockInit.ALTAR.get(), RenderType.cutout());
+            RenderTypeLookup.setRenderLayer(BlockInit.RUNIC_PILLAR.get(), RenderType.cutout());
+            RenderTypeLookup.setRenderLayer(BlockInit.SCROLL_TABLE.get(), RenderType.cutout());
+            // RenderTypeLookup.setRenderLayer(BlockInit.WAND_WORKBENCH.get(), RenderType.cutout();
+
+            // Translucent
+            RenderTypeLookup.setRenderLayer(BlockInit.CRYSTAL_BLOCK.get(), RenderType.translucent());
+
             // Item Properties
             ItemModelsProperties.register(ItemInit.ARCANE_SCROLL.get(), new ResourceLocation("spell"), (p_239426_0_, p_239426_1_, p_239426_2_) -> {
                 for (SpellInstance spellInstance : SpellUtils.getSpell(p_239426_0_)) {

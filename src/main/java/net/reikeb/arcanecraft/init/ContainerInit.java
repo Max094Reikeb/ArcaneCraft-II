@@ -15,6 +15,7 @@ public class ContainerInit {
             ArcaneCraft.MODID);
 
     public static final RegistryObject<ContainerType<AltarContainer>> ALTAR_CONTAINER = CONTAINERS.register("altar", () -> registerContainer(AltarContainer::new));
+    public static final RegistryObject<ContainerType<ScrollTableContainer>> SCROLL_TABLE_CONTAINER = CONTAINERS.register("scroll_table", () -> registerContainer(ScrollTableContainer::new));
 
     public static <T extends Container> ContainerType<T> registerContainer(IContainerFactory<T> fact) {
         ContainerType<T> type = new ContainerType<T>(fact);

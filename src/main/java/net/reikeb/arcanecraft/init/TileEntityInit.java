@@ -15,4 +15,7 @@ public class TileEntityInit {
 
     public static final RegistryObject<TileEntityType<TileAltar>> TILE_ALTAR = TILE_ENTITIES.register("altar", () ->
             TileEntityType.Builder.of(TileAltar::new, BlockInit.ALTAR.get()).build(null));
+
+    public static final RegistryObject<TileEntityType<TileScrollTable>> TILE_SCROLL_TABLE = TILE_ENTITIES.register("scroll_table", () ->
+            TileEntityType.Builder.of(TileScrollTable::new, BlockInit.SCROLL_TABLE.get()).build(null));
 }

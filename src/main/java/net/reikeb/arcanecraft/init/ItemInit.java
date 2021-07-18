@@ -49,6 +49,9 @@ public class ItemInit {
     public static final RegistryObject<Item> CRYSTAL_BLOCK_ITEM = ITEMS.register("crystal_block", () ->
             new BlockItem(BlockInit.CRYSTAL_BLOCK.get(), new Item.Properties().tab(ItemGroups.ARCANECRAFT)));
 
+    public static final RegistryObject<Item> SCROLL_TABLE_ITEM = ITEMS.register("scroll_table", () ->
+            new BlockItem(BlockInit.SCROLL_TABLE.get(), new Item.Properties().tab(ItemGroups.ARCANECRAFT)));
+
     public static final RegistryObject<Item> ALTAR_ITEM = ITEMS.register("altar", () ->
             new BlockItem(BlockInit.ALTAR.get(), new Item.Properties().tab(ItemGroups.ARCANECRAFT)));
 
