@@ -1,7 +1,10 @@
 {
   "variants": {
-    "": {
+    "used=false": {
       "model": "arcanecraft:block/wand_workbench"
+    },
+    "used=true": {
+      "model": "arcanecraft:block/wand_workbench_used"
     }
   }
 }

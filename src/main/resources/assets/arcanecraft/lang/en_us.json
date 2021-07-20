@@ -24,7 +24,7 @@
   "effect.druid_blessing": "Druid\u0027s Blessing",
   "effect.soul_trapper": "Soul Trapper",
   "entity.arcanecraft.fire_splash": "Fire Splash",
-  "gui.arcanecraft.scroll_table.write": "Ok",
+  "gui.arcanecraft.ok_button": "Ok",
   "item.arcanecraft.arcane_scroll": "Arcane Scroll",
   "item.arcanecraft.arcane_scroll_focus": "Arcane Scroll Focus",
   "item.arcanecraft.blank_scroll": "Blank Scroll",

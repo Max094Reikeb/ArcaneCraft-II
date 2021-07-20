@@ -29,6 +29,7 @@ public class ClientSetup {
         // Connect Containers and Windows
         ScreenManager.register(ALTAR_CONTAINER.get(), AltarWindow::new);
         ScreenManager.register(SCROLL_TABLE_CONTAINER.get(), ScrollTableWindow::new);
+        ScreenManager.register(WAND_WORKBENCH_CONTAINER.get(), WandWorkbenchWindow::new);
 
         // Make this deferred for unsafe threads
         event.enqueueWork(() -> {
@@ -36,7 +37,7 @@ public class ClientSetup {
             RenderTypeLookup.setRenderLayer(BlockInit.ALTAR.get(), RenderType.cutout());
             RenderTypeLookup.setRenderLayer(BlockInit.RUNIC_PILLAR.get(), RenderType.cutout());
             RenderTypeLookup.setRenderLayer(BlockInit.SCROLL_TABLE.get(), RenderType.cutout());
-            // RenderTypeLookup.setRenderLayer(BlockInit.WAND_WORKBENCH.get(), RenderType.cutout();
+            RenderTypeLookup.setRenderLayer(BlockInit.WAND_WORKBENCH.get(), RenderType.cutout());
 
             // Translucent
             RenderTypeLookup.setRenderLayer(BlockInit.CRYSTAL_BLOCK.get(), RenderType.translucent());

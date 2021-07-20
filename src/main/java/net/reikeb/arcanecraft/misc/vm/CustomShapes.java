@@ -28,4 +28,15 @@ public class CustomShapes {
     ).reduce((v1, v2) -> {
         return VoxelShapes.join(v1, v2, IBooleanFunction.OR);
     }).get();
+
+    /**
+     * VoxelShape of the Wand Workbench
+     */
+    public static VoxelShape WandWorkbench = Stream.of(
+            Block.box(2, 0, 2, 14, 3, 14),
+            Block.box(3, 3, 3, 13, 5, 13),
+            Block.box(1, 5, 1, 15, 9, 15)
+    ).reduce((v1, v2) -> {
+        return VoxelShapes.join(v1, v2, IBooleanFunction.OR);
+    }).get();
 }
