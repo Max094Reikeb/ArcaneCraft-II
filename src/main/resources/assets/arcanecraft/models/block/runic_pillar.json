@@ -1,8 +1,192 @@
 {
-  "parent": "arcanecraft:custom/runic_pillar",
+  "credit": "Made with Blockbench",
+  "ambientocclusion": false,
+  "texture_size": [
+    64,
+    64
+  ],
   "textures": {
-    "all": "arcanecraft:blocks/rune_stone",
-    "particle": "arcanecraft:blocks/rune_stone",
+    "particle": "arcanecraft:blocks/runic_pillar",
     "0": "arcanecraft:blocks/runic_pillar"
+  },
+  "elements": [
+    {
+      "from": [
+        3,
+        0,
+        3
+      ],
+      "to": [
+        13,
+        32,
+        13
+      ],
+      "rotation": {
+        "angle": 0,
+        "axis": "y",
+        "origin": [
+          11,
+          8,
+          11
+        ]
+      },
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            0,
+            2.5,
+            8
+          ],
+          "texture": "#0"
+        },
+        "east": {
+          "uv": [
+            2.5,
+            2.5,
+            5,
+            10.5
+          ],
+          "texture": "#0"
+        },
+        "south": {
+          "uv": [
+            5,
+            5,
+            7.5,
+            13
+          ],
+          "texture": "#0"
+        },
+        "west": {
+          "uv": [
+            7.5,
+            7.5,
+            10,
+            15.5
+          ],
+          "texture": "#0"
+        },
+        "up": {
+          "uv": [
+            5,
+            2.5,
+            2.5,
+            0
+          ],
+          "texture": "#0"
+        },
+        "down": {
+          "uv": [
+            7.5,
+            0,
+            5,
+            2.5
+          ],
+          "texture": "#0"
+        }
+      }
+    }
+  ],
+  "display": {
+    "thirdperson_righthand": {
+      "rotation": [
+        30,
+        51,
+        0
+      ],
+      "scale": [
+        0.4,
+        0.4,
+        0.4
+      ]
+    },
+    "thirdperson_lefthand": {
+      "rotation": [
+        30,
+        51,
+        0
+      ],
+      "scale": [
+        0.4,
+        0.4,
+        0.4
+      ]
+    },
+    "firstperson_righthand": {
+      "rotation": [
+        0,
+        30,
+        0
+      ],
+      "translation": [
+        0,
+        2.5,
+        0
+      ],
+      "scale": [
+        0.4,
+        0.4,
+        0.4
+      ]
+    },
+    "firstperson_lefthand": {
+      "rotation": [
+        0,
+        30,
+        0
+      ],
+      "translation": [
+        0,
+        2.5,
+        0
+      ],
+      "scale": [
+        0.4,
+        0.4,
+        0.4
+      ]
+    },
+    "ground": {
+      "translation": [
+        0,
+        2.75,
+        0
+      ],
+      "scale": [
+        0.4,
+        0.4,
+        0.4
+      ]
+    },
+    "gui": {
+      "rotation": [
+        26,
+        41,
+        0
+      ],
+      "translation": [
+        0,
+        -3,
+        0
+      ],
+      "scale": [
+        0.4,
+        0.4,
+        0.4
+      ]
+    },
+    "fixed": {
+      "translation": [
+        0,
+        -5.25,
+        0
+      ],
+      "scale": [
+        0.7,
+        0.7,
+        0.7
+      ]
+    }
   }
 }

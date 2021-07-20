@@ -38,9 +38,7 @@ public class ClientSetup {
             RenderTypeLookup.setRenderLayer(BlockInit.RUNIC_PILLAR.get(), RenderType.cutout());
             RenderTypeLookup.setRenderLayer(BlockInit.SCROLL_TABLE.get(), RenderType.cutout());
             RenderTypeLookup.setRenderLayer(BlockInit.WAND_WORKBENCH.get(), RenderType.cutout());
-
-            // Translucent
-            RenderTypeLookup.setRenderLayer(BlockInit.CRYSTAL_BLOCK.get(), RenderType.translucent());
+            RenderTypeLookup.setRenderLayer(BlockInit.CRYSTAL_BLOCK.get(), RenderType.cutout());
 
             // Item Properties
             ItemModelsProperties.register(ItemInit.ARCANE_SCROLL.get(), new ResourceLocation("spell"), (p_239426_0_, p_239426_1_, p_239426_2_) -> {
@@ -55,6 +53,8 @@ public class ClientSetup {
                         return 4.0F;
                     } else if (spellInstance.getSpell() == SpellInit.LIGHTNING.get()) {
                         return 5.0F;
+                    } else if (spellInstance.getSpell() == SpellInit.BOLT.get()) {
+                        return 6.0F;
                     }
                 }
                 return 0.0F;
@@ -70,6 +70,8 @@ public class ClientSetup {
                         return 3.0F;
                     } else if (spellInstance.getSpell() == SpellInit.LIGHTNING.get()) {
                         return 4.0F;
+                    } else if (spellInstance.getSpell() == SpellInit.BOLT.get()) {
+                        return 5.0F;
                     }
                 }
                 return 0.0F;
@@ -87,6 +89,8 @@ public class ClientSetup {
                         return 4.0F;
                     } else if (spellInstance.getSpell() == SpellInit.LIGHTNING.get()) {
                         return 5.0F;
+                    } else if (spellInstance.getSpell() == SpellInit.BOLT.get()) {
+                        return 6.0F;
                     }
                 }
                 return 0.0F;

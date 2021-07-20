@@ -1,5 +1,5 @@
 {
-  "parent": "arcanecraft:custom/wand",
+  "parent": "arcanecraft:item/wand_empty",
   "textures": {
     "0": "arcanecraft:items/wand",
     "1": "arcanecraft:items/wand2"
