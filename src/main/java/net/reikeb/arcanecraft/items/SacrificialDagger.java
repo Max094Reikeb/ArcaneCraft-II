@@ -58,7 +58,7 @@ public class SacrificialDagger extends SwordItem {
                 && (context.getPlayer().isShiftKeyDown())) {
             TileEntity tile = context.getLevel().getBlockEntity(context.getClickedPos());
             if (tile instanceof TileAltar) {
-                new CastRitual(context.getLevel(), context.getClickedPos(), (TileAltar) tile, true);
+                new CastRitual(context.getLevel(), context.getClickedPos(), (TileAltar) tile, context.getPlayer(), true);
             }
         }
 

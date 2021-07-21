@@ -68,7 +68,7 @@ public class Altar extends Block {
             TileEntity tile = worldIn.getBlockEntity(pos);
             if (tile instanceof TileAltar) {
                 if (player.isShiftKeyDown()) {
-                    new CastRitual(worldIn, pos, (TileAltar) tile, false);
+                    new CastRitual(worldIn, pos, (TileAltar) tile, player,false);
                 } else {
                     NetworkHooks.openGui((ServerPlayerEntity) player, (INamedContainerProvider) tile, pos);
                     return ActionResultType.SUCCESS;
