@@ -65,11 +65,11 @@ public class Altar extends Block {
     @Override
     public ActionResultType use(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
         if (!worldIn.isClientSide) {
-            if (player.isShiftKeyDown()) {
-                new CastRitual(worldIn, pos, false);
-            } else {
-                TileEntity tile = worldIn.getBlockEntity(pos);
-                if (tile instanceof TileAltar) {
+            TileEntity tile = worldIn.getBlockEntity(pos);
+            if (tile instanceof TileAltar) {
+                if (player.isShiftKeyDown()) {
+                    new CastRitual(worldIn, pos, (TileAltar) tile, false);
+                } else {
                     NetworkHooks.openGui((ServerPlayerEntity) player, (INamedContainerProvider) tile, pos);
                     return ActionResultType.SUCCESS;
                 }

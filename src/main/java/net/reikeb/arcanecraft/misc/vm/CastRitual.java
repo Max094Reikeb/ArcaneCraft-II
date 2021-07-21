@@ -4,70 +4,61 @@ import net.minecraft.block.Blocks;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.effect.LightningBoltEntity;
 import net.minecraft.item.*;
-import net.minecraft.item.crafting.*;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 
-import net.minecraftforge.items.wrapper.RecipeWrapper;
-
-import net.reikeb.arcanecraft.ArcaneCraft;
 import net.reikeb.arcanecraft.blocks.RunicPillar;
 import net.reikeb.arcanecraft.network.NetworkManager;
 import net.reikeb.arcanecraft.network.packets.MagicSummoningPacket;
-import net.reikeb.arcanecraft.recipes.AltarRecipe;
 import net.reikeb.arcanecraft.tileentities.TileAltar;
-
-import javax.annotation.Nullable;
-import java.util.*;
-import java.util.stream.Collectors;
 
 public class CastRitual {
 
-    private boolean isCorrect = true;
     private final World level;
     private final BlockPos pos;
+    private final TileAltar tileAltar;
 
-    public CastRitual(World world, BlockPos pos, boolean isSacrifice) {
+    public CastRitual(World world, BlockPos pos, TileAltar tileAltar, boolean isSacrifice) {
         this.level = world;
         this.pos = pos;
-
-        TileEntity tileEntity = this.level.getBlockEntity(this.pos);
-        if (!(tileEntity instanceof TileAltar)) return;
-        TileAltar tileAltar = ((TileAltar) tileEntity);
+        this.tileAltar = tileAltar;
 
         ItemStack stackInSlot0 = tileAltar.getInventory().getStackInSlot(0);
         ItemStack stackInSlot1 = tileAltar.getInventory().getStackInSlot(1);
-        AltarRecipe altarRecipe = this.getRecipe(stackInSlot0, stackInSlot1, tileAltar);
-        if (altarRecipe == null) return;
 
-        if (this.isCorrect && isPlaced()) {
-            ItemStack output = altarRecipe.getResultItem();
-            if ((output.getItem() == Blocks.STONE.asItem()) && (!isSacrifice)) {
+        if (this.isPlaced()) {
+            if ((stackInSlot0.getItem() == Items.PRISMARINE_SHARD) // Rain Ritual
+                    && (stackInSlot1.getItem() == Items.LAPIS_LAZULI) && (!isSacrifice)) {
                 ((ServerWorld) this.level).setWeatherParameters(0, 9999, true, false);
-                finishRitual(tileAltar);
-            } else if ((output.getItem() == Blocks.DIRT.asItem() && (!isSacrifice))) {
+                finishRitual();
+
+            } else if ((stackInSlot0.getItem() == Items.PRISMARINE_SHARD) // Thunder Ritual
+                    && (stackInSlot1.getItem() == Items.GLOWSTONE_DUST) && (!isSacrifice)) {
                 ((ServerWorld) this.level).setWeatherParameters(0, 6000, true, true);
-                finishRitual(tileAltar);
-            } else if ((output.getItem() == Items.SUNFLOWER) && (!isSacrifice)) {
+                finishRitual();
+
+            } else if ((stackInSlot0.getItem() == Items.SUNFLOWER) // Day Ritual
+                    && (stackInSlot1.getItem() == Blocks.SAND.asItem()) && (!isSacrifice)) {
                 if (this.level.getServer() == null) return;
                 for (ServerWorld serverWorld : this.level.getServer().getAllLevels()) {
                     serverWorld.setDayTime(1000);
                 }
-                finishRitual(tileAltar);
-            } else if ((output.getItem() == Items.ENDER_PEARL) && (!isSacrifice)) {
+                finishRitual();
+
+            } else if ((stackInSlot0.getItem() == Items.ENDER_PEARL) // Night ritual
+                    && (stackInSlot1.getItem() == Blocks.SAND.asItem()) && (!isSacrifice)) {
                 if (this.level.getServer() == null) return;
                 for (ServerWorld serverWorld : this.level.getServer().getAllLevels()) {
                     serverWorld.setDayTime(13000);
                 }
-                finishRitual(tileAltar);
+                finishRitual();
             }
         }
     }
 
-    private void finishRitual(TileAltar tileAltar) {
+    private void finishRitual() {
         NetworkManager.INSTANCE.sendToServer(new MagicSummoningPacket());
 
         LightningBoltEntity lightningBoltEntity = EntityType.LIGHTNING_BOLT.create(this.level);
@@ -77,8 +68,8 @@ public class CastRitual {
         lightningBoltEntity.setVisualOnly(false);
         this.level.addFreshEntity(lightningBoltEntity);
 
-        tileAltar.removeItemIndexCount(0, 1);
-        tileAltar.removeItemIndexCount(1, 1);
+        this.tileAltar.removeItemIndexCount(0, 1);
+        this.tileAltar.removeItemIndexCount(1, 1);
 
         this.level.setBlockAndUpdate(this.pos.north().north(), this.level.getBlockState(pos.north().north())
                 .setValue(RunicPillar.ACTIVE, false));
@@ -110,36 +101,5 @@ public class CastRitual {
         }
 
         return flag && flag1 && flag2 && flag3;
-    }
-
-    @Nullable
-    private AltarRecipe getRecipe(ItemStack stack, ItemStack stack2, TileAltar tileAltar) {
-        if (stack == null || stack2 == null) return null;
-
-        Set<IRecipe<?>> recipes = findRecipesByType(ArcaneCraft.RITUAL);
-        for (IRecipe<?> iRecipe : recipes) {
-            AltarRecipe recipe = (AltarRecipe) iRecipe;
-            if (recipe.matches(new RecipeWrapper(tileAltar.getInventory()), this.level)) {
-                isCorrect(recipe);
-                return recipe;
-            }
-        }
-        return null;
-    }
-
-    public Set<IRecipe<?>> findRecipesByType(IRecipeType<?> typeIn) {
-        return this.level != null ? this.level.getRecipeManager().getRecipes().stream()
-                .filter(recipe -> recipe.getType() == typeIn).collect(Collectors.toSet()) : Collections.emptySet();
-    }
-
-    protected void isCorrect(@Nullable IRecipe<?> recipe) {
-        if (recipe != null) {
-            ItemStack resultItem = recipe.getResultItem();
-            if (resultItem.isEmpty()) {
-                this.isCorrect = false;
-            }
-        } else {
-            this.isCorrect = false;
-        }
     }
 }

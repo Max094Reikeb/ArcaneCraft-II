@@ -3,11 +3,13 @@ package net.reikeb.arcanecraft.items;
 import net.minecraft.block.Blocks;
 import net.minecraft.item.*;
 import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
 
 import net.reikeb.arcanecraft.init.BlockInit;
 import net.reikeb.arcanecraft.misc.vm.CastRitual;
 import net.reikeb.arcanecraft.setup.ItemGroups;
+import net.reikeb.arcanecraft.tileentities.TileAltar;
 
 public class SacrificialDagger extends SwordItem {
 
@@ -54,7 +56,10 @@ public class SacrificialDagger extends SwordItem {
 
         if ((context.getLevel().getBlockState(context.getClickedPos()).getBlock() == BlockInit.ALTAR.get())
                 && (context.getPlayer().isShiftKeyDown())) {
-            new CastRitual(context.getLevel(), context.getClickedPos(), true);
+            TileEntity tile = context.getLevel().getBlockEntity(context.getClickedPos());
+            if (tile instanceof TileAltar) {
+                new CastRitual(context.getLevel(), context.getClickedPos(), (TileAltar) tile, true);
+            }
         }
 
         return actionResultType;
