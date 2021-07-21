@@ -30,7 +30,7 @@ public class EntityAttackedEvent {
             }
         }
 
-        if (flag) {
+        if (flag && (Math.random() < 0.58)) {
             entity.setSecondsOnFire(15);
         }
     }
