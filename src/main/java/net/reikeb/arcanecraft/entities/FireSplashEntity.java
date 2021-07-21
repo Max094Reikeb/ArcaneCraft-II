@@ -11,14 +11,14 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.network.FMLPlayMessages;
 import net.minecraftforge.registries.ForgeRegistries;
 
+import net.reikeb.arcanecraft.init.EntityInit;
+
 import java.util.Random;
 
 public class FireSplashEntity extends CreatureEntity {
 
-    public static EntityType entity = null;
-
     public FireSplashEntity(FMLPlayMessages.SpawnEntity packet, World world) {
-        this(entity, world);
+        this(EntityInit.FIRE_SPLASH_ENTITY_ENTITY_TYPE, world);
     }
 
     public FireSplashEntity(EntityType<FireSplashEntity> type, World world) {
