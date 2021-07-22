@@ -18,20 +18,15 @@ import net.minecraftforge.fml.network.NetworkHooks;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class CustomShulkerBullet extends ShulkerBulletEntity {
+public class SmartShulkerBullet extends ShulkerBulletEntity {
 
     private World world;
     private LivingEntity entity;
     private Entity targetEntity;
     private Direction.Axis direction;
 
-    public CustomShulkerBullet(World world, LivingEntity entity, Entity targetEntity, Direction.Axis direction) {
-        super(world, entity,targetEntity, direction);
-        BlockPos blockpos = entity.blockPosition();
-        double d0 = blockpos.getX();
-        double d1 = (double) blockpos.getY() + 1;
-        double d2 = blockpos.getZ();
-        this.moveTo(d0, d1, d2, this.yRot, this.xRot);
+    public SmartShulkerBullet(World world, LivingEntity entity, Entity targetEntity, Direction.Axis direction) {
+        super(world, entity, targetEntity, direction);
         this.world = world;
         this.entity = entity;
         this.targetEntity = targetEntity;
@@ -48,7 +43,7 @@ public class CustomShulkerBullet extends ShulkerBulletEntity {
                 }
             }
 
-            if (this.finalTarget == null || !this.finalTarget.isAlive() || this.finalTarget instanceof PlayerEntity && ((PlayerEntity) this.finalTarget).isSpectator()) {
+            if (this.finalTarget == null || !this.finalTarget.isAlive() || this.finalTarget instanceof PlayerEntity && this.finalTarget.isSpectator()) {
                 if (!this.isNoGravity()) {
                     this.setDeltaMovement(this.getDeltaMovement().add(0.0D, -0.04D, 0.0D));
                 }
@@ -57,7 +52,7 @@ public class CustomShulkerBullet extends ShulkerBulletEntity {
                 this.targetDeltaY = MathHelper.clamp(this.targetDeltaY * 1.025D, -1.0D, 1.0D);
                 this.targetDeltaZ = MathHelper.clamp(this.targetDeltaZ * 1.025D, -1.0D, 1.0D);
                 Vector3d vector3d = this.getDeltaMovement();
-                this.setDeltaMovement(vector3d.add((this.targetDeltaX - vector3d.x)  * 0.4 , (this.targetDeltaY - vector3d.y) * 0.4, (this.targetDeltaZ - vector3d.z) * 0.4));
+                this.setDeltaMovement(vector3d.add((this.targetDeltaX - vector3d.x) * 0.5, (this.targetDeltaY - vector3d.y) * 0.5, (this.targetDeltaZ - vector3d.z) * 0.5));
             }
 
             RayTraceResult raytraceresult = ProjectileHelper.getHitResult(this, this::canHitEntity);
@@ -72,7 +67,7 @@ public class CustomShulkerBullet extends ShulkerBulletEntity {
         ProjectileHelper.rotateTowardsMovement(this, 0.5F);
 
         if (this.level.isClientSide) {
-            this.level.addParticle(ParticleTypes.END_ROD, this.getX() - vector3d1.x, this.getY() - vector3d1.y + 0.15D, this.getZ() - vector3d1.z, 0.0D, 0.0D, 0.0D);
+            this.level.addParticle(ParticleTypes.HAPPY_VILLAGER, this.getX() - vector3d1.x, this.getY() - vector3d1.y + 0.15D, this.getZ() - vector3d1.z, 0.0D, 0.0D, 0.0D);
         } else if (this.finalTarget != null && !this.finalTarget.removed) {
             if (this.flightSteps > 0) {
                 --this.flightSteps;
@@ -96,6 +91,7 @@ public class CustomShulkerBullet extends ShulkerBulletEntity {
         }
     }
 
+    @Override
     public void selectNextMoveDirection(@Nullable Direction.Axis axis) {
         double d0 = 0.5D;
         BlockPos blockpos;
@@ -106,9 +102,9 @@ public class CustomShulkerBullet extends ShulkerBulletEntity {
             blockpos = new BlockPos(this.finalTarget.getX(), this.finalTarget.getY() + d0, this.finalTarget.getZ());
         }
 
-        double d1 = (double)blockpos.getX() + 0.5D;
-        double d2 = (double)blockpos.getY() + d0;
-        double d3 = (double)blockpos.getZ() + 0.5D;
+        double d1 = (double) blockpos.getX() + 0.5D;
+        double d2 = (double) blockpos.getY() + d0;
+        double d3 = (double) blockpos.getZ() + 0.5D;
         Direction direction = null;
         if (!blockpos.closerThan(this.position(), 2.0D)) {
             BlockPos blockpos1 = this.blockPosition();
@@ -139,45 +135,45 @@ public class CustomShulkerBullet extends ShulkerBulletEntity {
 
             direction = Direction.getRandom(this.random);
             if (list.isEmpty()) {
-                for(int i = 5; !this.level.isEmptyBlock(blockpos1.relative(direction)) && i > 0; --i) {
+                for (int i = 1; !this.level.isEmptyBlock(blockpos1.relative(direction)) && i > 0; --i) {
                     direction = Direction.getRandom(this.random);
                 }
             } else {
                 direction = list.get(this.random.nextInt(list.size()));
             }
 
-            d1 = this.getX() + (double)direction.getStepX();
-            d2 = this.getY() + (double)direction.getStepY();
-            d3 = this.getZ() + (double)direction.getStepZ();
+            d1 = this.getX() + (double) direction.getStepX();
+            d2 = this.getY() + (double) direction.getStepY();
+            d3 = this.getZ() + (double) direction.getStepZ();
         }
 
         this.setMoveDirection(direction);
         double d6 = d1 - this.getX();
         double d7 = d2 - this.getY();
         double d4 = d3 - this.getZ();
-        double d5 = (double)MathHelper.sqrt(d6 * d6 + d7 * d7 + d4 * d4);
+        double d5 = MathHelper.sqrt(d6 * d6 + d7 * d7 + d4 * d4);
 
         if (d5 == 0.0D) {
             this.targetDeltaX = 0.0D;
             this.targetDeltaY = 0.0D;
             this.targetDeltaZ = 0.0D;
         } else {
-            this.targetDeltaX = d6 / d5 * 0.30D;
-            this.targetDeltaY = d7 / d5 * 0.30D;
-            this.targetDeltaZ = d4 / d5 * 0.30D;
+            this.targetDeltaX = d6 / d5 * 0.38D;
+            this.targetDeltaY = d7 / d5 * 0.38D;
+            this.targetDeltaZ = d4 / d5 * 0.38D;
         }
 
         this.hasImpulse = true;
-        this.flightSteps = 8;
+        this.flightSteps = 10;
     }
 
     @Override
     protected void onHit(RayTraceResult result) {
         RayTraceResult.Type raytraceresult$type = result.getType();
         if (raytraceresult$type == RayTraceResult.Type.ENTITY) {
-            this.onHitEntity((EntityRayTraceResult)result);
+            this.onHitEntity((EntityRayTraceResult) result);
         } else if (raytraceresult$type == RayTraceResult.Type.BLOCK) {
-            this.onHitBlock((BlockRayTraceResult)result);
+            this.onHitBlock((BlockRayTraceResult) result);
         }
     }
 
@@ -187,14 +183,22 @@ public class CustomShulkerBullet extends ShulkerBulletEntity {
     }
 
     @Override
+    protected void onHitBlock(BlockRayTraceResult result) {
+    }
+
+    @Override
     protected void onHitEntity(EntityRayTraceResult result) {
         Entity entity = result.getEntity();
         Entity entity1 = this.getOwner();
-        LivingEntity livingentity = entity1 instanceof LivingEntity ? (LivingEntity)entity1 : null;
+        LivingEntity livingentity = entity1 instanceof LivingEntity ? (LivingEntity) entity1 : null;
 
-        if (result.getEntity() == this.getOwner()) return;
+        if (livingentity == null) return;
 
-        if (entity.hurt(DamageSource.indirectMobAttack(this, livingentity).setProjectile(), 6.0F)) {
+        if (entity == this.getOwner()) {
+            return;
+        }
+
+        if (entity.hurt(DamageSource.indirectMobAttack(this, livingentity).setProjectile(), 11.0F)) {
             this.doEnchantDamageEffects(livingentity, entity);
             this.remove();
         }

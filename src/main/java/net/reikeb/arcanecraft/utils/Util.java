@@ -15,12 +15,11 @@ public class Util {
         Vector3d cam1 = player.getLookAngle();
         Vector3d cam2 = cam1.add(cam1.x * range, cam1.y * range, cam1.z * range);
         AxisAlignedBB aabb = player.getBoundingBox().expandTowards(cam1.scale(range)).inflate(1.0F, 1.0F, 1.0F);
-        RayTraceResult ray = findEntity(world, player, pos, cam2, aabb, null, range);
+        EntityRayTraceResult ray = findEntity(world, player, pos, cam2, aabb, null, range);
 
         if (ray != null) {
             if (ray.getType() == RayTraceResult.Type.ENTITY) {
-                EntityRayTraceResult ray2 = (EntityRayTraceResult) ray;
-                return ray2.getEntity() instanceof LivingEntity && !(ray2.getEntity() instanceof PlayerEntity) ? ray2.getEntity() : null;
+                return ray.getEntity() instanceof LivingEntity && !(ray.getEntity() instanceof PlayerEntity) ? ray.getEntity() : null;
             }
         }
         return null;
@@ -58,9 +57,11 @@ public class Util {
         if ((tmin > tymax) || (tymin > tmax)) {
             return false;
         }
+
         if (tymin > tmin) {
             tmin = tymin;
         }
+
         if (tymax < tmax) {
             tmax = tymax;
         }

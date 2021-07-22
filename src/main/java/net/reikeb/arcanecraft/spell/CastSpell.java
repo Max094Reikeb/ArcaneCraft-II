@@ -4,10 +4,12 @@ import net.minecraft.entity.*;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.*;
 import net.minecraft.item.ItemStack;
+import net.minecraft.network.IPacket;
 import net.minecraft.util.*;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.*;
 import net.minecraft.world.World;
 
+import net.minecraftforge.fml.network.NetworkHooks;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import net.reikeb.arcanecraft.entities.*;
@@ -16,6 +18,7 @@ import net.reikeb.arcanecraft.network.NetworkManager;
 import net.reikeb.arcanecraft.network.packets.WooMagicPacket;
 import net.reikeb.arcanecraft.utils.Util;
 
+import javax.annotation.Nullable;
 import java.util.Random;
 
 public class CastSpell {
@@ -34,25 +37,31 @@ public class CastSpell {
             ArrowEvokerEntity arrowEvokerEntity = shootEvokerArrow(0.7000000000000001f, 2.5, 0);
             arrowEvokerEntity.pickup = AbstractArrowEntity.PickupStatus.DISALLOWED;
             flag = true;
+
         } else if (wandObject == WandInit.FIRE.get()) {
             ArrowFireEntity arrowFireEntity = shootFireArrow(0.7000000000000001f, 3, 0);
             arrowFireEntity.pickup = AbstractArrowEntity.PickupStatus.DISALLOWED;
             flag = true;
+
         } else if (wandObject == WandInit.ICE.get()) {
             ArrowIceEntity arrowIceEntity = shootIceArrow(world, playerEntity, world.random, 0.7000000000000001f, 2, 0);
             arrowIceEntity.pickup = AbstractArrowEntity.PickupStatus.DISALLOWED;
             flag = true;
+
         } else if (wandObject == WandInit.LIFE_DRAIN.get()) {
             ArrowLifeEntity arrowLifeEntity = shootLifeArrow(world, playerEntity, world.random, 0.4f, 2, 0);
             arrowLifeEntity.pickup = AbstractArrowEntity.PickupStatus.DISALLOWED;
             flag = true;
+
         } else if (wandObject == WandInit.LIGHTNING.get()) {
             ArrowLightningEntity arrowLightningEntity = shootLightningArrow(world, playerEntity, world.random, 0.6f, 3, 0);
             arrowLightningEntity.pickup = AbstractArrowEntity.PickupStatus.DISALLOWED;
             flag = true;
+
         } else if (wandObject == WandInit.BOLT.get()) {
             doBolt();
             flag = true;
+
         }
 
         if (flag) {
@@ -64,18 +73,64 @@ public class CastSpell {
         Entity target = Util.rayTrace(this.world, this.playerEntity, 25D);
 
         if (target != null) {
-            CustomShulkerBullet bullet = new CustomShulkerBullet(this.world, this.playerEntity, target, this.playerEntity.getDirection().getAxis());
-            this.world.addFreshEntity(bullet);
-            this.world.playSound(null, this.playerEntity.getX(), this.playerEntity.getY(), this.playerEntity.getZ(),
-                    ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.illusioner.cast_spell")),
-                    SoundCategory.PLAYERS, 1, 1f / (this.world.random.nextFloat() * 0.5f + 1) + (0.6f / 2));
+            ShulkerBulletEntity smartBullet = new SmartShulkerBullet(this.world, this.playerEntity, target, this.playerEntity.getDirection().getAxis());
+            smartBullet.setPos(this.playerEntity.getX() + this.playerEntity.getViewVector(1.0F).x, this.playerEntity.getY() + 1.35, this.playerEntity.getZ() + this.playerEntity.getViewVector(1.0F).z);
+            this.world.addFreshEntity(smartBullet);
             return;
         }
 
-        DumbShulkerBullet dumbShulkerBullet = new DumbShulkerBullet(EntityType.SHULKER_BULLET, this.world, this.playerEntity);
-        dumbShulkerBullet.shootFromRotation(this.playerEntity, this.playerEntity.xRot, this.playerEntity.yRot, 1.0F, 1.0F, 1.0F);
-        dumbShulkerBullet.setDeltaMovement(MathHelper.cos((float) Math.toRadians(this.playerEntity.yRot + 90)) * this.playerEntity.getBbWidth(), 0, MathHelper.sin((float) Math.toRadians(this.playerEntity.yRot + 90)) * this.playerEntity.getBbWidth());
-        this.world.addFreshEntity(dumbShulkerBullet);
+        ShulkerBulletEntity dumbBullet = new ShulkerBulletEntity(EntityType.SHULKER_BULLET, this.world) {
+            @Override
+            public void selectNextMoveDirection(@Nullable Direction.Axis axis) {
+            }
+
+            @Override
+            protected void onHit(RayTraceResult result) {
+                RayTraceResult.Type raytraceresult$type = result.getType();
+                if (raytraceresult$type == RayTraceResult.Type.ENTITY) {
+                    this.onHitEntity((EntityRayTraceResult) result);
+                } else if (raytraceresult$type == RayTraceResult.Type.BLOCK) {
+                    this.onHitBlock((BlockRayTraceResult) result);
+                }
+            }
+
+            @Override
+            public void tick() {
+                super.tick();
+                if (this.getOwner() != null && this.distanceTo(this.getOwner()) >= 40) {
+                    this.remove();
+                }
+            }
+
+            @Override
+            public IPacket<?> getAddEntityPacket() {
+                return NetworkHooks.getEntitySpawningPacket(this);
+            }
+
+            @Override
+            protected void onHitEntity(EntityRayTraceResult result) {
+                Entity entity = result.getEntity();
+                Entity entity1 = this.getOwner();
+                LivingEntity livingentity = entity1 instanceof LivingEntity ? (LivingEntity) entity1 : null;
+
+                if (livingentity == null) return;
+
+                if (result.getEntity() == this.getOwner()) {
+                    return;
+                }
+
+                if (entity.hurt(DamageSource.indirectMobAttack(this, livingentity).setProjectile(), 11.0F)) {
+                    this.doEnchantDamageEffects(livingentity, entity);
+                    this.remove();
+                }
+            }
+        };
+
+        dumbBullet.setNoGravity(true);
+        dumbBullet.setOwner(this.playerEntity);
+        dumbBullet.setPos(this.playerEntity.getX() + this.playerEntity.getViewVector(1.0F).x, this.playerEntity.getY() + 1.35, this.playerEntity.getZ() + this.playerEntity.getViewVector(1.0F).z);
+        dumbBullet.shootFromRotation(this.playerEntity, this.playerEntity.xRot, this.playerEntity.yRot, 1.3F, 1.3F, 1.3F);
+        this.world.addFreshEntity(dumbBullet);
         this.world.playSound(null, this.playerEntity.getX(), this.playerEntity.getY(), this.playerEntity.getZ(),
                 ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.illusioner.cast_spell")),
                 SoundCategory.PLAYERS, 1, 1f / (this.world.random.nextFloat() * 0.5f + 1) + (0.6f / 2));

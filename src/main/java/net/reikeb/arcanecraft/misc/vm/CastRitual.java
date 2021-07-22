@@ -92,62 +92,48 @@ public class CastRitual {
 
             } else if ((stackInSlot0.getItem() == ItemInit.SOUL.get()) // Pig summoning
                     && (stackInSlot1.getItem() == Items.PORKCHOP) && (isSacrifice)) {
+                finishRitual();
                 Entity pig = new PigEntity(EntityType.PIG, this.level);
                 pig.moveTo(this.pos.above(), this.level.random.nextFloat() * 360F, 0);
                 this.level.addFreshEntity(pig);
-                finishSummoning();
 
             } else if ((stackInSlot0.getItem() == ItemInit.SOUL.get()) // Cow summoning
                     && (stackInSlot1.getItem() == Items.BEEF) && (isSacrifice)) {
+                finishRitual();
                 Entity cow = new CowEntity(EntityType.COW, this.level);
                 cow.moveTo(this.pos.above(), this.level.random.nextFloat() * 360F, 0);
                 this.level.addFreshEntity(cow);
-                finishSummoning();
 
             } else if ((stackInSlot0.getItem() == ItemInit.SOUL.get()) // Zombie summoning
                     && (stackInSlot1.getItem() == Items.ROTTEN_FLESH) && (isSacrifice)) {
+                finishRitual();
                 Entity zombie = new ZombieEntity(EntityType.ZOMBIE, this.level);
                 zombie.moveTo(this.pos.above(), this.level.random.nextFloat() * 360F, 0);
                 this.level.addFreshEntity(zombie);
-                finishSummoning();
 
             } else if ((stackInSlot0.getItem() == ItemInit.SOUL.get()) // Sheep summoning
                     && (stackInSlot1.getItem() == Items.MUTTON) && (isSacrifice)) {
+                finishRitual();
                 Entity sheep = new SheepEntity(EntityType.SHEEP, this.level);
                 sheep.moveTo(this.pos.above(), this.level.random.nextFloat() * 360F, 0);
                 this.level.addFreshEntity(sheep);
-                finishSummoning();
 
             } else if ((stackInSlot0.getItem() == ItemInit.SOUL.get()) // Skeleton summoning
                     && (stackInSlot1.getItem() == Items.BONE) && (isSacrifice)) {
+                finishRitual();
                 Entity skeleton = new SkeletonEntity(EntityType.SKELETON, this.level);
                 skeleton.moveTo(this.pos.above(), this.level.random.nextFloat() * 360F, 0);
                 this.level.addFreshEntity(skeleton);
-                finishSummoning();
 
             } else if ((stackInSlot0.getItem() == ItemInit.SOUL.get()) // Spider summoning
                     && (stackInSlot1.getItem() == Items.SPIDER_EYE) && (isSacrifice)) {
+                finishRitual();
                 Entity spider = new SpiderEntity(EntityType.SPIDER, this.level);
                 spider.moveTo(this.pos.above(), this.level.random.nextFloat() * 360F, 0);
                 this.level.addFreshEntity(spider);
-                finishSummoning();
 
             }
         }
-    }
-
-    private void finishSummoning() {
-        this.tileAltar.removeItemIndexCount(0, 1);
-        this.tileAltar.removeItemIndexCount(1, 1);
-
-        this.level.setBlockAndUpdate(this.pos.north().north(), this.level.getBlockState(pos.north().north())
-                .setValue(RunicPillar.ACTIVE, false));
-        this.level.setBlockAndUpdate(this.pos.south().south(), this.level.getBlockState(pos.south().south())
-                .setValue(RunicPillar.ACTIVE, false));
-        this.level.setBlockAndUpdate(this.pos.east().east(), this.level.getBlockState(pos.east().east())
-                .setValue(RunicPillar.ACTIVE, false));
-        this.level.setBlockAndUpdate(this.pos.west().west(), this.level.getBlockState(pos.west().west())
-                .setValue(RunicPillar.ACTIVE, false));
     }
 
     private void finishRitual() {
@@ -160,7 +146,17 @@ public class CastRitual {
         lightningBoltEntity.setVisualOnly(false);
         this.level.addFreshEntity(lightningBoltEntity);
 
-        finishSummoning();
+        this.tileAltar.removeItemIndexCount(0, 1);
+        this.tileAltar.removeItemIndexCount(1, 1);
+
+        this.level.setBlockAndUpdate(this.pos.north().north(), this.level.getBlockState(pos.north().north())
+                .setValue(RunicPillar.ACTIVE, false));
+        this.level.setBlockAndUpdate(this.pos.south().south(), this.level.getBlockState(pos.south().south())
+                .setValue(RunicPillar.ACTIVE, false));
+        this.level.setBlockAndUpdate(this.pos.east().east(), this.level.getBlockState(pos.east().east())
+                .setValue(RunicPillar.ACTIVE, false));
+        this.level.setBlockAndUpdate(this.pos.west().west(), this.level.getBlockState(pos.west().west())
+                .setValue(RunicPillar.ACTIVE, false));
     }
 
     private boolean isPlaced() {
