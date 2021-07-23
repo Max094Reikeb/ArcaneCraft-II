@@ -30,7 +30,7 @@ public class Wand extends ShootableItem {
     }
 
     public void appendHoverText(ItemStack stack, @Nullable World world, List<ITextComponent> text, ITooltipFlag flag) {
-        SpellUtils.addSpellItemTooltip(stack, text);
+        SpellUtils.addWandTooltip(stack, text);
     }
 
     public boolean isFoil(ItemStack stack) {

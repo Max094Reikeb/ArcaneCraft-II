@@ -190,4 +190,19 @@ public class SpellUtils {
             }
         }
     }
+
+    @OnlyIn(Dist.CLIENT)
+    public static void addWandTooltip(ItemStack stack, List<ITextComponent> text) {
+        List<SpellInstance> list = getSpell(stack);
+        if (list.isEmpty()) {
+            text.add(NO_CONTENT);
+        } else {
+            for (SpellInstance spellInstance : list) {
+                Spell spell = spellInstance.getSpell();
+                int mana = spellInstance.getMana();
+                text.add(new TranslationTextComponent(spell.getDescriptionId()).withStyle(spell.getFormatting()));
+                text.add(new TranslationTextComponent("item.arcanecraft.wand_require_mana", mana).withStyle(TextFormatting.DARK_GRAY));
+            }
+        }
+    }
 }

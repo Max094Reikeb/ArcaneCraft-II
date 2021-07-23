@@ -15,6 +15,7 @@ import java.util.function.Supplier;
 public class SpellInit {
 
     public static final DeferredRegister<Spell> SPELLS_DEFERRED_REGISTER = DeferredRegister.create(Spell.class, ArcaneCraft.MODID);
+
     public static Supplier<IForgeRegistry<Spell>> SPELLS_REGISTRY = SPELLS_DEFERRED_REGISTER.makeRegistry("spell", () ->
             new RegistryBuilder<Spell>().setMaxID(Integer.MAX_VALUE - 1).onAdd((owner, stage, id, obj, oldObj) ->
                     ArcaneCraft.LOGGER.info("Spell added: " + getName(obj).toString() + " ")

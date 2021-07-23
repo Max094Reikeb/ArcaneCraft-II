@@ -19,7 +19,7 @@ import net.reikeb.arcanecraft.network.packets.WooMagicPacket;
 import net.reikeb.arcanecraft.utils.Util;
 
 import javax.annotation.Nullable;
-import java.util.Random;
+import java.util.*;
 
 public class CastSpell {
 
@@ -32,6 +32,17 @@ public class CastSpell {
 
         WandObject wandObject = SpellUtils.getWand(wand);
         boolean flag = false;
+        int playerMana = playerEntity.getPersistentData().getInt("Mana");
+        int spellMana = 0;
+
+        List<SpellInstance> spells = SpellUtils.getSpell(wand);
+        if (!spells.isEmpty()) {
+            for (SpellInstance spellInstance : spells) {
+                spellMana = spellInstance.getMana();
+            }
+        }
+
+        if ((playerMana < spellMana) && (!playerEntity.isCreative())) return;
 
         if (wandObject == WandInit.EVOKER.get()) {
             ArrowEvokerEntity arrowEvokerEntity = shootEvokerArrow(0.7000000000000001f, 2.5, 0);
@@ -66,6 +77,9 @@ public class CastSpell {
 
         if (flag) {
             NetworkManager.INSTANCE.sendToServer(new WooMagicPacket());
+            if (!playerEntity.isCreative()) {
+                playerEntity.getPersistentData().putInt("Mana", (playerMana - spellMana));
+            }
         }
     }
 

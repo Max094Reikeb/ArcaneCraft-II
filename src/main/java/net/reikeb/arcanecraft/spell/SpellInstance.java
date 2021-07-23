@@ -8,17 +8,28 @@ public class SpellInstance {
 
     private static final Logger LOGGER = LogManager.getLogger();
     private final Spell spell;
+    private final int mana;
 
     public SpellInstance(Spell spell) {
+        this(spell, 0);
+    }
+
+    public SpellInstance(Spell spell, int mana) {
         this.spell = spell;
+        this.mana = mana;
     }
 
     public SpellInstance(SpellInstance spellInstance) {
         this.spell = spellInstance.spell;
+        this.mana = spellInstance.mana;
     }
 
     public Spell getSpell() {
         return this.spell == null ? null : this.spell.delegate.get();
+    }
+
+    public int getMana() {
+        return this.mana;
     }
 
     public String getDescriptionId() {
@@ -36,8 +47,10 @@ public class SpellInstance {
             return true;
         } else if (!(obj instanceof SpellInstance)) {
             return false;
+        } else {
+            SpellInstance spellInstance = (SpellInstance) obj;
+            return this.mana == spellInstance.mana && this.spell.equals(spellInstance.spell);
         }
-        return false;
     }
 
     public static SpellInstance load(CompoundNBT nbt) {
@@ -47,15 +60,12 @@ public class SpellInstance {
 
     public CompoundNBT save(CompoundNBT nbt) {
         nbt.putString("Id", Spell.getId(this.getSpell()));
-        this.writeDetailsTo(nbt);
+        nbt.putInt("Mana", this.getMana());
         return nbt;
     }
 
-    private void writeDetailsTo(CompoundNBT nbt) {
-        CompoundNBT compoundnbt = new CompoundNBT();
-    }
-
     private static SpellInstance loadSpecifiedEffect(Spell spell, CompoundNBT nbt) {
-        return new SpellInstance(spell);
+        int m = nbt.getInt("Mana");
+        return new SpellInstance(spell, m);
     }
 }
