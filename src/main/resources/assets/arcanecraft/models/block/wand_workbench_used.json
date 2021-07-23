@@ -5,7 +5,8 @@
     64
   ],
   "textures": {
-    "main": "arcanecraft:blocks/wand_workbench"
+    "main": "arcanecraft:blocks/wand_workbench",
+    "particle": "arcanecraft:blocks/wand_workbench_empty"
   },
   "elements": [
     {

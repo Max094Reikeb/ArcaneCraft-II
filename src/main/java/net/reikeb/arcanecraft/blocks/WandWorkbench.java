@@ -72,9 +72,13 @@ public class WandWorkbench extends Block {
     @Override
     public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
         List<ItemStack> dropsOriginal = super.getDrops(state, builder);
+        List<ItemStack> usedWorkbench = new ArrayList<>(Collections.singletonList(new ItemStack(this, 1)));
         if (!dropsOriginal.isEmpty())
             return dropsOriginal;
-        return Collections.singletonList(new ItemStack(this, 1));
+        if (state.getValue(USED)) {
+            usedWorkbench.add(new ItemStack(ItemInit.WAND.get(), 1));
+        }
+        return usedWorkbench;
     }
 
     @OnlyIn(Dist.CLIENT)
