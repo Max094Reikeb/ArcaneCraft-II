@@ -2,9 +2,14 @@ package net.reikeb.arcanecraft.utils;
 
 import net.minecraft.entity.*;
 import net.minecraft.entity.player.*;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.*;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
+
+import net.minecraftforge.items.IItemHandler;
+
+import net.reikeb.arcanecraft.*;
 
 import java.util.function.Predicate;
 
@@ -82,6 +87,26 @@ public class Util {
         }
         if ((tmin < range) && (tmax > 0)) {
             return true;
+        }
+        return false;
+    }
+
+    /**
+     * Checks if a player has an item in one of his Curios slot
+     *
+     * @param playerEntity The player
+     * @param stack        The item we want
+     * @return true if he has it, false if he hasn't
+     */
+    public static boolean hasCuriosItem(PlayerEntity playerEntity, ItemStack stack) {
+        IItemHandler curios = IntegrationHelper.getCurios(playerEntity);
+        if (curios != null) {
+            for (int i = 0; i < curios.getSlots(); i++) {
+                ItemStack stacks = curios.getStackInSlot(i);
+                if ((!stacks.isEmpty()) && (stacks.equals(stack))) {
+                    return true;
+                }
+            }
         }
         return false;
     }

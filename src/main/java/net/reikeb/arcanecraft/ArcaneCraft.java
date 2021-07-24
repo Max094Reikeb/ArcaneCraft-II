@@ -2,11 +2,12 @@ package net.reikeb.arcanecraft;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.SpriteRenderer;
+import net.minecraft.util.ResourceLocation;
 
 import net.minecraftforge.common.*;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.*;
-import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.fml.event.lifecycle.*;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
 import net.reikeb.arcanecraft.init.EntityInit;
@@ -33,17 +34,20 @@ public class ArcaneCraft {
         // Registers an event with the mod specific event bus. This is needed to register new stuff.
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(ClientSetup::init);
+        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::curiosEvent);
 
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);
     }
 
+    public static ResourceLocation RL(String path) {
+        return new ResourceLocation(MODID, path);
+    }
+
     public void setup(final FMLCommonSetupEvent event) {
         event.enqueueWork(ConfiguredFeatures::registerConfiguredFeatures);
 
-        /**
-         * Setup arrows renderers
-         */
+        // Setup arrows renderers
         RenderingRegistry.registerEntityRenderingHandler(EntityInit.ARROW_EVOKER_ENTITY_ENTITY_TYPE,
                 renderManager -> new SpriteRenderer<>(renderManager, Minecraft.getInstance().getItemRenderer()));
         RenderingRegistry.registerEntityRenderingHandler(EntityInit.ARROW_FIRE_ENTITY_ENTITY_TYPE,
@@ -54,5 +58,9 @@ public class ArcaneCraft {
                 renderManager -> new SpriteRenderer<>(renderManager, Minecraft.getInstance().getItemRenderer()));
         RenderingRegistry.registerEntityRenderingHandler(EntityInit.ARROW_LIGHTNING_ENTITY_ENTITY_TYPE,
                 renderManager -> new SpriteRenderer<>(renderManager, Minecraft.getInstance().getItemRenderer()));
+    }
+
+    private void curiosEvent(InterModEnqueueEvent event) {
+        IntegrationHelper.registerMods(event);
     }
 }

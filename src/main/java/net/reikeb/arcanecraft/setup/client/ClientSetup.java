@@ -4,18 +4,20 @@ import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.client.renderer.entity.model.SlimeModel;
+import net.minecraft.client.renderer.texture.AtlasTexture;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemModelsProperties;
 import net.minecraft.util.ResourceLocation;
 
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.ModelRegistryEvent;
+import net.minecraftforge.client.event.*;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 
-import net.reikeb.arcanecraft.ArcaneCraft;
+import net.reikeb.arcanecraft.*;
 import net.reikeb.arcanecraft.guis.*;
 import net.reikeb.arcanecraft.init.*;
 import net.reikeb.arcanecraft.spell.*;
@@ -107,5 +109,14 @@ public class ClientSetup {
                         return new ResourceLocation("arcanecraft:textures/air.png");
                     }
                 });
+    }
+
+    @SubscribeEvent
+    public static void textureSwitchEvent(TextureStitchEvent.Pre event) {
+        if (event.getMap().location().equals(AtlasTexture.LOCATION_BLOCKS)) {
+            if (ModList.get().isLoaded(IntegrationHelper.CURIOS_MODID)) {
+                event.addSprite(IntegrationHelper.CURIOS_EMPTY_RING);
+            }
+        }
     }
 }
