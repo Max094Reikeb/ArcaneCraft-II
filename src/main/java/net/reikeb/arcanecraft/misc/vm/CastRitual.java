@@ -41,12 +41,12 @@ public class CastRitual {
             if ((stackInSlot0.getItem() == Items.PRISMARINE_SHARD) // Rain Ritual
                     && (stackInSlot1.getItem() == Items.LAPIS_LAZULI) && (!isSacrifice)) {
                 ((ServerWorld) this.level).setWeatherParameters(0, 9999, true, false);
-                finishRitual();
+                finishRitual(false);
 
             } else if ((stackInSlot0.getItem() == Items.PRISMARINE_SHARD) // Thunder Ritual
                     && (stackInSlot1.getItem() == Items.GLOWSTONE_DUST) && (!isSacrifice)) {
                 ((ServerWorld) this.level).setWeatherParameters(0, 6000, true, true);
-                finishRitual();
+                finishRitual(false);
 
             } else if ((stackInSlot0.getItem() == Items.SUNFLOWER) // Day Ritual
                     && (stackInSlot1.getItem() == Blocks.SAND.asItem()) && (!isSacrifice)) {
@@ -54,7 +54,7 @@ public class CastRitual {
                 for (ServerWorld serverWorld : this.level.getServer().getAllLevels()) {
                     serverWorld.setDayTime(1000);
                 }
-                finishRitual();
+                finishRitual(false);
 
             } else if ((stackInSlot0.getItem() == Items.ENDER_PEARL) // Night ritual
                     && (stackInSlot1.getItem() == Blocks.SAND.asItem()) && (!isSacrifice)) {
@@ -62,7 +62,7 @@ public class CastRitual {
                 for (ServerWorld serverWorld : this.level.getServer().getAllLevels()) {
                     serverWorld.setDayTime(13000);
                 }
-                finishRitual();
+                finishRitual(false);
 
             } else if ((stackInSlot0.getItem() == Items.BLAZE_POWDER) // Flame ritual
                     && (stackInSlot1.getItem() == Items.GOLD_INGOT) && (!isSacrifice)) {
@@ -75,7 +75,7 @@ public class CastRitual {
                     fireSplash.moveTo(this.pos.above(), this.level.random.nextFloat() * 360F, 0);
                     this.level.addFreshEntity(fireSplash);
                 }
-                finishRitual();
+                finishRitual(false);
 
             } else if ((stackInSlot0.getItem() == Blocks.SOUL_SAND.asItem()) // Soul harvest ritual
                     && (stackInSlot1.getItem() == Items.BONE) && (!isSacrifice)) {
@@ -83,67 +83,67 @@ public class CastRitual {
                 this.level.playSound(null, this.pos.getX(), this.pos.getY(), this.pos.getZ(),
                         ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.wither.ambient")),
                         SoundCategory.NEUTRAL, 5, 1);
-                finishRitual();
+                finishRitual(false);
 
             } else if ((stackInSlot0.getItem() == Blocks.LILY_OF_THE_VALLEY.asItem()) // Growth ritual
                     && (stackInSlot1.getItem() == Blocks.GRASS_BLOCK.asItem()) && (!isSacrifice)) {
                 playerEntity.addEffect(new EffectInstance(PotionEffectInit.DRUID_BLESSING.get(), 12000, 0));
-                finishRitual();
+                finishRitual(false);
 
             } else if ((stackInSlot0.getItem() == ItemInit.SOUL.get()) // Pig summoning
                     && (stackInSlot1.getItem() == Items.PORKCHOP) && (isSacrifice)) {
-                finishRitual();
-                Entity pig = new PigEntity(EntityType.PIG, this.level);
+                LivingEntity pig = new PigEntity(EntityType.PIG, this.level);
                 pig.moveTo(this.pos.above(), this.level.random.nextFloat() * 360F, 0);
                 this.level.addFreshEntity(pig);
+                finishRitual(true);
 
             } else if ((stackInSlot0.getItem() == ItemInit.SOUL.get()) // Cow summoning
                     && (stackInSlot1.getItem() == Items.BEEF) && (isSacrifice)) {
-                finishRitual();
-                Entity cow = new CowEntity(EntityType.COW, this.level);
+                LivingEntity cow = new CowEntity(EntityType.COW, this.level);
                 cow.moveTo(this.pos.above(), this.level.random.nextFloat() * 360F, 0);
                 this.level.addFreshEntity(cow);
+                finishRitual(true);
 
             } else if ((stackInSlot0.getItem() == ItemInit.SOUL.get()) // Zombie summoning
                     && (stackInSlot1.getItem() == Items.ROTTEN_FLESH) && (isSacrifice)) {
-                finishRitual();
-                Entity zombie = new ZombieEntity(EntityType.ZOMBIE, this.level);
+                LivingEntity zombie = new ZombieEntity(EntityType.ZOMBIE, this.level);
                 zombie.moveTo(this.pos.above(), this.level.random.nextFloat() * 360F, 0);
                 this.level.addFreshEntity(zombie);
+                finishRitual(true);
 
             } else if ((stackInSlot0.getItem() == ItemInit.SOUL.get()) // Sheep summoning
                     && (stackInSlot1.getItem() == Items.MUTTON) && (isSacrifice)) {
-                finishRitual();
-                Entity sheep = new SheepEntity(EntityType.SHEEP, this.level);
+                LivingEntity sheep = new SheepEntity(EntityType.SHEEP, this.level);
                 sheep.moveTo(this.pos.above(), this.level.random.nextFloat() * 360F, 0);
                 this.level.addFreshEntity(sheep);
+                finishRitual(true);
 
             } else if ((stackInSlot0.getItem() == ItemInit.SOUL.get()) // Skeleton summoning
                     && (stackInSlot1.getItem() == Items.BONE) && (isSacrifice)) {
-                finishRitual();
-                Entity skeleton = new SkeletonEntity(EntityType.SKELETON, this.level);
+                LivingEntity skeleton = new SkeletonEntity(EntityType.SKELETON, this.level);
                 skeleton.moveTo(this.pos.above(), this.level.random.nextFloat() * 360F, 0);
                 this.level.addFreshEntity(skeleton);
+                finishRitual(true);
 
             } else if ((stackInSlot0.getItem() == ItemInit.SOUL.get()) // Spider summoning
                     && (stackInSlot1.getItem() == Items.SPIDER_EYE) && (isSacrifice)) {
-                finishRitual();
-                Entity spider = new SpiderEntity(EntityType.SPIDER, this.level);
+                LivingEntity spider = new SpiderEntity(EntityType.SPIDER, this.level);
                 spider.moveTo(this.pos.above(), this.level.random.nextFloat() * 360F, 0);
                 this.level.addFreshEntity(spider);
+                finishRitual(true);
 
             }
         }
     }
 
-    private void finishRitual() {
+    private void finishRitual(boolean isSacrifice) {
         NetworkManager.INSTANCE.sendToServer(new MagicSummoningPacket());
 
         LightningBoltEntity lightningBoltEntity = EntityType.LIGHTNING_BOLT.create(this.level);
         if (lightningBoltEntity == null) return;
 
         lightningBoltEntity.moveTo(Vector3d.atBottomCenterOf(this.pos));
-        lightningBoltEntity.setVisualOnly(false);
+        lightningBoltEntity.setVisualOnly(isSacrifice);
         this.level.addFreshEntity(lightningBoltEntity);
 
         this.tileAltar.removeItemIndexCount(0, 1);
