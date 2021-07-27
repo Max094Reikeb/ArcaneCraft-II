@@ -19,7 +19,7 @@ public class SpellInit {
     public static Supplier<IForgeRegistry<Spell>> SPELLS_REGISTRY = SPELLS_DEFERRED_REGISTER.makeRegistry("spell", () ->
             new RegistryBuilder<Spell>().setMaxID(Integer.MAX_VALUE - 1).onAdd((owner, stage, id, obj, oldObj) ->
                     ArcaneCraft.LOGGER.info("Spell added: " + getName(obj).toString() + " ")
-            ).setDefaultKey(new ResourceLocation(ArcaneCraft.MODID, "empty"))
+            ).setDefaultKey(ArcaneCraft.RL("empty"))
     );
 
     public static final RegistryObject<Spell> EMPTY = SPELLS_DEFERRED_REGISTER.register("empty", () -> new Spell(TextFormatting.DARK_GRAY));

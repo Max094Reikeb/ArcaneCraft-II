@@ -3,11 +3,13 @@ package net.reikeb.arcanecraft.potions;
 import net.minecraft.potion.*;
 import net.minecraft.util.ResourceLocation;
 
+import net.reikeb.arcanecraft.ArcaneCraft;
+
 public class SoulTrapperEffect extends Effect {
 
     public SoulTrapperEffect() {
         super(EffectType.BENEFICIAL, -12034723);
-        ResourceLocation potionIcon = new ResourceLocation("arcanecraft:textures/mob_effect/soul_trapper.png");
+        ResourceLocation potionIcon = ArcaneCraft.RL("mob_effect/soul_trapper");
     }
 
     @Override

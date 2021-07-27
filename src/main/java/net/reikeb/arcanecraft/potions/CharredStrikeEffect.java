@@ -3,11 +3,13 @@ package net.reikeb.arcanecraft.potions;
 import net.minecraft.potion.*;
 import net.minecraft.util.ResourceLocation;
 
+import net.reikeb.arcanecraft.ArcaneCraft;
+
 public class CharredStrikeEffect extends Effect {
 
     public CharredStrikeEffect() {
         super(EffectType.BENEFICIAL, -3124707);
-        ResourceLocation potionIcon = new ResourceLocation("arcanecraft:textures/mob_effect/charred_strike.png");
+        ResourceLocation potionIcon = ArcaneCraft.RL("mob_effect/charred_strike");
     }
 
     @Override

@@ -19,7 +19,7 @@ public class ScrollFocusInit {
     public static Supplier<IForgeRegistry<ScrollFocusObject>> SCOLL_FOCUS_REGISTRY = SCROLL_FOCUS_DEFERRED_REGISTER.makeRegistry("arcane_scroll_focus", () ->
             new RegistryBuilder<ScrollFocusObject>().setMaxID(Integer.MAX_VALUE - 1).onAdd((owner, stage, id, obj, oldObj) ->
                     ArcaneCraft.LOGGER.info("Scroll Focus added: " + getName(obj).toString() + " ")
-            ).setDefaultKey(new ResourceLocation(ArcaneCraft.MODID, "empty"))
+            ).setDefaultKey(ArcaneCraft.RL("empty"))
     );
 
     public static final RegistryObject<ScrollFocusObject> EMPTY = SCROLL_FOCUS_DEFERRED_REGISTER.register("empty", ScrollFocusObject::new);

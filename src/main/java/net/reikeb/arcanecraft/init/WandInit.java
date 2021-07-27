@@ -19,7 +19,7 @@ public class WandInit {
     public static Supplier<IForgeRegistry<WandObject>> WAND_REGISTRY = WAND_DEFERRED_REGISTER.makeRegistry("wand", () ->
             new RegistryBuilder<WandObject>().setMaxID(Integer.MAX_VALUE - 1).onAdd((owner, stage, id, obj, oldObj) ->
                     ArcaneCraft.LOGGER.info("Wand added: " + getName(obj).toString() + " ")
-            ).setDefaultKey(new ResourceLocation(ArcaneCraft.MODID, "empty"))
+            ).setDefaultKey(ArcaneCraft.RL("empty"))
     );
 
     public static final RegistryObject<WandObject> EMPTY = WAND_DEFERRED_REGISTER.register("empty", WandObject::new);

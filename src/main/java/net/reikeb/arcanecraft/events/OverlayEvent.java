@@ -5,7 +5,6 @@ import com.mojang.blaze3d.systems.RenderSystem;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.ResourceLocation;
 
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
@@ -34,7 +33,7 @@ public class OverlayEvent {
             RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
             RenderSystem.disableAlphaTest();
 
-            Minecraft.getInstance().getTextureManager().bind(new ResourceLocation(ArcaneCraft.MODID, "textures/overlay/crystal.png"));
+            Minecraft.getInstance().getTextureManager().bind(ArcaneCraft.RL("overlay/crystal"));
             Minecraft.getInstance().gui.blit(event.getMatrixStack(), posX + -198, posY + 99, 0, 0, 256, 256);
             RenderSystem.depthMask(true);
 

@@ -52,7 +52,7 @@ public class Spell extends ForgeRegistryEntry<Spell> {
 
     @Nullable
     public static Spell byId(String id) {
-        return SpellInit.SPELLS_REGISTRY.get().getValue(new ResourceLocation(ArcaneCraft.MODID, id));
+        return SpellInit.SPELLS_REGISTRY.get().getValue(ArcaneCraft.RL(id));
     }
 
     public static String getId(Spell spell) {

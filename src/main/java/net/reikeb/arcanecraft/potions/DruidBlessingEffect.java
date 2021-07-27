@@ -9,11 +9,13 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+import net.reikeb.arcanecraft.ArcaneCraft;
+
 public class DruidBlessingEffect extends Effect {
 
     public DruidBlessingEffect() {
         super(EffectType.BENEFICIAL, -14328056);
-        ResourceLocation potionIcon = new ResourceLocation("arcanecraft:textures/mob_effect/druid_blessing.png");
+        ResourceLocation potionIcon = ArcaneCraft.RL("mob_effect/druid_blessing");
     }
 
     @Override

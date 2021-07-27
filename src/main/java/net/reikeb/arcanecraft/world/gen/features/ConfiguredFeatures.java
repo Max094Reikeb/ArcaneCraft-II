@@ -1,7 +1,6 @@
 package net.reikeb.arcanecraft.world.gen.features;
 
 import net.minecraft.tags.BlockTags;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.registry.*;
 import net.minecraft.world.gen.feature.*;
 import net.minecraft.world.gen.feature.template.TagMatchRuleTest;
@@ -18,6 +17,6 @@ public class ConfiguredFeatures {
 
     public static void registerConfiguredFeatures() {
         Registry<ConfiguredFeature<?, ?>> registry = WorldGenRegistries.CONFIGURED_FEATURE;
-        Registry.register(registry, new ResourceLocation(ArcaneCraft.MODID, "crystal_ore"), CRYSTAL_ORE_CONFIGURED_FEATURE);
+        Registry.register(registry, ArcaneCraft.RL("crystal_ore"), CRYSTAL_ORE_CONFIGURED_FEATURE);
     }
 }

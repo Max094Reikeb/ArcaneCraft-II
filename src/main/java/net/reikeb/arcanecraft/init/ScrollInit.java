@@ -19,7 +19,7 @@ public class ScrollInit {
     public static Supplier<IForgeRegistry<ScrollObject>> SCROLL_REGISTRY = SCROLL_DEFERRED_REGISTER.makeRegistry("arcane_scroll", () ->
             new RegistryBuilder<ScrollObject>().setMaxID(Integer.MAX_VALUE - 1).onAdd((owner, stage, id, obj, oldObj) ->
                     ArcaneCraft.LOGGER.info("Scroll added: " + getName(obj).toString() + " ")
-            ).setDefaultKey(new ResourceLocation(ArcaneCraft.MODID, "empty"))
+            ).setDefaultKey(ArcaneCraft.RL("empty"))
     );
 
     public static final RegistryObject<ScrollObject> EMPTY = SCROLL_DEFERRED_REGISTER.register("empty", ScrollObject::new);

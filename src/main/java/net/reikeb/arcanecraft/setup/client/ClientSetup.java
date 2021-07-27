@@ -106,7 +106,7 @@ public class ClientSetup {
                 renderManager -> new MobRenderer(renderManager, new SlimeModel(0), 0f) {
                     @Override
                     public ResourceLocation getTextureLocation(Entity entity) {
-                        return new ResourceLocation("arcanecraft:textures/air.png");
+                        return ArcaneCraft.RL("air");
                     }
                 });
     }
