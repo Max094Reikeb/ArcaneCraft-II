@@ -57,6 +57,7 @@ public class ManaManager {
     @SubscribeEvent
     public static void onPlayerAttachCapabilities(@Nonnull final AttachCapabilitiesEvent<Entity> e) {
         if (!(e.getObject() instanceof PlayerEntity)) return;
+        if (e.getObject().getCapability(MANA_CAPABILITY).isPresent()) return;
         e.addCapability(MANA_CAPABILITY_NAME,
                 ManaProvider.from(MANA_CAPABILITY, ManaCapability::new));
     }

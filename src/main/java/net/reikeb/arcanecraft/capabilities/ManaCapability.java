@@ -31,7 +31,7 @@ public class ManaCapability implements ManaInterface {
     @Override
     public CompoundNBT serializeNBT() {
         final CompoundNBT nbt = new CompoundNBT();
-        nbt.putDouble(INFO_NBT_KEY, maxMana);
+        nbt.putDouble(INFO_NBT_KEY, this.getMaxMana());
         return nbt;
     }
 
