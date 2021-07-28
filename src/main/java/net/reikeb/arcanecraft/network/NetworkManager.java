@@ -28,5 +28,6 @@ public class NetworkManager {
         INSTANCE.registerMessage(index++, MagicSummoningPacket.class, MagicSummoningPacket::encode, MagicSummoningPacket::decode, MagicSummoningPacket::whenThisPacketIsReceived);
         INSTANCE.registerMessage(index++, ScrollWritingPacket.class, ScrollWritingPacket::encode, ScrollWritingPacket::decode, ScrollWritingPacket::whenThisPacketIsReceived);
         INSTANCE.registerMessage(index++, WandWorkbenchingPacket.class, WandWorkbenchingPacket::encode, WandWorkbenchingPacket::decode, WandWorkbenchingPacket::whenThisPacketIsReceived);
+        INSTANCE.registerMessage(index++, MaxManaPacket.class, MaxManaPacket::encode, MaxManaPacket::decode, MaxManaPacket::whenThisPacketIsReceived);
     }
 }

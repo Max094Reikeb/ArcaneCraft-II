@@ -1,13 +1,16 @@
 package net.reikeb.arcanecraft.potions;
 
-import com.google.common.util.concurrent.AtomicDouble;
-
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.*;
 import net.minecraft.potion.*;
 import net.minecraft.util.ResourceLocation;
 
+import net.minecraftforge.fml.network.PacketDistributor;
+
 import net.reikeb.arcanecraft.ArcaneCraft;
 import net.reikeb.arcanecraft.capabilities.ManaManager;
+import net.reikeb.arcanecraft.network.NetworkManager;
+import net.reikeb.arcanecraft.network.packets.MaxManaPacket;
 
 public class ManaEffect extends Effect {
 
@@ -53,11 +56,12 @@ public class ManaEffect extends Effect {
 
     @Override
     public void applyEffectTick(LivingEntity entity, int level) {
-        AtomicDouble entityManaMax = new AtomicDouble();
-        entity.getCapability(ManaManager.MANA_CAPABILITY, null).ifPresent(cap ->
-                entityManaMax.set(cap.getMaxMana()));
+        if (!(entity instanceof ServerPlayerEntity)) return;
 
-        entity.getCapability(ManaManager.MANA_CAPABILITY, null).ifPresent(cap ->
-                cap.setMaxMana((entityManaMax.get() + 0.05)));
+        entity.getCapability(ManaManager.MANA_CAPABILITY, null).ifPresent(cap -> {
+            cap.setMaxMana((cap.getMaxMana() + 0.05));
+            NetworkManager.INSTANCE.send(PacketDistributor.PLAYER.with(() ->
+                    (ServerPlayerEntity) entity), new MaxManaPacket((int) (cap.getMaxMana() + 0.05)));
+        });
     }
 }
