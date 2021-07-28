@@ -15,5 +15,6 @@ public class PotionEffectInit {
 
     public static final RegistryObject<Effect> CHARRED_STRIKE = EFFECTS.register("charred_strike", CharredStrikeEffect::new);
     public static final RegistryObject<Effect> DRUID_BLESSING = EFFECTS.register("druid_blessing", DruidBlessingEffect::new);
+    public static final RegistryObject<Effect> MANA = EFFECTS.register("mana", ManaEffect::new);
     public static final RegistryObject<Effect> SOUL_TRAPPER = EFFECTS.register("soul_trapper", SoulTrapperEffect::new);
 }

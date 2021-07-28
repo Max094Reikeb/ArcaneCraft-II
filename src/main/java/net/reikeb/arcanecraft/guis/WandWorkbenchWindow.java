@@ -18,7 +18,7 @@ import net.reikeb.arcanecraft.tileentities.TileWandWorkbench;
 
 public class WandWorkbenchWindow extends ContainerScreen<WandWorkbenchContainer> {
 
-    private static final ResourceLocation WAND_WORKBENCH_GUI = ArcaneCraft.RL("guis/wand_workbench_gui");
+    private static final ResourceLocation WAND_WORKBENCH_GUI = ArcaneCraft.RL("textures/guis/wand_workbench_gui.png");
     public TileWandWorkbench tileEntity;
 
     public WandWorkbenchWindow(WandWorkbenchContainer container, PlayerInventory inv, ITextComponent title) {

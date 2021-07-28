@@ -15,7 +15,7 @@ import net.reikeb.arcanecraft.tileentities.TileAltar;
 
 public class AltarWindow extends ContainerScreen<AltarContainer> {
 
-    private static final ResourceLocation ALTAR_GUI = ArcaneCraft.RL("guis/altar_gui");
+    private static final ResourceLocation ALTAR_GUI = ArcaneCraft.RL("textures/guis/altar_gui.png");
     public TileAltar tileEntity;
 
     public AltarWindow(AltarContainer container, PlayerInventory inv, ITextComponent title) {

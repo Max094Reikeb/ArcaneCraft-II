@@ -18,7 +18,7 @@ import net.reikeb.arcanecraft.tileentities.TileScrollTable;
 
 public class ScrollTableWindow extends ContainerScreen<ScrollTableContainer> {
 
-    private static final ResourceLocation SCROLL_TABLE_GUI = ArcaneCraft.RL("guis/scroll_table_gui");
+    private static final ResourceLocation SCROLL_TABLE_GUI = ArcaneCraft.RL("textures/guis/scroll_table_gui.png");
     public TileScrollTable tileEntity;
 
     public ScrollTableWindow(ScrollTableContainer container, PlayerInventory inv, ITextComponent title) {
