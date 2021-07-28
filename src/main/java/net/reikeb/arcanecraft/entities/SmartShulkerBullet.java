@@ -43,7 +43,7 @@ public class SmartShulkerBullet extends ShulkerBulletEntity {
                 }
             }
 
-            if (this.finalTarget == null || !this.finalTarget.isAlive() || this.finalTarget instanceof PlayerEntity && this.finalTarget.isSpectator()) {
+            if (this.finalTarget == null || !this.finalTarget.isAlive() || this.finalTarget instanceof PlayerEntity && ((PlayerEntity) this.finalTarget).isSpectator()) {
                 if (!this.isNoGravity()) {
                     this.setDeltaMovement(this.getDeltaMovement().add(0.0D, -0.04D, 0.0D));
                 }
@@ -192,11 +192,8 @@ public class SmartShulkerBullet extends ShulkerBulletEntity {
         Entity entity1 = this.getOwner();
         LivingEntity livingentity = entity1 instanceof LivingEntity ? (LivingEntity) entity1 : null;
 
+        if (result.getEntity() == this.getOwner()) return;
         if (livingentity == null) return;
-
-        if (entity == this.getOwner()) {
-            return;
-        }
 
         if (entity.hurt(DamageSource.indirectMobAttack(this, livingentity).setProjectile(), 11.0F)) {
             this.doEnchantDamageEffects(livingentity, entity);

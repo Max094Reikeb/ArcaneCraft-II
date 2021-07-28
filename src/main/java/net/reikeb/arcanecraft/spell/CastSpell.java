@@ -127,11 +127,8 @@ public class CastSpell {
                 Entity entity1 = this.getOwner();
                 LivingEntity livingentity = entity1 instanceof LivingEntity ? (LivingEntity) entity1 : null;
 
+                if (result.getEntity() == this.getOwner()) return;
                 if (livingentity == null) return;
-
-                if (result.getEntity() == this.getOwner()) {
-                    return;
-                }
 
                 if (entity.hurt(DamageSource.indirectMobAttack(this, livingentity).setProjectile(), 11.0F)) {
                     this.doEnchantDamageEffects(livingentity, entity);
