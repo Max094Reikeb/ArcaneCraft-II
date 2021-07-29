@@ -8,24 +8,28 @@ import com.mojang.brigadier.exceptions.*;
 import net.minecraft.command.*;
 import net.minecraft.command.arguments.GameProfileArgument;
 import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.util.text.*;
 
 import net.minecraftforge.fml.network.PacketDistributor;
 
 import net.reikeb.arcanecraft.capabilities.ManaManager;
 import net.reikeb.arcanecraft.network.NetworkManager;
-import net.reikeb.arcanecraft.network.packets.MaxManaPacket;
+import net.reikeb.arcanecraft.network.packets.*;
 
 import java.util.*;
 
 public class ManaCommand {
 
     private static final DynamicCommandExceptionType ERROR_NEGATIVE_MANA = new DynamicCommandExceptionType((error) -> {
-        return new TranslationTextComponent("command.arcanecraft.negative_mana", error);
+        return new TranslationTextComponent("command.arcanecraft.mana.negative", error);
     });
 
     private static final DynamicCommandExceptionType ERROR_NEGATIVE_MAX_MANA = new DynamicCommandExceptionType((error) -> {
-        return new TranslationTextComponent("command.arcanecraft.negative_max_mana", error);
+        return new TranslationTextComponent("command.arcanecraft.mana.negative_max", error);
+    });
+
+    private static final DynamicCommandExceptionType ERROR_MAX_INFERIOR = new DynamicCommandExceptionType((error) -> {
+        return new TranslationTextComponent("command.arcanecraft.mana.inferior_current", error);
     });
 
     private static final DynamicCommandExceptionType ERROR_PLAYER = new DynamicCommandExceptionType((error) -> {
@@ -76,9 +80,13 @@ public class ManaCommand {
                         NetworkManager.INSTANCE.send(PacketDistributor.PLAYER.with(() ->
                                 serverPlayerEntity), new MaxManaPacket(count));
                     }
+
+                    cap.setMana(count);
+                    NetworkManager.INSTANCE.send(PacketDistributor.PLAYER.with(() ->
+                            serverPlayerEntity), new CurrentManaPacket(count));
                 });
 
-                serverPlayerEntity.getPersistentData().putInt("Mana", count);
+                source.sendSuccess(new TranslationTextComponent("command.arcanecraft.mana.current_set", TextComponentUtils.getDisplayName(gameprofile), count), true);
             }
         }
 
@@ -97,10 +105,20 @@ public class ManaCommand {
                 }
 
                 serverPlayerEntity.getCapability(ManaManager.MANA_CAPABILITY, null).ifPresent(cap -> {
+                    if (cap.getMana() > count) {
+                        try {
+                            throw ERROR_MAX_INFERIOR.create(count);
+                        } catch (CommandSyntaxException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
                     cap.setMaxMana(count);
                     NetworkManager.INSTANCE.send(PacketDistributor.PLAYER.with(() ->
                             serverPlayerEntity), new MaxManaPacket(count));
                 });
+
+                source.sendSuccess(new TranslationTextComponent("command.arcanecraft.mana.max_set", TextComponentUtils.getDisplayName(gameprofile), count), true);
             }
         }
 
@@ -115,21 +133,29 @@ public class ManaCommand {
                 throw ERROR_PLAYER.create(gameprofile);
             }
 
-            int totalMana = serverPlayerEntity.getPersistentData().getInt("Mana") + count;
-
-            if (totalMana < 0) {
-                throw ERROR_NEGATIVE_MANA.create(totalMana);
-            }
-
             serverPlayerEntity.getCapability(ManaManager.MANA_CAPABILITY, null).ifPresent(cap -> {
+                int totalMana = cap.getMana() + count;
+
+                if (totalMana < 0) {
+                    try {
+                        throw ERROR_NEGATIVE_MANA.create(totalMana);
+                    } catch (CommandSyntaxException e) {
+                        e.printStackTrace();
+                    }
+                }
+
                 if (totalMana > cap.getMaxMana()) {
                     cap.setMaxMana(totalMana);
                     NetworkManager.INSTANCE.send(PacketDistributor.PLAYER.with(() ->
                             serverPlayerEntity), new MaxManaPacket(totalMana));
                 }
+
+                cap.setMana(totalMana);
+                NetworkManager.INSTANCE.send(PacketDistributor.PLAYER.with(() ->
+                        serverPlayerEntity), new CurrentManaPacket(totalMana));
             });
 
-            serverPlayerEntity.getPersistentData().putInt("Mana", totalMana);
+            source.sendSuccess(new TranslationTextComponent("command.arcanecraft.mana.current_add", count, TextComponentUtils.getDisplayName(gameprofile)), true);
         }
 
         return count;
@@ -154,10 +180,20 @@ public class ManaCommand {
                     }
                 }
 
+                if (cap.getMana() > totalMaxMana) {
+                    try {
+                        throw ERROR_MAX_INFERIOR.create(totalMaxMana);
+                    } catch (CommandSyntaxException e) {
+                        e.printStackTrace();
+                    }
+                }
+
                 cap.setMaxMana(totalMaxMana);
                 NetworkManager.INSTANCE.send(PacketDistributor.PLAYER.with(() ->
                         serverPlayerEntity), new MaxManaPacket((int) totalMaxMana));
             });
+
+            source.sendSuccess(new TranslationTextComponent("command.arcanecraft.mana.max_add", count, TextComponentUtils.getDisplayName(gameprofile)), true);
         }
 
         return count;

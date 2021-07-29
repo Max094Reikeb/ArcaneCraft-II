@@ -1,7 +1,7 @@
 package net.reikeb.arcanecraft.spell;
 
 import net.minecraft.entity.*;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.*;
 import net.minecraft.entity.projectile.*;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.IPacket;
@@ -9,17 +9,19 @@ import net.minecraft.util.*;
 import net.minecraft.util.math.*;
 import net.minecraft.world.World;
 
-import net.minecraftforge.fml.network.NetworkHooks;
+import net.minecraftforge.fml.network.*;
 import net.minecraftforge.registries.ForgeRegistries;
 
+import net.reikeb.arcanecraft.capabilities.ManaManager;
 import net.reikeb.arcanecraft.entities.*;
 import net.reikeb.arcanecraft.init.*;
 import net.reikeb.arcanecraft.network.NetworkManager;
-import net.reikeb.arcanecraft.network.packets.WooMagicPacket;
+import net.reikeb.arcanecraft.network.packets.*;
 import net.reikeb.arcanecraft.utils.Util;
 
 import javax.annotation.Nullable;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class CastSpell {
 
@@ -32,7 +34,7 @@ public class CastSpell {
 
         WandObject wandObject = SpellUtils.getWand(wand);
         boolean flag = false;
-        int playerMana = playerEntity.getPersistentData().getInt("Mana");
+        AtomicInteger playerMana = new AtomicInteger();
         int spellMana = 0;
 
         List<SpellInstance> spells = SpellUtils.getSpell(wand);
@@ -42,7 +44,11 @@ public class CastSpell {
             }
         }
 
-        if ((playerMana < spellMana) && (!playerEntity.isCreative())) return;
+        playerEntity.getCapability(ManaManager.MANA_CAPABILITY, null).ifPresent(cap -> {
+            playerMana.set(cap.getMana());
+        });
+
+        if ((playerMana.get() <= spellMana) && (!playerEntity.isCreative())) return;
 
         if (wandObject == WandInit.EVOKER.get()) {
             ArrowEvokerEntity arrowEvokerEntity = shootEvokerArrow(0.7000000000000001f, 2.5, 0);
@@ -78,7 +84,12 @@ public class CastSpell {
         if (flag) {
             NetworkManager.INSTANCE.sendToServer(new WooMagicPacket());
             if (!playerEntity.isCreative()) {
-                playerEntity.getPersistentData().putInt("Mana", (playerMana - spellMana));
+                int finalSpellMana = spellMana;
+                playerEntity.getCapability(ManaManager.MANA_CAPABILITY, null).ifPresent(cap -> {
+                    cap.setMana(playerMana.get() - finalSpellMana);
+                    NetworkManager.INSTANCE.send(PacketDistributor.PLAYER.with(() ->
+                            (ServerPlayerEntity) playerEntity), new CurrentManaPacket(cap.getMana() - finalSpellMana));
+                });
             }
         }
     }

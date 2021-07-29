@@ -16,7 +16,8 @@ import net.reikeb.arcanecraft.ArcaneCraft;
 @Mod.EventBusSubscriber(modid = ArcaneCraft.MODID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class OverlayEvent {
 
-    public static int manaValue;
+    public static int currentManaValue;
+    public static int maxManaValue;
 
     @SubscribeEvent
     public static void renderOverlay(RenderGameOverlayEvent event) {
@@ -26,9 +27,8 @@ public class OverlayEvent {
             PlayerEntity entity = Minecraft.getInstance().player;
 
             if (entity == null) return;
-            int playerMana = entity.getPersistentData().getInt("Mana");
 
-            Minecraft.getInstance().font.draw(event.getMatrixStack(), " - " + playerMana + "/" + manaValue, (float) (posX + -189), (float) (posY + 99), -4221208);
+            Minecraft.getInstance().font.draw(event.getMatrixStack(), " - " + currentManaValue + "/" + maxManaValue, (float) (posX + -189), (float) (posY + 99), -4221208);
             RenderSystem.disableDepthTest();
             RenderSystem.depthMask(false);
             RenderSystem.blendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);

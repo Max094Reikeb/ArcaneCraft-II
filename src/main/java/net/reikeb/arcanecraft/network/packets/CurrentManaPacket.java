@@ -8,25 +8,25 @@ import net.reikeb.arcanecraft.events.OverlayEvent;
 
 import java.util.function.Supplier;
 
-public class MaxManaPacket {
+public class CurrentManaPacket {
 
-    private final int maxMana;
+    private final int currentMana;
 
-    public MaxManaPacket(int maxMana) {
-        this.maxMana = maxMana;
+    public CurrentManaPacket(int currentMana) {
+        this.currentMana = currentMana;
     }
 
-    public static MaxManaPacket decode(PacketBuffer buf) {
-        return new MaxManaPacket(buf.readInt());
+    public static CurrentManaPacket decode(PacketBuffer buf) {
+        return new CurrentManaPacket(buf.readInt());
     }
 
     public void encode(PacketBuffer buf) {
-        buf.writeInt(maxMana);
+        buf.writeInt(currentMana);
     }
 
     public void whenThisPacketIsReceived(Supplier<NetworkEvent.Context> context) {
         context.get().enqueueWork(() -> {
-            OverlayEvent.maxManaValue = maxMana;
+            OverlayEvent.currentManaValue = currentMana;
         });
         context.get().setPacketHandled(true);
     }

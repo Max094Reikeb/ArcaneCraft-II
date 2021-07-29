@@ -69,19 +69,6 @@ public class Wand extends ShootableItem {
         }
     }
 
-    /*
-    public void releaseUsing(ItemStack stack, World world, LivingEntity entity, int power) {
-        if (entity instanceof PlayerEntity) {
-            PlayerEntity playerEntity = (PlayerEntity) entity;
-            if (playerEntity.getUseItemRemainingTicks() < 71984) {
-                if (!playerEntity.getCommandSenderWorld().isClientSide()) {
-                    CastSpell.doCastSpell(playerEntity, world, stack);
-                }
-            }
-        }
-    }
-     */
-
     public int getUseDuration(ItemStack stack) {
         return 72000;
     }

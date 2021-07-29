@@ -17,6 +17,9 @@ public class EntityClonedEvent {
         event.getOriginal().getCapability(ManaManager.MANA_CAPABILITY).ifPresent(oldStore -> {
             event.getPlayer().getCapability(ManaManager.MANA_CAPABILITY).ifPresent(newStore -> {
                 newStore.setMaxMana(oldStore.getMaxMana());
+                if (!event.isWasDeath()) {
+                    newStore.setMana(oldStore.getMana());
+                }
             });
         });
     }

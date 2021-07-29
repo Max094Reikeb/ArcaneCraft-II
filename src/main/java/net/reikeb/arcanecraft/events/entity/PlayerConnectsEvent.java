@@ -10,7 +10,7 @@ import net.minecraftforge.fml.network.PacketDistributor;
 import net.reikeb.arcanecraft.ArcaneCraft;
 import net.reikeb.arcanecraft.capabilities.ManaManager;
 import net.reikeb.arcanecraft.network.NetworkManager;
-import net.reikeb.arcanecraft.network.packets.MaxManaPacket;
+import net.reikeb.arcanecraft.network.packets.*;
 
 @Mod.EventBusSubscriber(modid = ArcaneCraft.MODID)
 public class PlayerConnectsEvent {
@@ -22,6 +22,8 @@ public class PlayerConnectsEvent {
         playerEntity.getCapability(ManaManager.MANA_CAPABILITY, null).ifPresent(cap -> {
             NetworkManager.INSTANCE.send(PacketDistributor.PLAYER.with(() ->
                     (ServerPlayerEntity) playerEntity), new MaxManaPacket((int) cap.getMaxMana()));
+            NetworkManager.INSTANCE.send(PacketDistributor.PLAYER.with(() ->
+                    (ServerPlayerEntity) playerEntity), new CurrentManaPacket(cap.getMana()));
         });
     }
 }
