@@ -19,7 +19,6 @@
   "block.arcanecraft.runic_stone_wall": "Runic Stone Wall",
   "block.arcanecraft.scroll_table": "Scroll Table",
   "block.arcanecraft.wand_workbench": "Wand Workbench",
-  "block.arcanecraft.wand_workbench_full": "Wand Workbench",
   "command.arcanecraft.mana.current_add": "Added %s to %s's current mana",
   "command.arcanecraft.mana.current_set": "%s's current mana set to %s",
   "command.arcanecraft.mana.inferior_current": "Current mana cannot be superior to maximum mana!",
