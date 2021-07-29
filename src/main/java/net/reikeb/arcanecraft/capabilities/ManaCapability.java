@@ -7,6 +7,7 @@ import javax.annotation.Nonnull;
 public class ManaCapability implements ManaInterface {
 
     private static final String INFO_NBT_KEY = "nfo";
+    private static final String MANA_NBT_KEY = "mana";
     private int mana;
     private double maxMana;
 
@@ -43,14 +44,14 @@ public class ManaCapability implements ManaInterface {
     @Override
     public CompoundNBT serializeNBT() {
         final CompoundNBT nbt = new CompoundNBT();
-        nbt.putInt(INFO_NBT_KEY, this.getMana());
+        nbt.putInt(MANA_NBT_KEY, this.getMana());
         nbt.putDouble(INFO_NBT_KEY, this.getMaxMana());
         return nbt;
     }
 
     @Override
     public void deserializeNBT(@Nonnull final CompoundNBT nbt) {
-        this.setMana(nbt.getInt(INFO_NBT_KEY));
+        this.setMana(nbt.getInt(MANA_NBT_KEY));
         this.setMaxMana(nbt.getDouble(INFO_NBT_KEY));
     }
 }
