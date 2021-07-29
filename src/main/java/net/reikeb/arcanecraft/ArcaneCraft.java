@@ -2,16 +2,20 @@ package net.reikeb.arcanecraft;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.SpriteRenderer;
+import net.minecraft.item.*;
+import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.potion.*;
 import net.minecraft.util.ResourceLocation;
 
 import net.minecraftforge.common.*;
+import net.minecraftforge.common.brewing.BrewingRecipeRegistry;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.*;
 import net.minecraftforge.fml.event.lifecycle.*;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
 import net.reikeb.arcanecraft.capabilities.ManaManager;
-import net.reikeb.arcanecraft.init.EntityInit;
+import net.reikeb.arcanecraft.init.*;
 import net.reikeb.arcanecraft.setup.RegistryHandler;
 import net.reikeb.arcanecraft.setup.client.ClientSetup;
 import net.reikeb.arcanecraft.world.gen.features.ConfiguredFeatures;
@@ -60,6 +64,12 @@ public class ArcaneCraft {
                 renderManager -> new SpriteRenderer<>(renderManager, Minecraft.getInstance().getItemRenderer()));
         RenderingRegistry.registerEntityRenderingHandler(EntityInit.ARROW_LIGHTNING_ENTITY_ENTITY_TYPE,
                 renderManager -> new SpriteRenderer<>(renderManager, Minecraft.getInstance().getItemRenderer()));
+
+        // Custom potion recipes
+        BrewingRecipeRegistry.addRecipe(
+                Ingredient.of(PotionUtils.setPotion(new ItemStack(Items.POTION), Potion.byName("awkward"))),
+                Ingredient.of(ItemInit.CRYSTAL.get()),
+                new ItemStack(ItemInit.MANA_POTION.get()));
     }
 
     private void curiosEvent(InterModEnqueueEvent event) {

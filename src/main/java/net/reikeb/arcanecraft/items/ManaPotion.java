@@ -50,6 +50,7 @@ public class ManaPotion extends Item {
         }
 
         if (!playerEntity.abilities.instabuild) {
+            stack.shrink(1);
             if (stack.isEmpty()) {
                 return new ItemStack(Items.GLASS_BOTTLE);
             }
