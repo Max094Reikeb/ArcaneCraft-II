@@ -1,7 +1,7 @@
 package net.reikeb.arcanecraft;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.player.Player;
 
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
@@ -25,7 +25,7 @@ public class IntegrationHelper {
     }
 
     @Nullable
-    public static IItemHandler getCurios(PlayerEntity player) {
+    public static IItemHandler getCurios(Player player) {
         if (ModList.get().isLoaded(CURIOS_MODID)) {
             return CuriosCompat.getAll(player);
         }

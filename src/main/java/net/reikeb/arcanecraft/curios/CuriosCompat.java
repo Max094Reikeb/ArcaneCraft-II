@@ -1,14 +1,15 @@
 package net.reikeb.arcanecraft.curios;
 
-import net.minecraft.entity.LivingEntity;
+import net.minecraft.world.entity.LivingEntity;
 
-import net.minecraftforge.fml.*;
+import net.minecraftforge.fml.InterModComms;
 import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 import net.minecraftforge.items.IItemHandler;
 
 import net.reikeb.arcanecraft.IntegrationHelper;
 
-import top.theillusivec4.curios.api.*;
+import top.theillusivec4.curios.api.CuriosApi;
+import top.theillusivec4.curios.api.SlotTypeMessage;
 
 import javax.annotation.Nullable;
 
