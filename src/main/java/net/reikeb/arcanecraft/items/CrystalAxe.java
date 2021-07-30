@@ -1,9 +1,14 @@
 package net.reikeb.arcanecraft.items;
 
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.item.*;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.util.*;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.AxeItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Tier;
+import net.minecraft.world.item.crafting.Ingredient;
 
 import net.minecraftforge.registries.ForgeRegistries;
 
@@ -13,7 +18,7 @@ import net.reikeb.arcanecraft.setup.ItemGroups;
 public class CrystalAxe extends AxeItem {
 
     public CrystalAxe() {
-        super(new IItemTier() {
+        super(new Tier() {
             @Override
             public int getUses() {
                 return 187;
@@ -52,7 +57,7 @@ public class CrystalAxe extends AxeItem {
         SoundEvent grassSound = ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("block.grass.break"));
         if (grassSound == null) return false;
         entity.level.playSound(null, entity.getX(), entity.getY(), entity.getZ(),
-                grassSound, SoundCategory.NEUTRAL, (float) 100, (float) 100);
+                grassSound, SoundSource.NEUTRAL, (float) 100, (float) 100);
         return action;
     }
 }

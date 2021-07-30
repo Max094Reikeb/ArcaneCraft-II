@@ -1,12 +1,14 @@
 package net.reikeb.arcanecraft.items;
 
-import net.minecraft.advancements.*;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.*;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
+import net.minecraft.advancements.Advancement;
+import net.minecraft.advancements.AdvancementProgress;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 
 import net.reikeb.arcanecraft.setup.ItemGroups;
 
@@ -34,16 +36,16 @@ public class Soul extends Item {
     }
 
     @Override
-    public void inventoryTick(ItemStack itemstack, World world, Entity entity, int slot, boolean selected) {
+    public void inventoryTick(ItemStack itemstack, Level world, Entity entity, int slot, boolean selected) {
         super.inventoryTick(itemstack, world, entity, slot, selected);
-        if (!(entity instanceof ServerPlayerEntity)) return;
-        Advancement advancement = ((ServerPlayerEntity) entity).server.getAdvancements().getAdvancement(new ResourceLocation("arcanecraft:your_soul_is_mine"));
+        if (!(entity instanceof ServerPlayer)) return;
+        Advancement advancement = ((ServerPlayer) entity).server.getAdvancements().getAdvancement(new ResourceLocation("arcanecraft:your_soul_is_mine"));
         if (advancement == null) System.out.println("Advancement 'Your soul is mine!' seems to be null");
         if (advancement == null) return;
-        AdvancementProgress advancementProgress = ((ServerPlayerEntity) entity).getAdvancements().getOrStartProgress(advancement);
+        AdvancementProgress advancementProgress = ((ServerPlayer) entity).getAdvancements().getOrStartProgress(advancement);
         if (!advancementProgress.isDone()) {
             for (String criteria : advancementProgress.getRemainingCriteria()) {
-                ((ServerPlayerEntity) entity).getAdvancements().award(advancement, criteria);
+                ((ServerPlayer) entity).getAdvancements().award(advancement, criteria);
             }
         }
     }

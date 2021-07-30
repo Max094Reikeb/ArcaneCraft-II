@@ -1,10 +1,14 @@
 package net.reikeb.arcanecraft.items;
 
-import net.minecraft.block.Blocks;
-import net.minecraft.item.*;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ActionResultType;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.SwordItem;
+import net.minecraft.world.item.Tier;
+import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.entity.BlockEntity;
 
 import net.reikeb.arcanecraft.init.BlockInit;
 import net.reikeb.arcanecraft.misc.vm.CastRitual;
@@ -14,7 +18,7 @@ import net.reikeb.arcanecraft.tileentities.TileAltar;
 public class SacrificialDagger extends SwordItem {
 
     public SacrificialDagger() {
-        super(new IItemTier() {
+        super(new Tier() {
             @Override
             public int getUses() {
                 return 111;
@@ -48,15 +52,15 @@ public class SacrificialDagger extends SwordItem {
     }
 
     @Override
-    public ActionResultType useOn(ItemUseContext context) {
-        ActionResultType actionResultType = super.useOn(context);
+    public InteractionResult useOn(UseOnContext context) {
+        InteractionResult actionResultType = super.useOn(context);
 
         if (context.getLevel().isClientSide) return actionResultType;
         if (context.getPlayer() == null) return actionResultType;
 
         if ((context.getLevel().getBlockState(context.getClickedPos()).getBlock() == BlockInit.ALTAR.get())
                 && (context.getPlayer().isShiftKeyDown())) {
-            TileEntity tile = context.getLevel().getBlockEntity(context.getClickedPos());
+            BlockEntity tile = context.getLevel().getBlockEntity(context.getClickedPos());
             if (tile instanceof TileAltar) {
                 new CastRitual(context.getLevel(), context.getClickedPos(), (TileAltar) tile, context.getPlayer(), true);
             }

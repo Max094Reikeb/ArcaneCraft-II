@@ -1,16 +1,20 @@
 package net.reikeb.arcanecraft.items;
 
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.item.*;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.world.World;
+import net.minecraft.core.NonNullList;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.level.Level;
 
-import net.minecraftforge.api.distmarker.*;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 import net.reikeb.arcanecraft.init.ScrollFocusInit;
 import net.reikeb.arcanecraft.setup.ItemGroups;
-import net.reikeb.arcanecraft.spell.*;
+import net.reikeb.arcanecraft.spell.ScrollFocusObject;
+import net.reikeb.arcanecraft.spell.SpellUtils;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -32,7 +36,7 @@ public class ArcaneScrollFocus extends Item {
     }
 
     @OnlyIn(Dist.CLIENT)
-    public void appendHoverText(ItemStack stack, @Nullable World world, List<ITextComponent> text, ITooltipFlag flag) {
+    public void appendHoverText(ItemStack stack, @Nullable Level world, List<Component> text, TooltipFlag flag) {
         SpellUtils.addSpellItemTooltip(stack, text);
     }
 
@@ -40,7 +44,7 @@ public class ArcaneScrollFocus extends Item {
         return super.isFoil(stack) || !SpellUtils.getSpell(stack).isEmpty();
     }
 
-    public void fillItemCategory(ItemGroup group, NonNullList<ItemStack> stacks) {
+    public void fillItemCategory(CreativeModeTab group, NonNullList<ItemStack> stacks) {
         if (this.allowdedIn(group)) {
             for (ScrollFocusObject scrollFocusObject : ScrollFocusInit.SCOLL_FOCUS_REGISTRY.get()) {
                 if (!scrollFocusObject.getSpells().isEmpty()) {

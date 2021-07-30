@@ -1,7 +1,8 @@
 package net.reikeb.arcanecraft.items;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.item.*;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.state.BlockState;
 
 import net.reikeb.arcanecraft.setup.ItemGroups;
 
