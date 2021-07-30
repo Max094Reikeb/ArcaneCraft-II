@@ -1,24 +1,25 @@
 package net.reikeb.arcanecraft.guis;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.PoseStack;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.screen.inventory.ContainerScreen;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
+import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.player.Inventory;
 
 import net.reikeb.arcanecraft.ArcaneCraft;
 import net.reikeb.arcanecraft.containers.AltarContainer;
 import net.reikeb.arcanecraft.tileentities.TileAltar;
 
-public class AltarWindow extends ContainerScreen<AltarContainer> {
+import org.lwjgl.opengl.GL11;
+
+public class AltarWindow extends AbstractContainerScreen<AltarContainer> {
 
     private static final ResourceLocation ALTAR_GUI = ArcaneCraft.RL("textures/guis/altar_gui.png");
     public TileAltar tileEntity;
 
-    public AltarWindow(AltarContainer container, PlayerInventory inv, ITextComponent title) {
+    public AltarWindow(AltarContainer container, Inventory inv, Component title) {
         super(container, inv, title);
         this.tileEntity = container.getTileEntity();
         this.imageWidth = 176;
@@ -26,21 +27,21 @@ public class AltarWindow extends ContainerScreen<AltarContainer> {
     }
 
     @Override
-    public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
+    public void render(PoseStack matrixStack, int mouseX, int mouseY, float partialTicks) {
         this.renderBackground(matrixStack);
         super.render(matrixStack, mouseX, mouseY, partialTicks);
         this.renderTooltip(matrixStack, mouseX, mouseY);
     }
 
     @Override
-    protected void renderLabels(MatrixStack matrixStack, int mouseX, int mouseY) {
+    protected void renderLabels(PoseStack matrixStack, int mouseX, int mouseY) {
         // Render nothing
     }
 
     @Override
-    protected void renderBg(MatrixStack matrixStack, float partialTicks, int mouseX, int mouseY) {
-        RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-        this.minecraft.getTextureManager().bind(ALTAR_GUI);
+    protected void renderBg(PoseStack matrixStack, float partialTicks, int mouseX, int mouseY) {
+        GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+        RenderSystem.setShaderTexture(0, ALTAR_GUI);
         int relX = (this.width - this.imageWidth) / 2;
         int relY = (this.height - this.imageHeight) / 2;
         this.blit(matrixStack, relX, relY, 0, 0, this.imageWidth, this.imageHeight);
@@ -56,19 +57,13 @@ public class AltarWindow extends ContainerScreen<AltarContainer> {
     }
 
     @Override
-    public void tick() {
-        super.tick();
-    }
-
-    @Override
     public void removed() {
         super.removed();
         this.minecraft.keyboardHandler.setSendRepeatsToGui(false);
     }
 
     @Override
-    public void init(Minecraft minecraft, int width, int height) {
-        super.init(minecraft, width, height);
+    public void init() {
         this.minecraft.keyboardHandler.setSendRepeatsToGui(true);
     }
 }
