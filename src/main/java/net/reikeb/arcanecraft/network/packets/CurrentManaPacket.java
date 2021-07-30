@@ -1,8 +1,8 @@
 package net.reikeb.arcanecraft.network.packets;
 
-import net.minecraft.network.PacketBuffer;
+import net.minecraft.network.FriendlyByteBuf;
 
-import net.minecraftforge.fml.network.NetworkEvent;
+import net.minecraftforge.fmllegacy.network.NetworkEvent;
 
 import net.reikeb.arcanecraft.events.OverlayEvent;
 
@@ -16,11 +16,11 @@ public class CurrentManaPacket {
         this.currentMana = currentMana;
     }
 
-    public static CurrentManaPacket decode(PacketBuffer buf) {
+    public static CurrentManaPacket decode(FriendlyByteBuf buf) {
         return new CurrentManaPacket(buf.readInt());
     }
 
-    public void encode(PacketBuffer buf) {
+    public void encode(FriendlyByteBuf buf) {
         buf.writeInt(currentMana);
     }
 

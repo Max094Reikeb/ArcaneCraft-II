@@ -1,11 +1,12 @@
 package net.reikeb.arcanecraft.network.packets;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.*;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 
-import net.minecraftforge.fml.network.NetworkEvent;
+import net.minecraftforge.fmllegacy.network.NetworkEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import net.reikeb.arcanecraft.blocks.WandWorkbench;
@@ -20,16 +21,16 @@ public class WandWorkbenchingPacket {
     public WandWorkbenchingPacket() {
     }
 
-    public static WandWorkbenchingPacket decode(PacketBuffer buf) {
+    public static WandWorkbenchingPacket decode(FriendlyByteBuf buf) {
         return new WandWorkbenchingPacket();
     }
 
-    public void encode(PacketBuffer buf) {
+    public void encode(FriendlyByteBuf buf) {
     }
 
     public void whenThisPacketIsReceived(Supplier<NetworkEvent.Context> context) {
         context.get().enqueueWork(() -> {
-            PlayerEntity playerEntity = context.get().getSender();
+            Player playerEntity = context.get().getSender();
             if ((playerEntity == null) || (!(playerEntity.containerMenu instanceof WandWorkbenchContainer))) return;
             TileWandWorkbench tileEntity = ((WandWorkbenchContainer) playerEntity.containerMenu).getTileEntity();
             ItemStack stackInSlot0 = tileEntity.getInventory().getStackInSlot(0);
@@ -38,7 +39,7 @@ public class WandWorkbenchingPacket {
 
             playerEntity.level.playSound(null, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(),
                     ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("block.enchantment_table.use")),
-                    SoundCategory.NEUTRAL, 10, 10);
+                    SoundSource.NEUTRAL, 10, 10);
 
             ItemStack newScroll = new ItemStack(ItemInit.WAND.get());
             newScroll.getOrCreateTag().putString("Wand", stackInSlot0.getOrCreateTag().getString("Scroll"));

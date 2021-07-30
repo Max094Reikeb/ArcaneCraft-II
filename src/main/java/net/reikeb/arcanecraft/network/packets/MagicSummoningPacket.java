@@ -2,10 +2,11 @@ package net.reikeb.arcanecraft.network.packets;
 
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementProgress;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.network.NetworkEvent;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
+
+import net.minecraftforge.fmllegacy.network.NetworkEvent;
 
 import java.util.function.Supplier;
 
@@ -14,16 +15,16 @@ public class MagicSummoningPacket {
     public MagicSummoningPacket() {
     }
 
-    public static MagicSummoningPacket decode(PacketBuffer buf) {
+    public static MagicSummoningPacket decode(FriendlyByteBuf buf) {
         return new MagicSummoningPacket();
     }
 
-    public void encode(PacketBuffer buf) {
+    public void encode(FriendlyByteBuf buf) {
     }
 
     public void whenThisPacketIsReceived(Supplier<NetworkEvent.Context> context) {
         context.get().enqueueWork(() -> {
-            ServerPlayerEntity entity = context.get().getSender();
+            ServerPlayer entity = context.get().getSender();
             if (entity == null) return;
             Advancement advancement = entity.server.getAdvancements().getAdvancement(new ResourceLocation("arcanecraft:magic_summoning"));
             if (advancement == null) System.out.println("Advancement 'Magic Summoning!' seems to be null");

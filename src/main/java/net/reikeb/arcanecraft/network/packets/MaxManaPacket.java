@@ -1,8 +1,8 @@
 package net.reikeb.arcanecraft.network.packets;
 
-import net.minecraft.network.PacketBuffer;
+import net.minecraft.network.FriendlyByteBuf;
 
-import net.minecraftforge.fml.network.NetworkEvent;
+import net.minecraftforge.fmllegacy.network.NetworkEvent;
 
 import net.reikeb.arcanecraft.events.OverlayEvent;
 
@@ -16,11 +16,11 @@ public class MaxManaPacket {
         this.maxMana = maxMana;
     }
 
-    public static MaxManaPacket decode(PacketBuffer buf) {
+    public static MaxManaPacket decode(FriendlyByteBuf buf) {
         return new MaxManaPacket(buf.readInt());
     }
 
-    public void encode(PacketBuffer buf) {
+    public void encode(FriendlyByteBuf buf) {
         buf.writeInt(maxMana);
     }
 
