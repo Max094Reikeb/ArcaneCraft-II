@@ -1,48 +1,53 @@
 package net.reikeb.arcanecraft.tileentities;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.*;
-import net.minecraft.inventory.InventoryHelper;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.NetworkManager;
-import net.minecraft.network.play.server.SUpdateTileEntityPacket;
-import net.minecraft.tileentity.*;
-import net.minecraft.util.*;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.*;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.NonNullList;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.Connection;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.world.Containers;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
 
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.*;
+import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandlerModifiable;
 
 import net.reikeb.arcanecraft.containers.AltarContainer;
 import net.reikeb.arcanecraft.init.ContainerInit;
 import net.reikeb.arcanecraft.utils.ItemHandler;
 
-import static net.reikeb.arcanecraft.init.TileEntityInit.*;
+import static net.reikeb.arcanecraft.init.TileEntityInit.TILE_ALTAR;
 
-public class TileAltar extends LockableLootTileEntity implements ITickableTileEntity {
+public class TileAltar extends RandomizableContainerBlockEntity {
 
     private NonNullList<ItemStack> stacks = NonNullList.<ItemStack>withSize(2, ItemStack.EMPTY);
     private final ItemHandler inventory;
 
-    public TileAltar() {
-        super(TILE_ALTAR.get());
+    public TileAltar(BlockPos pos, BlockState state) {
+        super(TILE_ALTAR.get(), pos, state);
 
         this.inventory = new ItemHandler(2);
     }
 
     @Override
-    public ITextComponent getDisplayName() {
-        return new TranslationTextComponent("gui.arcanecraft.altar.name");
+    public Component getDisplayName() {
+        return new TranslatableComponent("gui.arcanecraft.altar.name");
     }
 
     @Override
-    protected ITextComponent getDefaultName() {
-        return new StringTextComponent("altar");
+    protected Component getDefaultName() {
+        return new TextComponent("altar");
     }
 
     @Override
@@ -56,22 +61,18 @@ public class TileAltar extends LockableLootTileEntity implements ITickableTileEn
     }
 
     @Override
-    public Container createMenu(final int windowID, final PlayerInventory playerInv, final PlayerEntity playerIn) {
+    public AbstractContainerMenu createMenu(final int windowID, final Inventory playerInv, final Player playerIn) {
         return new AltarContainer(windowID, playerInv, this);
     }
 
     @Override
-    public Container createMenu(int id, PlayerInventory player) {
+    public AbstractContainerMenu createMenu(int id, Inventory player) {
         return new AltarContainer(ContainerInit.ALTAR_CONTAINER.get(), id);
     }
 
     @Override
     public void setRemoved() {
         super.setRemoved();
-    }
-
-    @Override
-    public void tick() {
     }
 
     public final IItemHandlerModifiable getInventory() {
@@ -83,15 +84,15 @@ public class TileAltar extends LockableLootTileEntity implements ITickableTileEn
     }
 
     @Override
-    public void load(BlockState blockState, CompoundNBT compoundNBT) {
-        super.load(blockState, compoundNBT);
+    public void load(CompoundTag compoundNBT) {
+        super.load(compoundNBT);
         if (compoundNBT.contains("Inventory")) {
-            inventory.deserializeNBT((CompoundNBT) compoundNBT.get("Inventory"));
+            inventory.deserializeNBT((CompoundTag) compoundNBT.get("Inventory"));
         }
     }
 
     @Override
-    public CompoundNBT save(CompoundNBT compoundNBT) {
+    public CompoundTag save(CompoundTag compoundNBT) {
         super.save(compoundNBT);
         compoundNBT.put("Inventory", inventory.serializeNBT());
         return compoundNBT;
@@ -102,26 +103,26 @@ public class TileAltar extends LockableLootTileEntity implements ITickableTileEn
         return CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.orEmpty(cap, LazyOptional.of(() -> this.inventory));
     }
 
-    public void dropItems(World world, BlockPos pos) {
+    public void dropItems(Level world, BlockPos pos) {
         for (int i = 0; i < 2; i++)
             if (!inventory.getStackInSlot(i).isEmpty()) {
-                InventoryHelper.dropItemStack(world, pos.getX(), pos.getY(), pos.getZ(), inventory.getStackInSlot(i));
+                Containers.dropItemStack(world, pos.getX(), pos.getY(), pos.getZ(), inventory.getStackInSlot(i));
             }
     }
 
     @Override
-    public SUpdateTileEntityPacket getUpdatePacket() {
-        return new SUpdateTileEntityPacket(this.worldPosition, 0, this.getUpdateTag());
+    public ClientboundBlockEntityDataPacket getUpdatePacket() {
+        return new ClientboundBlockEntityDataPacket(this.worldPosition, 0, this.getUpdateTag());
     }
 
     @Override
-    public CompoundNBT getUpdateTag() {
-        return this.save(new CompoundNBT());
+    public CompoundTag getUpdateTag() {
+        return this.save(new CompoundTag());
     }
 
     @Override
-    public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
-        this.load(this.getBlockState(), pkt.getTag());
+    public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
+        this.load(pkt.getTag());
     }
 
     @Override

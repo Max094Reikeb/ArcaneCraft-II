@@ -1,24 +1,27 @@
 package net.reikeb.arcanecraft.init;
 
-import net.minecraft.tileentity.TileEntityType;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 
-import net.minecraftforge.fml.RegistryObject;
-import net.minecraftforge.registries.*;
+import net.minecraftforge.fmllegacy.RegistryObject;
+import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import net.reikeb.arcanecraft.ArcaneCraft;
-import net.reikeb.arcanecraft.tileentities.*;
+import net.reikeb.arcanecraft.tileentities.TileAltar;
+import net.reikeb.arcanecraft.tileentities.TileScrollTable;
+import net.reikeb.arcanecraft.tileentities.TileWandWorkbench;
 
 public class TileEntityInit {
 
-    public static final DeferredRegister<TileEntityType<?>> TILE_ENTITIES = DeferredRegister.create(ForgeRegistries.TILE_ENTITIES,
+    public static final DeferredRegister<BlockEntityType<?>> TILE_ENTITIES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITIES,
             ArcaneCraft.MODID);
 
-    public static final RegistryObject<TileEntityType<TileAltar>> TILE_ALTAR = TILE_ENTITIES.register("altar", () ->
-            TileEntityType.Builder.of(TileAltar::new, BlockInit.ALTAR.get()).build(null));
+    public static final RegistryObject<BlockEntityType<TileAltar>> TILE_ALTAR = TILE_ENTITIES.register("altar", () ->
+            BlockEntityType.Builder.of(TileAltar::new, BlockInit.ALTAR.get()).build(null));
 
-    public static final RegistryObject<TileEntityType<TileScrollTable>> TILE_SCROLL_TABLE = TILE_ENTITIES.register("scroll_table", () ->
-            TileEntityType.Builder.of(TileScrollTable::new, BlockInit.SCROLL_TABLE.get()).build(null));
+    public static final RegistryObject<BlockEntityType<TileScrollTable>> TILE_SCROLL_TABLE = TILE_ENTITIES.register("scroll_table", () ->
+            BlockEntityType.Builder.of(TileScrollTable::new, BlockInit.SCROLL_TABLE.get()).build(null));
 
-    public static final RegistryObject<TileEntityType<TileWandWorkbench>> TILE_WAND_WORKBENCH = TILE_ENTITIES.register("wand_workbench", () ->
-            TileEntityType.Builder.of(TileWandWorkbench::new, BlockInit.WAND_WORKBENCH.get()).build(null));
+    public static final RegistryObject<BlockEntityType<TileWandWorkbench>> TILE_WAND_WORKBENCH = TILE_ENTITIES.register("wand_workbench", () ->
+            BlockEntityType.Builder.of(TileWandWorkbench::new, BlockInit.WAND_WORKBENCH.get()).build(null));
 }
