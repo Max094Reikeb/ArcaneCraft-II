@@ -1,14 +1,15 @@
 package net.reikeb.arcanecraft.capabilities;
 
-import net.minecraft.nbt.INBT;
-import net.minecraft.util.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.Tag;
+import net.minecraft.core.Direction;
 
 import net.minecraftforge.common.capabilities.*;
 import net.minecraftforge.common.util.*;
 
 import javax.annotation.*;
 
-public class ManaProvider<C, S extends INBT> implements ICapabilityProvider, INBTSerializable<S> {
+public class ManaProvider<C extends ManaInterface, S extends Tag> implements ICapabilityProvider, INBTSerializable<S> {
 
     private final Capability<C> capability;
     private final LazyOptional<C> implementation;
@@ -20,13 +21,13 @@ public class ManaProvider<C, S extends INBT> implements ICapabilityProvider, INB
         this.direction = direction;
     }
 
-    public static <C> ManaProvider<C, INBT> from(@Nonnull final Capability<C> cap, @Nonnull final NonNullSupplier<C> impl) {
-        return from(cap, null, impl);
+    public static <C extends ManaInterface> ManaProvider<C, Tag> from(@Nonnull final Capability<C> capability, @Nonnull final NonNullSupplier<C> impl) {
+        return from(capability, null, impl);
     }
 
     @Nonnull
-    public static <C> ManaProvider<C, INBT> from(@Nonnull final Capability<C> cap, @Nullable final Direction direction, @Nonnull final NonNullSupplier<C> impl) {
-        return new ManaProvider<>(cap, LazyOptional.of(impl), direction);
+    public static <C extends ManaInterface> ManaProvider<C, Tag> from(@Nonnull final Capability<C> capability, @Nullable final Direction direction, @Nonnull final NonNullSupplier<C> impl) {
+        return new ManaProvider<>(capability, LazyOptional.of(impl), direction);
     }
 
     @Nonnull
@@ -40,12 +41,12 @@ public class ManaProvider<C, S extends INBT> implements ICapabilityProvider, INB
     @Override
     @SuppressWarnings("unchecked")
     public S serializeNBT() {
-        return (S) this.capability.writeNBT(this.getInstance(), this.direction);
+        return (S) this.getInstance().serializeNBT();
     }
 
     @Override
     public void deserializeNBT(@Nonnull final S nbt) {
-        this.capability.readNBT(this.getInstance(), this.direction, nbt);
+        this.getInstance().deserializeNBT((CompoundTag) nbt);
     }
 
     @Nonnull

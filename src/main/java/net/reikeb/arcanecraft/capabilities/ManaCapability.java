@@ -1,6 +1,6 @@
 package net.reikeb.arcanecraft.capabilities;
 
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.CompoundTag;
 
 import javax.annotation.Nonnull;
 
@@ -42,15 +42,15 @@ public class ManaCapability implements ManaInterface {
 
     @Nonnull
     @Override
-    public CompoundNBT serializeNBT() {
-        final CompoundNBT nbt = new CompoundNBT();
+    public CompoundTag serializeNBT() {
+        final CompoundTag nbt = new CompoundTag();
         nbt.putInt(MANA_NBT_KEY, this.getMana());
         nbt.putDouble(INFO_NBT_KEY, this.getMaxMana());
         return nbt;
     }
 
     @Override
-    public void deserializeNBT(@Nonnull final CompoundNBT nbt) {
+    public void deserializeNBT(@Nonnull final CompoundTag nbt) {
         this.setMana(nbt.getInt(MANA_NBT_KEY));
         this.setMaxMana(nbt.getDouble(INFO_NBT_KEY));
     }
