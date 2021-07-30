@@ -4,7 +4,7 @@ import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.world.entity.player.Player;
 
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
@@ -21,10 +21,10 @@ public class OverlayEvent {
 
     @SubscribeEvent
     public static void renderOverlay(RenderGameOverlayEvent event) {
-        if (!event.isCancelable() && event.getType() == RenderGameOverlayEvent.ElementType.HELMET) {
+        if (!event.isCancelable() && event.getType() == RenderGameOverlayEvent.ElementType.TEXT) {
             int posX = event.getWindow().getGuiScaledWidth() / 2;
             int posY = event.getWindow().getGuiScaledHeight() / 2;
-            PlayerEntity entity = Minecraft.getInstance().player;
+            Player entity = Minecraft.getInstance().player;
 
             if (entity == null) return;
 
@@ -32,16 +32,14 @@ public class OverlayEvent {
             RenderSystem.disableDepthTest();
             RenderSystem.depthMask(false);
             RenderSystem.blendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
-            RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-            RenderSystem.disableAlphaTest();
+            RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
 
-            Minecraft.getInstance().getTextureManager().bind(ArcaneCraft.RL("textures/overlay/crystal.png"));
+            RenderSystem.setShaderTexture(0, ArcaneCraft.RL("textures/overlay/crystal.png"));
             Minecraft.getInstance().gui.blit(event.getMatrixStack(), posX + -198, posY + 99, 0, 0, 256, 256);
             RenderSystem.depthMask(true);
 
             RenderSystem.enableDepthTest();
-            RenderSystem.enableAlphaTest();
-            RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
+            RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
         }
     }
 }

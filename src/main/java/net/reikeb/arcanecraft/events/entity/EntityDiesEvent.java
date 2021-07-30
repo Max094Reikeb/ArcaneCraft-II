@@ -1,10 +1,12 @@
 package net.reikeb.arcanecraft.events.entity;
 
-import net.minecraft.entity.*;
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.util.*;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.item.ItemStack;
 
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -12,7 +14,8 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import net.reikeb.arcanecraft.ArcaneCraft;
-import net.reikeb.arcanecraft.init.*;
+import net.reikeb.arcanecraft.init.ItemInit;
+import net.reikeb.arcanecraft.init.PotionEffectInit;
 
 import java.util.Collection;
 
@@ -27,8 +30,8 @@ public class EntityDiesEvent {
 
         if (!(attacker instanceof LivingEntity)) return;
 
-        Collection<EffectInstance> effects = ((LivingEntity) attacker).getActiveEffects();
-        for (EffectInstance effectInstance : effects) {
+        Collection<MobEffectInstance> effects = ((LivingEntity) attacker).getActiveEffects();
+        for (MobEffectInstance effectInstance : effects) {
             if (effectInstance.getEffect() == PotionEffectInit.SOUL_TRAPPER.get()) {
                 flag = true;
             }
@@ -43,7 +46,7 @@ public class EntityDiesEvent {
             }
             entity.level.playSound(null, entity.getX(), entity.getY(), entity.getZ(),
                     ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.wither.ambient")),
-                    SoundCategory.NEUTRAL, 1, 1);
+                    SoundSource.NEUTRAL, 1, 1);
         }
     }
 }

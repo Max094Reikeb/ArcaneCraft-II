@@ -1,7 +1,8 @@
 package net.reikeb.arcanecraft.events.entity;
 
-import net.minecraft.entity.*;
-import net.minecraft.potion.EffectInstance;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
 
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -23,8 +24,8 @@ public class EntityAttackedEvent {
 
         if (!(attacker instanceof LivingEntity)) return;
 
-        Collection<EffectInstance> effects = ((LivingEntity) attacker).getActiveEffects();
-        for (EffectInstance effectInstance : effects) {
+        Collection<MobEffectInstance> effects = ((LivingEntity) attacker).getActiveEffects();
+        for (MobEffectInstance effectInstance : effects) {
             if (effectInstance.getEffect() == PotionEffectInit.CHARRED_STRIKE.get()) {
                 flag = true;
             }
