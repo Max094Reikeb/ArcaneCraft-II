@@ -1,38 +1,42 @@
 package net.reikeb.arcanecraft.containers;
 
-import net.minecraft.entity.player.*;
-import net.minecraft.inventory.container.*;
-import net.minecraft.item.ItemStack;
-import net.minecraft.network.PacketBuffer;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.MenuType;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ItemStack;
 
-import net.minecraftforge.items.*;
+import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.SlotItemHandler;
 
 import net.reikeb.arcanecraft.init.ItemInit;
 import net.reikeb.arcanecraft.tileentities.TileWandWorkbench;
 
 import static net.reikeb.arcanecraft.init.ContainerInit.WAND_WORKBENCH_CONTAINER;
 
-public class WandWorkbenchContainer extends Container {
+public class WandWorkbenchContainer extends AbstractContainerMenu {
 
     public TileWandWorkbench tileEntity;
 
-    public WandWorkbenchContainer(ContainerType<?> type, int id) {
+    public WandWorkbenchContainer(MenuType<?> type, int id) {
         super(type, id);
     }
 
     // Client
-    public WandWorkbenchContainer(int id, PlayerInventory inv, PacketBuffer buf) {
+    public WandWorkbenchContainer(int id, Inventory inv, FriendlyByteBuf buf) {
         super(WAND_WORKBENCH_CONTAINER.get(), id);
         this.init(inv, this.tileEntity = (TileWandWorkbench) inv.player.level.getBlockEntity(buf.readBlockPos()));
     }
 
     // Server
-    public WandWorkbenchContainer(int id, PlayerInventory inv, TileWandWorkbench tile) {
+    public WandWorkbenchContainer(int id, Inventory inv, TileWandWorkbench tile) {
         super(WAND_WORKBENCH_CONTAINER.get(), id);
         this.init(inv, this.tileEntity = tile);
     }
 
-    public void init(PlayerInventory playerInv, TileWandWorkbench tile) {
+    public void init(Inventory playerInv, TileWandWorkbench tile) {
         if (tileEntity != null) {
             tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
                 addSlot(new SlotItemHandler(h, 0, 79, 30) {
@@ -53,7 +57,7 @@ public class WandWorkbenchContainer extends Container {
         return this.tileEntity;
     }
 
-    private void layoutPlayerInventorySlots(PlayerInventory playerInv) {
+    private void layoutPlayerInventorySlots(Inventory playerInv) {
         int si;
         int sj;
         for (si = 0; si < 3; ++si)
@@ -64,12 +68,12 @@ public class WandWorkbenchContainer extends Container {
     }
 
     @Override
-    public boolean stillValid(PlayerEntity playerEntity) {
+    public boolean stillValid(Player playerEntity) {
         return true;
     }
 
     @Override
-    public ItemStack quickMoveStack(PlayerEntity playerIn, int index) {
+    public ItemStack quickMoveStack(Player playerIn, int index) {
         ItemStack itemstack = ItemStack.EMPTY;
         Slot slot = this.slots.get(index);
         if (slot != null && slot.hasItem()) {
