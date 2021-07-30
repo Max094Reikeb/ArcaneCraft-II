@@ -1,21 +1,22 @@
 package net.reikeb.arcanecraft.potions;
 
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.*;
-import net.minecraft.potion.*;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectCategory;
+import net.minecraft.world.entity.LivingEntity;
 
-import net.minecraftforge.fml.network.PacketDistributor;
+import net.minecraftforge.fmllegacy.network.PacketDistributor;
 
 import net.reikeb.arcanecraft.ArcaneCraft;
 import net.reikeb.arcanecraft.capabilities.ManaManager;
 import net.reikeb.arcanecraft.network.NetworkManager;
 import net.reikeb.arcanecraft.network.packets.MaxManaPacket;
 
-public class ManaEffect extends Effect {
+public class ManaEffect extends MobEffect {
 
     public ManaEffect() {
-        super(EffectType.BENEFICIAL, -15545403);
+        super(MobEffectCategory.BENEFICIAL, -15545403);
         ResourceLocation potionIcon = ArcaneCraft.RL("mob_effect/mana");
     }
 
@@ -35,33 +36,18 @@ public class ManaEffect extends Effect {
     }
 
     @Override
-    public boolean shouldRenderInvText(EffectInstance effect) {
-        return true;
-    }
-
-    @Override
-    public boolean shouldRender(EffectInstance effect) {
-        return true;
-    }
-
-    @Override
-    public boolean shouldRenderHUD(EffectInstance effect) {
-        return true;
-    }
-
-    @Override
     public boolean isDurationEffectTick(int duration, int amplifier) {
         return true;
     }
 
     @Override
     public void applyEffectTick(LivingEntity entity, int level) {
-        if (!(entity instanceof ServerPlayerEntity)) return;
+        if (!(entity instanceof ServerPlayer)) return;
 
         entity.getCapability(ManaManager.MANA_CAPABILITY, null).ifPresent(cap -> {
             cap.setMaxMana((cap.getMaxMana() + 0.05));
             NetworkManager.INSTANCE.send(PacketDistributor.PLAYER.with(() ->
-                    (ServerPlayerEntity) entity), new MaxManaPacket((int) (cap.getMaxMana() + 0.05)));
+                    (ServerPlayer) entity), new MaxManaPacket((int) (cap.getMaxMana() + 0.05)));
         });
     }
 }

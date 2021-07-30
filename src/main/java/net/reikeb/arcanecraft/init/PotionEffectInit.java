@@ -1,20 +1,24 @@
 package net.reikeb.arcanecraft.init;
 
-import net.minecraft.potion.Effect;
+import net.minecraft.world.effect.MobEffect;
 
-import net.minecraftforge.fml.RegistryObject;
-import net.minecraftforge.registries.*;
+import net.minecraftforge.fmllegacy.RegistryObject;
+import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import net.reikeb.arcanecraft.ArcaneCraft;
-import net.reikeb.arcanecraft.potions.*;
+import net.reikeb.arcanecraft.potions.CharredStrikeEffect;
+import net.reikeb.arcanecraft.potions.DruidBlessingEffect;
+import net.reikeb.arcanecraft.potions.ManaEffect;
+import net.reikeb.arcanecraft.potions.SoulTrapperEffect;
 
 public class PotionEffectInit {
 
-    public static final DeferredRegister<Effect> EFFECTS = DeferredRegister.create(ForgeRegistries.POTIONS,
+    public static final DeferredRegister<MobEffect> EFFECTS = DeferredRegister.create(ForgeRegistries.POTIONS,
             ArcaneCraft.MODID);
 
-    public static final RegistryObject<Effect> CHARRED_STRIKE = EFFECTS.register("charred_strike", CharredStrikeEffect::new);
-    public static final RegistryObject<Effect> DRUID_BLESSING = EFFECTS.register("druid_blessing", DruidBlessingEffect::new);
-    public static final RegistryObject<Effect> MANA = EFFECTS.register("mana", ManaEffect::new);
-    public static final RegistryObject<Effect> SOUL_TRAPPER = EFFECTS.register("soul_trapper", SoulTrapperEffect::new);
+    public static final RegistryObject<MobEffect> CHARRED_STRIKE = EFFECTS.register("charred_strike", CharredStrikeEffect::new);
+    public static final RegistryObject<MobEffect> DRUID_BLESSING = EFFECTS.register("druid_blessing", DruidBlessingEffect::new);
+    public static final RegistryObject<MobEffect> MANA = EFFECTS.register("mana", ManaEffect::new);
+    public static final RegistryObject<MobEffect> SOUL_TRAPPER = EFFECTS.register("soul_trapper", SoulTrapperEffect::new);
 }

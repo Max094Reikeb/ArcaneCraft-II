@@ -1,14 +1,15 @@
 package net.reikeb.arcanecraft.potions;
 
-import net.minecraft.potion.*;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectCategory;
 
 import net.reikeb.arcanecraft.ArcaneCraft;
 
-public class CharredStrikeEffect extends Effect {
+public class CharredStrikeEffect extends MobEffect {
 
     public CharredStrikeEffect() {
-        super(EffectType.BENEFICIAL, -3124707);
+        super(MobEffectCategory.BENEFICIAL, -3124707);
         ResourceLocation potionIcon = ArcaneCraft.RL("mob_effect/charred_strike");
     }
 
@@ -25,21 +26,6 @@ public class CharredStrikeEffect extends Effect {
     @Override
     public boolean isInstantenous() {
         return false;
-    }
-
-    @Override
-    public boolean shouldRenderInvText(EffectInstance effect) {
-        return true;
-    }
-
-    @Override
-    public boolean shouldRender(EffectInstance effect) {
-        return true;
-    }
-
-    @Override
-    public boolean shouldRenderHUD(EffectInstance effect) {
-        return true;
     }
 
     @Override

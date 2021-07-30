@@ -1,14 +1,15 @@
 package net.reikeb.arcanecraft.potions;
 
-import net.minecraft.potion.*;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectCategory;
 
 import net.reikeb.arcanecraft.ArcaneCraft;
 
-public class SoulTrapperEffect extends Effect {
+public class SoulTrapperEffect extends MobEffect {
 
     public SoulTrapperEffect() {
-        super(EffectType.BENEFICIAL, -12034723);
+        super(MobEffectCategory.BENEFICIAL, -12034723);
         ResourceLocation potionIcon = ArcaneCraft.RL("mob_effect/soul_trapper");
     }
 
@@ -25,21 +26,6 @@ public class SoulTrapperEffect extends Effect {
     @Override
     public boolean isInstantenous() {
         return false;
-    }
-
-    @Override
-    public boolean shouldRenderInvText(EffectInstance effect) {
-        return true;
-    }
-
-    @Override
-    public boolean shouldRender(EffectInstance effect) {
-        return true;
-    }
-
-    @Override
-    public boolean shouldRenderHUD(EffectInstance effect) {
-        return true;
     }
 
     @Override
