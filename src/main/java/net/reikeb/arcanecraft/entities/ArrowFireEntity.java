@@ -1,38 +1,41 @@
 package net.reikeb.arcanecraft.entities;
 
-import net.minecraft.block.Blocks;
-import net.minecraft.entity.*;
-import net.minecraft.entity.projectile.AbstractArrowEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.network.IPacket;
-import net.minecraft.world.World;
-
-import net.minecraftforge.api.distmarker.*;
-import net.minecraftforge.fml.network.*;
-
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.world.entity.projectile.ItemSupplier;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.fmllegacy.network.FMLPlayMessages;
+import net.minecraftforge.fmllegacy.network.NetworkHooks;
 import net.reikeb.arcanecraft.init.EntityInit;
 
-@OnlyIn(value = Dist.CLIENT, _interface = IRendersAsItem.class)
-public class ArrowFireEntity extends AbstractArrowEntity implements IRendersAsItem {
+@OnlyIn(value = Dist.CLIENT, _interface = ItemSupplier.class)
+public class ArrowFireEntity extends AbstractArrow implements ItemSupplier {
 
-    public ArrowFireEntity(FMLPlayMessages.SpawnEntity packet, World world) {
+    public ArrowFireEntity(FMLPlayMessages.SpawnEntity packet, Level world) {
         super(EntityInit.ARROW_FIRE_ENTITY_ENTITY_TYPE, world);
     }
 
-    public ArrowFireEntity(EntityType<? extends ArrowFireEntity> type, World world) {
+    public ArrowFireEntity(EntityType<? extends ArrowFireEntity> type, Level world) {
         super(type, world);
     }
 
-    public ArrowFireEntity(EntityType<? extends ArrowFireEntity> type, double x, double y, double z, World world) {
+    public ArrowFireEntity(EntityType<? extends ArrowFireEntity> type, double x, double y, double z, Level world) {
         super(type, x, y, z, world);
     }
 
-    public ArrowFireEntity(EntityType<? extends ArrowFireEntity> type, LivingEntity entity, World world) {
+    public ArrowFireEntity(EntityType<? extends ArrowFireEntity> type, LivingEntity entity, Level world) {
         super(type, entity, world);
     }
 
     @Override
-    public IPacket<?> getAddEntityPacket() {
+    public Packet<?> getAddEntityPacket() {
         return NetworkHooks.getEntitySpawningPacket(this);
     }
 
@@ -66,7 +69,7 @@ public class ArrowFireEntity extends AbstractArrowEntity implements IRendersAsIt
             if (this.level.getBlockState(this.blockPosition()).getBlock() == Blocks.CAMPFIRE) {
                 this.level.setBlock(this.blockPosition(), Blocks.CAMPFIRE.defaultBlockState(), 3);
             }
-            this.remove();
+            this.remove(false);
         }
     }
 }

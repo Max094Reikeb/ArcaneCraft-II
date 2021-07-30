@@ -1,27 +1,32 @@
 package net.reikeb.arcanecraft.entities;
 
-import net.minecraft.entity.*;
-import net.minecraft.entity.ai.attributes.*;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.projectile.*;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.util.*;
-import net.minecraft.world.World;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.MobType;
+import net.minecraft.world.entity.PathfinderMob;
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.Arrow;
+import net.minecraft.world.entity.projectile.ThrownPotion;
+import net.minecraft.world.level.Level;
 
-import net.minecraftforge.fml.network.FMLPlayMessages;
+import net.minecraftforge.fmllegacy.network.FMLPlayMessages;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import net.reikeb.arcanecraft.init.EntityInit;
 
 import java.util.Random;
 
-public class FireSplashEntity extends CreatureEntity {
+public class FireSplashEntity extends PathfinderMob {
 
-    public FireSplashEntity(FMLPlayMessages.SpawnEntity packet, World world) {
+    public FireSplashEntity(FMLPlayMessages.SpawnEntity packet, Level world) {
         this(EntityInit.FIRE_SPLASH_ENTITY_ENTITY_TYPE, world);
     }
 
-    public FireSplashEntity(EntityType<FireSplashEntity> type, World world) {
+    public FireSplashEntity(EntityType<FireSplashEntity> type, Level world) {
         super(type, world);
         xpReward = 0;
         setNoAi(true);
@@ -29,8 +34,8 @@ public class FireSplashEntity extends CreatureEntity {
     }
 
     @Override
-    public CreatureAttribute getMobType() {
-        return CreatureAttribute.UNDEFINED;
+    public MobType getMobType() {
+        return MobType.UNDEFINED;
     }
 
     @Override
@@ -43,17 +48,17 @@ public class FireSplashEntity extends CreatureEntity {
     }
 
     @Override
-    public net.minecraft.util.SoundEvent getAmbientSound() {
+    public net.minecraft.sounds.SoundEvent getAmbientSound() {
         return ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation(""));
     }
 
     @Override
-    public net.minecraft.util.SoundEvent getHurtSound(DamageSource ds) {
+    public net.minecraft.sounds.SoundEvent getHurtSound(DamageSource ds) {
         return ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation(""));
     }
 
     @Override
-    public net.minecraft.util.SoundEvent getDeathSound() {
+    public net.minecraft.sounds.SoundEvent getDeathSound() {
         return ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation(""));
     }
 
@@ -64,11 +69,11 @@ public class FireSplashEntity extends CreatureEntity {
 
     @Override
     public boolean hurt(DamageSource source, float amount) {
-        if (source.getDirectEntity() instanceof ArrowEntity)
+        if (source.getDirectEntity() instanceof Arrow)
             return false;
-        if (source.getDirectEntity() instanceof PlayerEntity)
+        if (source.getDirectEntity() instanceof Player)
             return false;
-        if (source.getDirectEntity() instanceof PotionEntity)
+        if (source.getDirectEntity() instanceof ThrownPotion)
             return false;
         if (source == DamageSource.FALL)
             return false;
@@ -84,11 +89,11 @@ public class FireSplashEntity extends CreatureEntity {
     @Override
     public void baseTick() {
         super.baseTick();
-        this.remove();
+        this.remove(false);
     }
 
-    public static AttributeModifierMap.MutableAttribute createAttributes() {
-        return CreatureEntity.createMobAttributes()
+    public static AttributeSupplier.Builder createAttributes() {
+        return PathfinderMob.createMobAttributes()
                 .add(Attributes.MOVEMENT_SPEED, 0.3)
                 .add(Attributes.MAX_HEALTH, 1)
                 .add(Attributes.ARMOR, 0)

@@ -1,9 +1,11 @@
 package net.reikeb.arcanecraft.init;
 
-import net.minecraft.entity.*;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.MobCategory;
 
-import net.minecraftforge.fml.RegistryObject;
-import net.minecraftforge.registries.*;
+import net.minecraftforge.fmllegacy.RegistryObject;
+import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import net.reikeb.arcanecraft.ArcaneCraft;
 import net.reikeb.arcanecraft.entities.*;
@@ -14,7 +16,7 @@ public class EntityInit {
             ArcaneCraft.MODID);
 
     public static final EntityType<ArrowEvokerEntity> ARROW_EVOKER_ENTITY_ENTITY_TYPE = EntityType.Builder
-            .<ArrowEvokerEntity>of(ArrowEvokerEntity::new, EntityClassification.MISC)
+            .<ArrowEvokerEntity>of(ArrowEvokerEntity::new, MobCategory.MISC)
             .setShouldReceiveVelocityUpdates(true)
             .setTrackingRange(64)
             .setUpdateInterval(1)
@@ -23,7 +25,7 @@ public class EntityInit {
             .build("arrow_evoker");
 
     public static final EntityType<ArrowFireEntity> ARROW_FIRE_ENTITY_ENTITY_TYPE = EntityType.Builder
-            .<ArrowFireEntity>of(ArrowFireEntity::new, EntityClassification.MISC)
+            .<ArrowFireEntity>of(ArrowFireEntity::new, MobCategory.MISC)
             .setShouldReceiveVelocityUpdates(true)
             .setTrackingRange(64)
             .setUpdateInterval(1)
@@ -32,7 +34,7 @@ public class EntityInit {
             .build("arrow_fire");
 
     public static final EntityType<ArrowIceEntity> ARROW_ICE_ENTITY_ENTITY_TYPE = EntityType.Builder
-            .<ArrowIceEntity>of(ArrowIceEntity::new, EntityClassification.MISC)
+            .<ArrowIceEntity>of(ArrowIceEntity::new, MobCategory.MISC)
             .setShouldReceiveVelocityUpdates(true)
             .setTrackingRange(64)
             .setUpdateInterval(1)
@@ -41,7 +43,7 @@ public class EntityInit {
             .build("arrow_ice");
 
     public static final EntityType<ArrowLifeEntity> ARROW_LIFE_ENTITY_ENTITY_TYPE = EntityType.Builder
-            .<ArrowLifeEntity>of(ArrowLifeEntity::new, EntityClassification.MISC)
+            .<ArrowLifeEntity>of(ArrowLifeEntity::new, MobCategory.MISC)
             .setShouldReceiveVelocityUpdates(true)
             .setTrackingRange(64)
             .setUpdateInterval(1)
@@ -50,7 +52,7 @@ public class EntityInit {
             .build("arrow_life");
 
     public static final EntityType<ArrowLightningEntity> ARROW_LIGHTNING_ENTITY_ENTITY_TYPE = EntityType.Builder
-            .<ArrowLightningEntity>of(ArrowLightningEntity::new, EntityClassification.MISC)
+            .<ArrowLightningEntity>of(ArrowLightningEntity::new, MobCategory.MISC)
             .setShouldReceiveVelocityUpdates(true)
             .setTrackingRange(64)
             .setUpdateInterval(1)
@@ -59,7 +61,7 @@ public class EntityInit {
             .build("arrow_lightning");
 
     public static final EntityType<FireSplashEntity> FIRE_SPLASH_ENTITY_ENTITY_TYPE = EntityType.Builder
-            .<FireSplashEntity>of(FireSplashEntity::new, EntityClassification.MISC)
+            .<FireSplashEntity>of(FireSplashEntity::new, MobCategory.MISC)
             .setShouldReceiveVelocityUpdates(true)
             .setTrackingRange(64)
             .setUpdateInterval(1)

@@ -1,41 +1,45 @@
 package net.reikeb.arcanecraft.entities;
 
-import net.minecraft.block.Blocks;
-import net.minecraft.entity.*;
-import net.minecraft.entity.effect.LightningBoltEntity;
-import net.minecraft.entity.projectile.AbstractArrowEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.network.IPacket;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.World;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LightningBolt;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.world.entity.projectile.ItemSupplier;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.phys.Vec3;
 
-import net.minecraftforge.api.distmarker.*;
-import net.minecraftforge.fml.network.*;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.fmllegacy.network.FMLPlayMessages;
+import net.minecraftforge.fmllegacy.network.NetworkHooks;
 
 import net.reikeb.arcanecraft.init.EntityInit;
 
-@OnlyIn(value = Dist.CLIENT, _interface = IRendersAsItem.class)
-public class ArrowLightningEntity extends AbstractArrowEntity implements IRendersAsItem {
+@OnlyIn(value = Dist.CLIENT, _interface = ItemSupplier.class)
+public class ArrowLightningEntity extends AbstractArrow implements ItemSupplier {
 
-    public ArrowLightningEntity(FMLPlayMessages.SpawnEntity packet, World world) {
+    public ArrowLightningEntity(FMLPlayMessages.SpawnEntity packet, Level world) {
         super(EntityInit.ARROW_LIGHTNING_ENTITY_ENTITY_TYPE, world);
     }
 
-    public ArrowLightningEntity(EntityType<? extends ArrowLightningEntity> type, World world) {
+    public ArrowLightningEntity(EntityType<? extends ArrowLightningEntity> type, Level world) {
         super(type, world);
     }
 
-    public ArrowLightningEntity(EntityType<? extends ArrowLightningEntity> type, double x, double y, double z, World world) {
+    public ArrowLightningEntity(EntityType<? extends ArrowLightningEntity> type, double x, double y, double z, Level world) {
         super(type, x, y, z, world);
     }
 
-    public ArrowLightningEntity(EntityType<? extends ArrowLightningEntity> type, LivingEntity entity, World world) {
+    public ArrowLightningEntity(EntityType<? extends ArrowLightningEntity> type, LivingEntity entity, Level world) {
         super(type, entity, world);
     }
 
     @Override
-    public IPacket<?> getAddEntityPacket() {
+    public Packet<?> getAddEntityPacket() {
         return NetworkHooks.getEntitySpawningPacket(this);
     }
 
@@ -55,8 +59,8 @@ public class ArrowLightningEntity extends AbstractArrowEntity implements IRender
         super.doPostHurtEffects(entity);
         entity.setArrowCount(entity.getArrowCount() - 1);
 
-        LightningBoltEntity lightningBoltEntity = EntityType.LIGHTNING_BOLT.create(this.level);
-        lightningBoltEntity.moveTo(Vector3d.atBottomCenterOf(this.blockPosition()));
+        LightningBolt lightningBoltEntity = EntityType.LIGHTNING_BOLT.create(this.level);
+        lightningBoltEntity.moveTo(Vec3.atBottomCenterOf(this.blockPosition()));
         lightningBoltEntity.setVisualOnly(false);
         this.level.addFreshEntity(lightningBoltEntity);
     }
@@ -67,7 +71,7 @@ public class ArrowLightningEntity extends AbstractArrowEntity implements IRender
         this.level.addParticle(ParticleTypes.SWEEP_ATTACK, this.getX(), this.getY(), this.getZ(),
                 1, 1, 1);
         if (this.inGround) {
-            this.remove();
+            this.remove(false);
         }
     }
 }
