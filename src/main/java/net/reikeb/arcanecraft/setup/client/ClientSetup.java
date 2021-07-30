@@ -1,26 +1,36 @@
 package net.reikeb.arcanecraft.setup.client;
 
-import net.minecraft.client.gui.ScreenManager;
-import net.minecraft.client.renderer.*;
+import net.minecraft.client.gui.screens.MenuScreens;
+import net.minecraft.client.model.SlimeModel;
+import net.minecraft.client.model.geom.ModelLayers;
+import net.minecraft.client.renderer.ItemBlockRenderTypes;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.MobRenderer;
-import net.minecraft.client.renderer.entity.model.SlimeModel;
-import net.minecraft.client.renderer.texture.AtlasTexture;
-import net.minecraft.entity.Entity;
-import net.minecraft.item.ItemModelsProperties;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.client.renderer.entity.ThrownItemRenderer;
+import net.minecraft.client.renderer.item.ItemProperties;
+import net.minecraft.client.renderer.texture.TextureAtlas;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.Entity;
 
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.*;
+import net.minecraftforge.client.event.EntityRenderersEvent;
+import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModList;
-import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 
-import net.reikeb.arcanecraft.*;
-import net.reikeb.arcanecraft.guis.*;
-import net.reikeb.arcanecraft.init.*;
-import net.reikeb.arcanecraft.spell.*;
+import net.reikeb.arcanecraft.ArcaneCraft;
+import net.reikeb.arcanecraft.IntegrationHelper;
+import net.reikeb.arcanecraft.guis.AltarWindow;
+import net.reikeb.arcanecraft.guis.ScrollTableWindow;
+import net.reikeb.arcanecraft.guis.WandWorkbenchWindow;
+import net.reikeb.arcanecraft.init.BlockInit;
+import net.reikeb.arcanecraft.init.EntityInit;
+import net.reikeb.arcanecraft.init.ItemInit;
+import net.reikeb.arcanecraft.init.SpellInit;
+import net.reikeb.arcanecraft.spell.SpellInstance;
+import net.reikeb.arcanecraft.spell.SpellUtils;
 
 import static net.reikeb.arcanecraft.init.ContainerInit.*;
 
@@ -29,22 +39,22 @@ public class ClientSetup {
 
     public static void init(final FMLClientSetupEvent event) {
         // Connect Containers and Windows
-        ScreenManager.register(ALTAR_CONTAINER.get(), AltarWindow::new);
-        ScreenManager.register(SCROLL_TABLE_CONTAINER.get(), ScrollTableWindow::new);
-        ScreenManager.register(WAND_WORKBENCH_CONTAINER.get(), WandWorkbenchWindow::new);
+        MenuScreens.register(ALTAR_CONTAINER.get(), AltarWindow::new);
+        MenuScreens.register(SCROLL_TABLE_CONTAINER.get(), ScrollTableWindow::new);
+        MenuScreens.register(WAND_WORKBENCH_CONTAINER.get(), WandWorkbenchWindow::new);
 
         // Make this deferred for unsafe threads
         event.enqueueWork(() -> {
             // Cutout
-            RenderTypeLookup.setRenderLayer(BlockInit.ALTAR.get(), RenderType.cutout());
-            RenderTypeLookup.setRenderLayer(BlockInit.RUNIC_PILLAR.get(), RenderType.cutout());
-            RenderTypeLookup.setRenderLayer(BlockInit.SCROLL_TABLE.get(), RenderType.cutout());
-            RenderTypeLookup.setRenderLayer(BlockInit.WAND_WORKBENCH.get(), RenderType.cutout());
-            RenderTypeLookup.setRenderLayer(BlockInit.CRYSTAL_BLOCK.get(), RenderType.cutout());
+            ItemBlockRenderTypes.setRenderLayer(BlockInit.ALTAR.get(), RenderType.cutout());
+            ItemBlockRenderTypes.setRenderLayer(BlockInit.RUNIC_PILLAR.get(), RenderType.cutout());
+            ItemBlockRenderTypes.setRenderLayer(BlockInit.SCROLL_TABLE.get(), RenderType.cutout());
+            ItemBlockRenderTypes.setRenderLayer(BlockInit.WAND_WORKBENCH.get(), RenderType.cutout());
+            ItemBlockRenderTypes.setRenderLayer(BlockInit.CRYSTAL_BLOCK.get(), RenderType.cutout());
 
             // Item Properties
-            ItemModelsProperties.register(ItemInit.ARCANE_SCROLL.get(), new ResourceLocation("spell"), (p_239426_0_, p_239426_1_, p_239426_2_) -> {
-                for (SpellInstance spellInstance : SpellUtils.getSpell(p_239426_0_)) {
+            ItemProperties.register(ItemInit.ARCANE_SCROLL.get(), new ResourceLocation("spell"), (stack, p_239426_1_, player, p_239426_2_) -> {
+                for (SpellInstance spellInstance : SpellUtils.getSpell(stack)) {
                     if (spellInstance.getSpell() == SpellInit.EVOKER.get()) {
                         return 1.0F;
                     } else if (spellInstance.getSpell() == SpellInit.FIRE.get()) {
@@ -62,8 +72,8 @@ public class ClientSetup {
                 return 0.0F;
             });
 
-            ItemModelsProperties.register(ItemInit.ARCANE_SCROLL_FOCUS.get(), new ResourceLocation("spell"), (p_239426_0_, p_239426_1_, p_239426_2_) -> {
-                for (SpellInstance spellInstance : SpellUtils.getSpell(p_239426_0_)) {
+            ItemProperties.register(ItemInit.ARCANE_SCROLL_FOCUS.get(), new ResourceLocation("spell"), (stack, p_239426_1_, player, p_239426_2_) -> {
+                for (SpellInstance spellInstance : SpellUtils.getSpell(stack)) {
                     if (spellInstance.getSpell() == SpellInit.FIRE.get()) {
                         return 1.0F;
                     } else if (spellInstance.getSpell() == SpellInit.ICE.get()) {
@@ -79,8 +89,8 @@ public class ClientSetup {
                 return 0.0F;
             });
 
-            ItemModelsProperties.register(ItemInit.WAND.get(), new ResourceLocation("spell"), (p_239426_0_, p_239426_1_, p_239426_2_) -> {
-                for (SpellInstance spellInstance : SpellUtils.getSpell(p_239426_0_)) {
+        ItemProperties.register(ItemInit.WAND.get(), new ResourceLocation("spell"), (stack, p_239426_1_, player, p_239426_2_) -> {
+                for (SpellInstance spellInstance : SpellUtils.getSpell(stack)) {
                     if (spellInstance.getSpell() == SpellInit.EVOKER.get()) {
                         return 1.0F;
                     } else if (spellInstance.getSpell() == SpellInit.FIRE.get()) {
@@ -101,19 +111,31 @@ public class ClientSetup {
     }
 
     @SubscribeEvent
-    public static void registerModels(ModelRegistryEvent event) {
-        RenderingRegistry.registerEntityRenderingHandler(EntityInit.FIRE_SPLASH_ENTITY_ENTITY_TYPE,
-                renderManager -> new MobRenderer(renderManager, new SlimeModel(0), 0f) {
+    public static void registerModels(EntityRenderersEvent.RegisterRenderers event) {
+        event.registerEntityRenderer(EntityInit.FIRE_SPLASH_ENTITY_ENTITY_TYPE,
+                rendererProvider -> new MobRenderer(rendererProvider, new SlimeModel<>(rendererProvider.bakeLayer(ModelLayers.SLIME)), 0f) {
                     @Override
                     public ResourceLocation getTextureLocation(Entity entity) {
                         return ArcaneCraft.RL("air");
                     }
                 });
+
+        // Setup arrows renderers
+        event.registerEntityRenderer(EntityInit.ARROW_EVOKER_ENTITY_ENTITY_TYPE,
+                renderManager -> new ThrownItemRenderer<>(renderManager, 1.0F, false));
+        event.registerEntityRenderer(EntityInit.ARROW_FIRE_ENTITY_ENTITY_TYPE,
+                renderManager -> new ThrownItemRenderer<>(renderManager, 1.0F, false));
+        event.registerEntityRenderer(EntityInit.ARROW_ICE_ENTITY_ENTITY_TYPE,
+                renderManager -> new ThrownItemRenderer<>(renderManager, 1.0F, false));
+        event.registerEntityRenderer(EntityInit.ARROW_LIFE_ENTITY_ENTITY_TYPE,
+                renderManager -> new ThrownItemRenderer<>(renderManager, 1.0F, false));
+        event.registerEntityRenderer(EntityInit.ARROW_LIGHTNING_ENTITY_ENTITY_TYPE,
+                renderManager -> new ThrownItemRenderer<>(renderManager, 1.0F, false));
     }
 
     @SubscribeEvent
     public static void textureSwitchEvent(TextureStitchEvent.Pre event) {
-        if (event.getMap().location().equals(AtlasTexture.LOCATION_BLOCKS)) {
+        if (event.getMap().location().equals(TextureAtlas.LOCATION_BLOCKS)) {
             if (ModList.get().isLoaded(IntegrationHelper.CURIOS_MODID)) {
                 event.addSprite(IntegrationHelper.CURIOS_EMPTY_RING);
             }
