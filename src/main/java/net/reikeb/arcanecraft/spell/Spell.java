@@ -2,9 +2,11 @@ package net.reikeb.arcanecraft.spell;
 
 import com.google.common.collect.Maps;
 
-import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.util.*;
-import net.minecraft.util.text.*;
+import net.minecraft.ChatFormatting;
+import net.minecraft.Util;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 
 import net.minecraftforge.registries.ForgeRegistryEntry;
 
@@ -18,11 +20,11 @@ import java.util.Map;
 public class Spell extends ForgeRegistryEntry<Spell> {
 
     private final Map<Attribute, AttributeModifier> attributeModifiers = Maps.newHashMap();
-    private final TextFormatting textFormatting;
+    private final ChatFormatting textFormatting;
     @Nullable
     private String descriptionId;
 
-    public Spell(TextFormatting textFormatting) {
+    public Spell(ChatFormatting textFormatting) {
         this.textFormatting = textFormatting;
     }
 
@@ -42,11 +44,11 @@ public class Spell extends ForgeRegistryEntry<Spell> {
         return this.getOrCreateDescriptionId();
     }
 
-    public ITextComponent getDisplayName() {
-        return new TranslationTextComponent(this.getDescriptionId());
+    public Component getDisplayName() {
+        return new TranslatableComponent(this.getDescriptionId());
     }
 
-    public TextFormatting getFormatting() {
+    public ChatFormatting getFormatting() {
         return this.textFormatting;
     }
 

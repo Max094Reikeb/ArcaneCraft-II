@@ -1,34 +1,47 @@
 package net.reikeb.arcanecraft.spell;
 
-import net.minecraft.entity.*;
-import net.minecraft.entity.player.*;
-import net.minecraft.entity.projectile.*;
-import net.minecraft.item.ItemStack;
-import net.minecraft.network.IPacket;
-import net.minecraft.util.*;
-import net.minecraft.util.math.*;
-import net.minecraft.world.World;
+import net.minecraft.core.Direction;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.world.entity.projectile.ShulkerBullet;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.EntityHitResult;
+import net.minecraft.world.phys.HitResult;
 
-import net.minecraftforge.fml.network.*;
+import net.minecraftforge.fmllegacy.network.NetworkHooks;
+import net.minecraftforge.fmllegacy.network.PacketDistributor;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import net.reikeb.arcanecraft.capabilities.ManaManager;
 import net.reikeb.arcanecraft.entities.*;
-import net.reikeb.arcanecraft.init.*;
+import net.reikeb.arcanecraft.init.EntityInit;
+import net.reikeb.arcanecraft.init.WandInit;
 import net.reikeb.arcanecraft.network.NetworkManager;
-import net.reikeb.arcanecraft.network.packets.*;
+import net.reikeb.arcanecraft.network.packets.CurrentManaPacket;
+import net.reikeb.arcanecraft.network.packets.WooMagicPacket;
 import net.reikeb.arcanecraft.utils.Util;
 
 import javax.annotation.Nullable;
-import java.util.*;
+import java.util.List;
+import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class CastSpell {
 
-    private final World world;
-    private final PlayerEntity playerEntity;
+    private final Level world;
+    private final Player playerEntity;
 
-    public CastSpell(World world, PlayerEntity playerEntity, ItemStack wand) {
+    public CastSpell(Level world, Player playerEntity, ItemStack wand) {
         this.world = world;
         this.playerEntity = playerEntity;
 
@@ -52,27 +65,27 @@ public class CastSpell {
 
         if (wandObject == WandInit.EVOKER.get()) {
             ArrowEvokerEntity arrowEvokerEntity = shootEvokerArrow(0.7000000000000001f, 2.5, 0);
-            arrowEvokerEntity.pickup = AbstractArrowEntity.PickupStatus.DISALLOWED;
+            arrowEvokerEntity.pickup = AbstractArrow.Pickup.DISALLOWED;
             flag = true;
 
         } else if (wandObject == WandInit.FIRE.get()) {
             ArrowFireEntity arrowFireEntity = shootFireArrow(0.7000000000000001f, 3, 0);
-            arrowFireEntity.pickup = AbstractArrowEntity.PickupStatus.DISALLOWED;
+            arrowFireEntity.pickup = AbstractArrow.Pickup.DISALLOWED;
             flag = true;
 
         } else if (wandObject == WandInit.ICE.get()) {
             ArrowIceEntity arrowIceEntity = shootIceArrow(world, playerEntity, world.random, 0.7000000000000001f, 2, 0);
-            arrowIceEntity.pickup = AbstractArrowEntity.PickupStatus.DISALLOWED;
+            arrowIceEntity.pickup = AbstractArrow.Pickup.DISALLOWED;
             flag = true;
 
         } else if (wandObject == WandInit.LIFE_DRAIN.get()) {
             ArrowLifeEntity arrowLifeEntity = shootLifeArrow(world, playerEntity, world.random, 0.4f, 2, 0);
-            arrowLifeEntity.pickup = AbstractArrowEntity.PickupStatus.DISALLOWED;
+            arrowLifeEntity.pickup = AbstractArrow.Pickup.DISALLOWED;
             flag = true;
 
         } else if (wandObject == WandInit.LIGHTNING.get()) {
             ArrowLightningEntity arrowLightningEntity = shootLightningArrow(world, playerEntity, world.random, 0.6f, 3, 0);
-            arrowLightningEntity.pickup = AbstractArrowEntity.PickupStatus.DISALLOWED;
+            arrowLightningEntity.pickup = AbstractArrow.Pickup.DISALLOWED;
             flag = true;
 
         } else if (wandObject == WandInit.BOLT.get()) {
@@ -88,7 +101,7 @@ public class CastSpell {
                 playerEntity.getCapability(ManaManager.MANA_CAPABILITY, null).ifPresent(cap -> {
                     cap.setMana(playerMana.get() - finalSpellMana);
                     NetworkManager.INSTANCE.send(PacketDistributor.PLAYER.with(() ->
-                            (ServerPlayerEntity) playerEntity), new CurrentManaPacket(cap.getMana() - finalSpellMana));
+                            (ServerPlayer) playerEntity), new CurrentManaPacket(cap.getMana() - finalSpellMana));
                 });
             }
         }
@@ -98,24 +111,24 @@ public class CastSpell {
         Entity target = Util.rayTrace(this.world, this.playerEntity, 25D);
 
         if (target != null) {
-            ShulkerBulletEntity smartBullet = new SmartShulkerBullet(this.world, this.playerEntity, target, this.playerEntity.getDirection().getAxis());
+            ShulkerBullet smartBullet = new SmartShulkerBullet(this.world, this.playerEntity, target, this.playerEntity.getDirection().getAxis());
             smartBullet.setPos(this.playerEntity.getX() + this.playerEntity.getViewVector(1.0F).x, this.playerEntity.getY() + 1.35, this.playerEntity.getZ() + this.playerEntity.getViewVector(1.0F).z);
             this.world.addFreshEntity(smartBullet);
             return;
         }
 
-        ShulkerBulletEntity dumbBullet = new ShulkerBulletEntity(EntityType.SHULKER_BULLET, this.world) {
+        ShulkerBullet dumbBullet = new ShulkerBullet(EntityType.SHULKER_BULLET, this.world) {
             @Override
             public void selectNextMoveDirection(@Nullable Direction.Axis axis) {
             }
 
             @Override
-            protected void onHit(RayTraceResult result) {
-                RayTraceResult.Type raytraceresult$type = result.getType();
-                if (raytraceresult$type == RayTraceResult.Type.ENTITY) {
-                    this.onHitEntity((EntityRayTraceResult) result);
-                } else if (raytraceresult$type == RayTraceResult.Type.BLOCK) {
-                    this.onHitBlock((BlockRayTraceResult) result);
+            protected void onHit(HitResult result) {
+                HitResult.Type raytraceresult$type = result.getType();
+                if (raytraceresult$type == HitResult.Type.ENTITY) {
+                    this.onHitEntity((EntityHitResult) result);
+                } else if (raytraceresult$type == HitResult.Type.BLOCK) {
+                    this.onHitBlock((BlockHitResult) result);
                 }
             }
 
@@ -123,17 +136,17 @@ public class CastSpell {
             public void tick() {
                 super.tick();
                 if (this.getOwner() != null && this.distanceTo(this.getOwner()) >= 40) {
-                    this.remove();
+                    this.remove(false);
                 }
             }
 
             @Override
-            public IPacket<?> getAddEntityPacket() {
+            public Packet<?> getAddEntityPacket() {
                 return NetworkHooks.getEntitySpawningPacket(this);
             }
 
             @Override
-            protected void onHitEntity(EntityRayTraceResult result) {
+            protected void onHitEntity(EntityHitResult result) {
                 Entity entity = result.getEntity();
                 Entity entity1 = this.getOwner();
                 LivingEntity livingentity = entity1 instanceof LivingEntity ? (LivingEntity) entity1 : null;
@@ -143,7 +156,7 @@ public class CastSpell {
 
                 if (entity.hurt(DamageSource.indirectMobAttack(this, livingentity).setProjectile(), 11.0F)) {
                     this.doEnchantDamageEffects(livingentity, entity);
-                    this.remove();
+                    this.remove(false);
                 }
             }
         };
@@ -155,7 +168,7 @@ public class CastSpell {
         this.world.addFreshEntity(dumbBullet);
         this.world.playSound(null, this.playerEntity.getX(), this.playerEntity.getY(), this.playerEntity.getZ(),
                 ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.illusioner.cast_spell")),
-                SoundCategory.PLAYERS, 1, 1f / (this.world.random.nextFloat() * 0.5f + 1) + (0.6f / 2));
+                SoundSource.PLAYERS, 1, 1f / (this.world.random.nextFloat() * 0.5f + 1) + (0.6f / 2));
     }
 
     public ArrowEvokerEntity shootEvokerArrow(float power, double damage, int knockback) {
@@ -168,7 +181,7 @@ public class CastSpell {
         this.world.addFreshEntity(arrowEvokerEntity);
         this.world.playSound(null, this.playerEntity.getX(), this.playerEntity.getY(), this.playerEntity.getZ(),
                 ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.evoker.cast_spell")),
-                SoundCategory.PLAYERS, 1, 1f / (this.world.random.nextFloat() * 0.5f + 1) + (power / 2));
+                SoundSource.PLAYERS, 1, 1f / (this.world.random.nextFloat() * 0.5f + 1) + (power / 2));
         return arrowEvokerEntity;
     }
 
@@ -182,11 +195,11 @@ public class CastSpell {
         this.world.addFreshEntity(arrowFireEntity);
         this.world.playSound(null, this.playerEntity.getX(), this.playerEntity.getY(), this.playerEntity.getZ(),
                 ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.blaze.shoot")),
-                SoundCategory.PLAYERS, 1, 1f / (this.world.random.nextFloat() * 0.5f + 1) + (power / 2));
+                SoundSource.PLAYERS, 1, 1f / (this.world.random.nextFloat() * 0.5f + 1) + (power / 2));
         return arrowFireEntity;
     }
 
-    public static ArrowIceEntity shootIceArrow(World world, LivingEntity entity, Random random, float power, double damage, int knockback) {
+    public static ArrowIceEntity shootIceArrow(Level world, LivingEntity entity, Random random, float power, double damage, int knockback) {
         ArrowIceEntity arrowIceEntity = new ArrowIceEntity(EntityInit.ARROW_ICE_ENTITY_ENTITY_TYPE, entity, world);
         arrowIceEntity.shoot(entity.getLookAngle().x, entity.getLookAngle().y, entity.getLookAngle().z, power * 2, 0);
         arrowIceEntity.setSilent(true);
@@ -196,11 +209,11 @@ public class CastSpell {
         world.addFreshEntity(arrowIceEntity);
         world.playSound(null, entity.getX(), entity.getY(), entity.getZ(),
                 ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.evoker.cast_spell")),
-                SoundCategory.PLAYERS, 1, 1f / (random.nextFloat() * 0.5f + 1) + (power / 2));
+                SoundSource.PLAYERS, 1, 1f / (random.nextFloat() * 0.5f + 1) + (power / 2));
         return arrowIceEntity;
     }
 
-    public static ArrowLifeEntity shootLifeArrow(World world, LivingEntity entity, Random random, float power, double damage, int knockback) {
+    public static ArrowLifeEntity shootLifeArrow(Level world, LivingEntity entity, Random random, float power, double damage, int knockback) {
         ArrowLifeEntity arrowLifeEntity = new ArrowLifeEntity(EntityInit.ARROW_LIFE_ENTITY_ENTITY_TYPE, entity, world);
         arrowLifeEntity.shoot(entity.getLookAngle().x, entity.getLookAngle().y, entity.getLookAngle().z, power * 2, 0);
         arrowLifeEntity.setSilent(true);
@@ -210,11 +223,11 @@ public class CastSpell {
         world.addFreshEntity(arrowLifeEntity);
         world.playSound(null, entity.getX(), entity.getY(), entity.getZ(),
                 ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.illusioner.cast_spell")),
-                SoundCategory.PLAYERS, 1, 1f / (random.nextFloat() * 0.5f + 1) + (power / 2));
+                SoundSource.PLAYERS, 1, 1f / (random.nextFloat() * 0.5f + 1) + (power / 2));
         return arrowLifeEntity;
     }
 
-    public static ArrowLightningEntity shootLightningArrow(World world, LivingEntity entity, Random random, float power, double damage, int knockback) {
+    public static ArrowLightningEntity shootLightningArrow(Level world, LivingEntity entity, Random random, float power, double damage, int knockback) {
         ArrowLightningEntity arrowLightningEntity = new ArrowLightningEntity(EntityInit.ARROW_LIGHTNING_ENTITY_ENTITY_TYPE, entity, world);
         arrowLightningEntity.shoot(entity.getLookAngle().x, entity.getLookAngle().y, entity.getLookAngle().z, power * 2, 0);
         arrowLightningEntity.setSilent(true);
@@ -224,7 +237,7 @@ public class CastSpell {
         world.addFreshEntity(arrowLightningEntity);
         world.playSound(null, entity.getX(), entity.getY(), entity.getZ(),
                 ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.illusioner.cast_spell")),
-                SoundCategory.PLAYERS, 1, 1f / (random.nextFloat() * 0.5f + 1) + (power / 2));
+                SoundSource.PLAYERS, 1, 1f / (random.nextFloat() * 0.5f + 1) + (power / 2));
         return arrowLightningEntity;
     }
 }

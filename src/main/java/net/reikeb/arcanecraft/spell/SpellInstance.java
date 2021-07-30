@@ -1,8 +1,9 @@
 package net.reikeb.arcanecraft.spell;
 
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.CompoundTag;
 
-import org.apache.logging.log4j.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class SpellInstance {
 
@@ -53,18 +54,18 @@ public class SpellInstance {
         }
     }
 
-    public static SpellInstance load(CompoundNBT nbt) {
+    public static SpellInstance load(CompoundTag nbt) {
         Spell spell = Spell.byId(nbt.getString("Id"));
         return spell == null ? null : loadSpecifiedEffect(spell, nbt);
     }
 
-    public CompoundNBT save(CompoundNBT nbt) {
+    public CompoundTag save(CompoundTag nbt) {
         nbt.putString("Id", Spell.getId(this.getSpell()));
         nbt.putInt("Mana", this.getMana());
         return nbt;
     }
 
-    private static SpellInstance loadSpecifiedEffect(Spell spell, CompoundNBT nbt) {
+    private static SpellInstance loadSpecifiedEffect(Spell spell, CompoundTag nbt) {
         int m = nbt.getInt("Mana");
         return new SpellInstance(spell, m);
     }

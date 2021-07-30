@@ -2,8 +2,8 @@ package net.reikeb.arcanecraft.spell;
 
 import com.google.common.collect.ImmutableList;
 
-import net.minecraft.tags.ITag;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.Tag;
 
 import net.minecraftforge.registries.ForgeRegistryEntry;
 
@@ -33,7 +33,7 @@ public class ScrollFocusObject extends ForgeRegistryEntry<ScrollFocusObject> {
         return ScrollFocusInit.SCOLL_FOCUS_REGISTRY.get().getValue(ResourceLocation.tryParse(name));
     }
 
-    public boolean isIn(ITag<ScrollFocusObject> tag) {
+    public boolean isIn(Tag<ScrollFocusObject> tag) {
         return tag.contains(this);
     }
 

@@ -1,15 +1,18 @@
 package net.reikeb.arcanecraft.init;
 
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.TextFormatting;
+import net.minecraft.ChatFormatting;
+import net.minecraft.resources.ResourceLocation;
 
-import net.minecraftforge.fml.RegistryObject;
-import net.minecraftforge.registries.*;
+import net.minecraftforge.fmllegacy.RegistryObject;
+import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.IForgeRegistry;
+import net.minecraftforge.registries.IForgeRegistryEntry;
+import net.minecraftforge.registries.RegistryBuilder;
 
 import net.reikeb.arcanecraft.ArcaneCraft;
-import net.reikeb.arcanecraft.spell.*;
+import net.reikeb.arcanecraft.spell.Spell;
 
-import java.util.*;
+import java.util.Objects;
 import java.util.function.Supplier;
 
 public class SpellInit {
@@ -22,13 +25,13 @@ public class SpellInit {
             ).setDefaultKey(ArcaneCraft.RL("empty"))
     );
 
-    public static final RegistryObject<Spell> EMPTY = SPELLS_DEFERRED_REGISTER.register("empty", () -> new Spell(TextFormatting.DARK_GRAY));
-    public static final RegistryObject<Spell> EVOKER = SPELLS_DEFERRED_REGISTER.register("evoker", () -> new Spell(TextFormatting.DARK_PURPLE));
-    public static final RegistryObject<Spell> FIRE = SPELLS_DEFERRED_REGISTER.register("fire", () -> new Spell(TextFormatting.GOLD));
-    public static final RegistryObject<Spell> ICE = SPELLS_DEFERRED_REGISTER.register("ice", () -> new Spell(TextFormatting.AQUA));
-    public static final RegistryObject<Spell> LIFE_DRAIN = SPELLS_DEFERRED_REGISTER.register("life_drain", () -> new Spell(TextFormatting.DARK_RED));
-    public static final RegistryObject<Spell> LIGHTNING = SPELLS_DEFERRED_REGISTER.register("lightning", () -> new Spell(TextFormatting.YELLOW));
-    public static final RegistryObject<Spell> BOLT = SPELLS_DEFERRED_REGISTER.register("bolt", () -> new Spell(TextFormatting.WHITE));
+    public static final RegistryObject<Spell> EMPTY = SPELLS_DEFERRED_REGISTER.register("empty", () -> new Spell(ChatFormatting.DARK_GRAY));
+    public static final RegistryObject<Spell> EVOKER = SPELLS_DEFERRED_REGISTER.register("evoker", () -> new Spell(ChatFormatting.DARK_PURPLE));
+    public static final RegistryObject<Spell> FIRE = SPELLS_DEFERRED_REGISTER.register("fire", () -> new Spell(ChatFormatting.GOLD));
+    public static final RegistryObject<Spell> ICE = SPELLS_DEFERRED_REGISTER.register("ice", () -> new Spell(ChatFormatting.AQUA));
+    public static final RegistryObject<Spell> LIFE_DRAIN = SPELLS_DEFERRED_REGISTER.register("life_drain", () -> new Spell(ChatFormatting.DARK_RED));
+    public static final RegistryObject<Spell> LIGHTNING = SPELLS_DEFERRED_REGISTER.register("lightning", () -> new Spell(ChatFormatting.YELLOW));
+    public static final RegistryObject<Spell> BOLT = SPELLS_DEFERRED_REGISTER.register("bolt", () -> new Spell(ChatFormatting.WHITE));
 
     public static <T extends IForgeRegistryEntry<?>> ResourceLocation getName(T type) {
         return Objects.requireNonNull(type.getRegistryName());
