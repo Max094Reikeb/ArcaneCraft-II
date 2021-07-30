@@ -1,17 +1,17 @@
 modLoader="javafml"
-loaderVersion="[36,)"
+loaderVersion="[37,)"
 license="All rights reserved"
 
 [[mods]]
 modId="arcanecraft"
-version="Beta v3"
+version="Beta v4"
 displayName="ArcaneCraft II"
 credits="Credits are on mod's page."
 displayURL="https://github.com/Max094Reikeb/ArcaneCraft-II"
 logoFile="logo.png"
 authors="Max094_Reikeb and Fredzik22"
 description='''
-ArcaneCraft 2 is the recreation of ArcaneCraft.
+ArcaneCraft II is the recreation of ArcaneCraft.
 '''
 
 [[dependencies.arcanecraft]] #optional
@@ -24,6 +24,6 @@ ArcaneCraft 2 is the recreation of ArcaneCraft.
 [[dependencies.arcanecraft]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.16.5,1.17)"
+    versionRange="[1.16.5,1.17.1)"
     ordering="NONE"
     side="BOTH"
