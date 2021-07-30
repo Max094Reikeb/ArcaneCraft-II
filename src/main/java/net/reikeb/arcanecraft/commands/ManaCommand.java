@@ -3,40 +3,44 @@ package net.reikeb.arcanecraft.commands;
 import com.mojang.authlib.GameProfile;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
-import com.mojang.brigadier.exceptions.*;
+import com.mojang.brigadier.exceptions.CommandSyntaxException;
+import com.mojang.brigadier.exceptions.DynamicCommandExceptionType;
 
-import net.minecraft.command.*;
-import net.minecraft.command.arguments.GameProfileArgument;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.util.text.*;
+import net.minecraft.commands.CommandSourceStack;
+import net.minecraft.commands.Commands;
+import net.minecraft.commands.arguments.GameProfileArgument;
+import net.minecraft.network.chat.ComponentUtils;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.server.level.ServerPlayer;
 
-import net.minecraftforge.fml.network.PacketDistributor;
+import net.minecraftforge.fmllegacy.network.PacketDistributor;
 
 import net.reikeb.arcanecraft.capabilities.ManaManager;
 import net.reikeb.arcanecraft.network.NetworkManager;
-import net.reikeb.arcanecraft.network.packets.*;
+import net.reikeb.arcanecraft.network.packets.CurrentManaPacket;
+import net.reikeb.arcanecraft.network.packets.MaxManaPacket;
 
-import java.util.*;
+import java.util.Collection;
 
 public class ManaCommand {
 
     private static final DynamicCommandExceptionType ERROR_NEGATIVE_MANA = new DynamicCommandExceptionType((error) -> {
-        return new TranslationTextComponent("command.arcanecraft.mana.negative", error);
+        return new TranslatableComponent("command.arcanecraft.mana.negative", error);
     });
 
     private static final DynamicCommandExceptionType ERROR_NEGATIVE_MAX_MANA = new DynamicCommandExceptionType((error) -> {
-        return new TranslationTextComponent("command.arcanecraft.mana.negative_max", error);
+        return new TranslatableComponent("command.arcanecraft.mana.negative_max", error);
     });
 
     private static final DynamicCommandExceptionType ERROR_MAX_INFERIOR = new DynamicCommandExceptionType((error) -> {
-        return new TranslationTextComponent("command.arcanecraft.mana.inferior_current", error);
+        return new TranslatableComponent("command.arcanecraft.mana.inferior_current", error);
     });
 
     private static final DynamicCommandExceptionType ERROR_PLAYER = new DynamicCommandExceptionType((error) -> {
-        return new TranslationTextComponent("command.arcanecraft.null_player", error);
+        return new TranslatableComponent("command.arcanecraft.null_player", error);
     });
 
-    public static void register(CommandDispatcher<CommandSource> commandDispatcher) {
+    public static void register(CommandDispatcher<CommandSourceStack> commandDispatcher) {
         commandDispatcher.register(Commands.literal("mana").requires(commandSource -> {
             return commandSource.hasPermission(2);
         }).then(Commands.literal("set")
@@ -63,12 +67,12 @@ public class ManaCommand {
                                 }))))));
     }
 
-    private static int setCurrentMana(CommandSource source, Collection<GameProfile> target, int count) throws CommandSyntaxException {
+    private static int setCurrentMana(CommandSourceStack source, Collection<GameProfile> target, int count) throws CommandSyntaxException {
         if (count < 0) {
             throw ERROR_NEGATIVE_MANA.create(count);
         } else {
             for (GameProfile gameprofile : target) {
-                ServerPlayerEntity serverPlayerEntity = source.getServer().getPlayerList().getPlayer(gameprofile.getId());
+                ServerPlayer serverPlayerEntity = source.getServer().getPlayerList().getPlayer(gameprofile.getId());
 
                 if (serverPlayerEntity == null) {
                     throw ERROR_PLAYER.create(gameprofile);
@@ -86,19 +90,19 @@ public class ManaCommand {
                             serverPlayerEntity), new CurrentManaPacket(count));
                 });
 
-                source.sendSuccess(new TranslationTextComponent("command.arcanecraft.mana.current_set", TextComponentUtils.getDisplayName(gameprofile), count), true);
+                source.sendSuccess(new TranslatableComponent("command.arcanecraft.mana.current_set", ComponentUtils.getDisplayName(gameprofile), count), true);
             }
         }
 
         return count;
     }
 
-    private static int setMaxMana(CommandSource source, Collection<GameProfile> target, int count) throws CommandSyntaxException {
+    private static int setMaxMana(CommandSourceStack source, Collection<GameProfile> target, int count) throws CommandSyntaxException {
         if (count < 0) {
             throw ERROR_NEGATIVE_MAX_MANA.create(count);
         } else {
             for (GameProfile gameprofile : target) {
-                ServerPlayerEntity serverPlayerEntity = source.getServer().getPlayerList().getPlayer(gameprofile.getId());
+                ServerPlayer serverPlayerEntity = source.getServer().getPlayerList().getPlayer(gameprofile.getId());
 
                 if (serverPlayerEntity == null) {
                     throw ERROR_PLAYER.create(gameprofile);
@@ -118,16 +122,16 @@ public class ManaCommand {
                             serverPlayerEntity), new MaxManaPacket(count));
                 });
 
-                source.sendSuccess(new TranslationTextComponent("command.arcanecraft.mana.max_set", TextComponentUtils.getDisplayName(gameprofile), count), true);
+                source.sendSuccess(new TranslatableComponent("command.arcanecraft.mana.max_set", ComponentUtils.getDisplayName(gameprofile), count), true);
             }
         }
 
         return count;
     }
 
-    private static int addCurrentMana(CommandSource source, Collection<GameProfile> target, int count) throws CommandSyntaxException {
+    private static int addCurrentMana(CommandSourceStack source, Collection<GameProfile> target, int count) throws CommandSyntaxException {
         for (GameProfile gameprofile : target) {
-            ServerPlayerEntity serverPlayerEntity = source.getServer().getPlayerList().getPlayer(gameprofile.getId());
+            ServerPlayer serverPlayerEntity = source.getServer().getPlayerList().getPlayer(gameprofile.getId());
 
             if (serverPlayerEntity == null) {
                 throw ERROR_PLAYER.create(gameprofile);
@@ -155,15 +159,15 @@ public class ManaCommand {
                         serverPlayerEntity), new CurrentManaPacket(totalMana));
             });
 
-            source.sendSuccess(new TranslationTextComponent("command.arcanecraft.mana.current_add", count, TextComponentUtils.getDisplayName(gameprofile)), true);
+            source.sendSuccess(new TranslatableComponent("command.arcanecraft.mana.current_add", count, ComponentUtils.getDisplayName(gameprofile)), true);
         }
 
         return count;
     }
 
-    private static int addMaxMana(CommandSource source, Collection<GameProfile> target, int count) throws CommandSyntaxException {
+    private static int addMaxMana(CommandSourceStack source, Collection<GameProfile> target, int count) throws CommandSyntaxException {
         for (GameProfile gameprofile : target) {
-            ServerPlayerEntity serverPlayerEntity = source.getServer().getPlayerList().getPlayer(gameprofile.getId());
+            ServerPlayer serverPlayerEntity = source.getServer().getPlayerList().getPlayer(gameprofile.getId());
 
             if (serverPlayerEntity == null) {
                 throw ERROR_PLAYER.create(gameprofile);
@@ -193,7 +197,7 @@ public class ManaCommand {
                         serverPlayerEntity), new MaxManaPacket((int) totalMaxMana));
             });
 
-            source.sendSuccess(new TranslationTextComponent("command.arcanecraft.mana.max_add", count, TextComponentUtils.getDisplayName(gameprofile)), true);
+            source.sendSuccess(new TranslatableComponent("command.arcanecraft.mana.max_add", count, ComponentUtils.getDisplayName(gameprofile)), true);
         }
 
         return count;

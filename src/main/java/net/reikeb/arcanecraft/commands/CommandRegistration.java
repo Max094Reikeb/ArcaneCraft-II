@@ -2,7 +2,7 @@ package net.reikeb.arcanecraft.commands;
 
 import com.mojang.brigadier.CommandDispatcher;
 
-import net.minecraft.command.CommandSource;
+import net.minecraft.commands.CommandSourceStack;
 
 import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -15,7 +15,7 @@ public class CommandRegistration {
 
     @SubscribeEvent
     public static void onRegisterCommandEvent(RegisterCommandsEvent event) {
-        CommandDispatcher<CommandSource> commandDispatcher = event.getDispatcher();
+        CommandDispatcher<CommandSourceStack> commandDispatcher = event.getDispatcher();
         ManaCommand.register(commandDispatcher);
     }
 }
