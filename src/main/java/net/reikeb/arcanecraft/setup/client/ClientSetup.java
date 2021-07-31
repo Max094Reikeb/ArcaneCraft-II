@@ -22,7 +22,6 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 
 import net.reikeb.arcanecraft.ArcaneCraft;
 import net.reikeb.arcanecraft.IntegrationHelper;
-import net.reikeb.arcanecraft.guis.AltarWindow;
 import net.reikeb.arcanecraft.guis.ScrollTableWindow;
 import net.reikeb.arcanecraft.guis.WandWorkbenchWindow;
 import net.reikeb.arcanecraft.init.BlockInit;
@@ -39,15 +38,12 @@ public class ClientSetup {
 
     public static void init(final FMLClientSetupEvent event) {
         // Connect Containers and Windows
-        MenuScreens.register(ALTAR_CONTAINER.get(), AltarWindow::new);
         MenuScreens.register(SCROLL_TABLE_CONTAINER.get(), ScrollTableWindow::new);
         MenuScreens.register(WAND_WORKBENCH_CONTAINER.get(), WandWorkbenchWindow::new);
 
         // Make this deferred for unsafe threads
         event.enqueueWork(() -> {
             // Cutout
-            ItemBlockRenderTypes.setRenderLayer(BlockInit.ALTAR.get(), RenderType.cutout());
-            ItemBlockRenderTypes.setRenderLayer(BlockInit.RUNIC_PILLAR.get(), RenderType.cutout());
             ItemBlockRenderTypes.setRenderLayer(BlockInit.SCROLL_TABLE.get(), RenderType.cutout());
             ItemBlockRenderTypes.setRenderLayer(BlockInit.WAND_WORKBENCH.get(), RenderType.cutout());
 

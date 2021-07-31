@@ -46,12 +46,6 @@ public class ItemInit {
     public static final RegistryObject<Item> WAND_WORKBENCH_ITEM = ITEMS.register("wand_workbench", () ->
             new BlockItem(BlockInit.WAND_WORKBENCH.get(), new Item.Properties().tab(ItemGroups.ARCANECRAFT)));
 
-    public static final RegistryObject<Item> ALTAR_ITEM = ITEMS.register("altar", () ->
-            new BlockItem(BlockInit.ALTAR.get(), new Item.Properties().tab(ItemGroups.ARCANECRAFT)));
-
-    public static final RegistryObject<Item> RUNIC_PILLAR_ITEM = ITEMS.register("runic_pillar", () ->
-            new BlockItem(BlockInit.RUNIC_PILLAR.get(), new Item.Properties().tab(ItemGroups.ARCANECRAFT)));
-
     public static final RegistryObject<Item> RUNIC_STONE_ITEM = ITEMS.register("runic_stone", () ->
             new BlockItem(BlockInit.RUNIC_STONE.get(), new Item.Properties().tab(ItemGroups.ARCANECRAFT)));
 

@@ -16,9 +16,6 @@ public class TileEntityInit {
     public static final DeferredRegister<BlockEntityType<?>> TILE_ENTITIES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITIES,
             ArcaneCraft.MODID);
 
-    public static final RegistryObject<BlockEntityType<TileAltar>> TILE_ALTAR = TILE_ENTITIES.register("altar", () ->
-            BlockEntityType.Builder.of(TileAltar::new, BlockInit.ALTAR.get()).build(null));
-
     public static final RegistryObject<BlockEntityType<TileScrollTable>> TILE_SCROLL_TABLE = TILE_ENTITIES.register("scroll_table", () ->
             BlockEntityType.Builder.of(TileScrollTable::new, BlockInit.SCROLL_TABLE.get()).build(null));
 
