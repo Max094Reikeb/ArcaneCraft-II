@@ -4,11 +4,9 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.phys.AABB;
-import net.minecraft.world.phys.EntityHitResult;
-import net.minecraft.world.phys.HitResult;
-import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.phys.*;
 
 import net.minecraftforge.items.IItemHandler;
 
@@ -17,6 +15,20 @@ import net.reikeb.arcanecraft.IntegrationHelper;
 import java.util.function.Predicate;
 
 public class Util {
+
+    public static BlockHitResult rayTrace(Level world, Player player, ClipContext.Fluid fluidHandling) {
+        float f = player.xRot;
+        float g = player.yRot;
+        Vec3 vec3d = player.getPosition(1.0f);
+        float h = (float) Math.cos(-g * 0.017453292F - 3.1415927F);
+        float i = (float) Math.sin(-g * 0.017453292F - 3.1415927F);
+        float j = (float) -Math.cos(-f * 0.017453292F);
+        float k = (float) Math.sin(-f * 0.017453292F);
+        float l = i * j;
+        float n = h * j;
+        Vec3 vec3d2 = new Vec3(l * 5.0D, k * 5.0D, n * 5.0D);
+        return world.clip(new ClipContext(vec3d, vec3d.add(vec3d2), ClipContext.Block.OUTLINE, fluidHandling, player));
+    }
 
     public static Entity rayTrace(Level world, Player player, double range) {
         Vec3 pos = player.getPosition(0f);
