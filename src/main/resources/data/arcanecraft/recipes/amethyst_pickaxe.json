@@ -2,26 +2,29 @@
   "group": "arcanecraft",
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "01",
-    " 3",
-    " 5"
+    "012",
+    " 4 ",
+    " 7 "
   ],
   "key": {
     "0": {
-      "item": "arcanecraft:crystal"
+      "item": "minecraft:amethyst_shard"
     },
     "1": {
-      "item": "arcanecraft:crystal"
+      "item": "minecraft:amethyst_shard"
     },
-    "3": {
+    "2": {
+      "item": "minecraft:amethyst_shard"
+    },
+    "4": {
       "item": "minecraft:stick"
     },
-    "5": {
+    "7": {
       "item": "minecraft:stick"
     }
   },
   "result": {
-    "item": "arcanecraft:crystal_hoe",
+    "item": "arcanecraft:amethyst_pickaxe",
     "count": 1
   }
 }

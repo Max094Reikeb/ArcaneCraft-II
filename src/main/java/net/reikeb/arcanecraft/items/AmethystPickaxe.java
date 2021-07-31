@@ -4,20 +4,16 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.item.AxeItem;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Tier;
+import net.minecraft.world.item.*;
 import net.minecraft.world.item.crafting.Ingredient;
 
 import net.minecraftforge.registries.ForgeRegistries;
 
-import net.reikeb.arcanecraft.init.ItemInit;
 import net.reikeb.arcanecraft.setup.ItemGroups;
 
-public class CrystalAxe extends AxeItem {
+public class AmethystPickaxe extends PickaxeItem {
 
-    public CrystalAxe() {
+    public AmethystPickaxe() {
         super(new Tier() {
             @Override
             public int getUses() {
@@ -31,7 +27,7 @@ public class CrystalAxe extends AxeItem {
 
             @Override
             public float getAttackDamageBonus() {
-                return 6.5f;
+                return 1.5f;
             }
 
             @Override
@@ -41,12 +37,12 @@ public class CrystalAxe extends AxeItem {
 
             @Override
             public int getEnchantmentValue() {
-                return 2;
+                return 33;
             }
 
             @Override
             public Ingredient getRepairIngredient() {
-                return Ingredient.of(new ItemStack(ItemInit.CRYSTAL.get(), 1));
+                return Ingredient.of(new ItemStack(Items.AMETHYST_SHARD, 1));
             }
         }, 1, -3f, new Item.Properties().tab(ItemGroups.ARCANECRAFT));
     }

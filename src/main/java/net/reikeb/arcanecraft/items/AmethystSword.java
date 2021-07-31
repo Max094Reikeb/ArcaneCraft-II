@@ -4,20 +4,16 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.ShovelItem;
-import net.minecraft.world.item.Tier;
+import net.minecraft.world.item.*;
 import net.minecraft.world.item.crafting.Ingredient;
 
 import net.minecraftforge.registries.ForgeRegistries;
 
-import net.reikeb.arcanecraft.init.ItemInit;
 import net.reikeb.arcanecraft.setup.ItemGroups;
 
-public class CrystalShovel extends ShovelItem {
+public class AmethystSword extends SwordItem {
 
-    public CrystalShovel() {
+    public AmethystSword() {
         super(new Tier() {
             @Override
             public int getUses() {
@@ -26,17 +22,17 @@ public class CrystalShovel extends ShovelItem {
 
             @Override
             public float getSpeed() {
-                return 5.5f;
+                return 4f;
             }
 
             @Override
             public float getAttackDamageBonus() {
-                return 0f;
+                return 1.5f;
             }
 
             @Override
             public int getLevel() {
-                return 1;
+                return 2;
             }
 
             @Override
@@ -46,9 +42,9 @@ public class CrystalShovel extends ShovelItem {
 
             @Override
             public Ingredient getRepairIngredient() {
-                return Ingredient.of(new ItemStack(ItemInit.CRYSTAL.get(), 1));
+                return Ingredient.of(new ItemStack(Items.AMETHYST_SHARD, 1));
             }
-        }, 1, -3f, new Item.Properties().tab(ItemGroups.ARCANECRAFT));
+        }, 3, -2.4f, new Item.Properties().tab(ItemGroups.ARCANECRAFT));
     }
 
     @Override

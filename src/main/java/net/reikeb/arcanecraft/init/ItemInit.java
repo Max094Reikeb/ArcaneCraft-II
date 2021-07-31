@@ -18,15 +18,15 @@ public class ItemInit {
 
     public static final RegistryObject<Item> AMETHYST_DUST = ITEMS.register("amethyst_dust", AmethystDust::new);
 
-    public static final RegistryObject<Item> CRYSTAL_SWORD = ITEMS.register("crystal_sword", CrystalSword::new);
+    public static final RegistryObject<Item> AMETHYST_SWORD = ITEMS.register("amethyst_sword", AmethystSword::new);
 
-    public static final RegistryObject<Item> CRYSTAL_PICKAXE = ITEMS.register("crystal_pickaxe", CrystalPickaxe::new);
+    public static final RegistryObject<Item> AMETHYST_PICKAXE = ITEMS.register("amethyst_pickaxe", AmethystPickaxe::new);
 
-    public static final RegistryObject<Item> CRYSTAL_AXE = ITEMS.register("crystal_axe", CrystalAxe::new);
+    public static final RegistryObject<Item> AMETHYST_AXE = ITEMS.register("amethyst_axe", AmethystAxe::new);
 
-    public static final RegistryObject<Item> CRYSTAL_SHOVEL = ITEMS.register("crystal_shovel", CrystalShovel::new);
+    public static final RegistryObject<Item> AMETHYST_SHOVEL = ITEMS.register("amethyst_shovel", AmethystShovel::new);
 
-    public static final RegistryObject<Item> CRYSTAL_HOE = ITEMS.register("crystal_hoe", CrystalHoe::new);
+    public static final RegistryObject<Item> AMETHYST_HOE = ITEMS.register("amethyst_hoe", AmethystHoe::new);
 
     public static final RegistryObject<Item> SACRIFICIAL_DAGGER = ITEMS.register("sacrificial_dagger", SacrificialDagger::new);
 
