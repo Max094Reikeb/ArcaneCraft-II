@@ -20,9 +20,6 @@ public class ItemInit {
 
     public static final RegistryObject<Item> CRYSTAL_DUST = ITEMS.register("crystal_dust", CrystalDust::new);
 
-    public static final RegistryObject<Item> CRYSTAL_ORE_ITEM = ITEMS.register("crystal_ore", () ->
-            new BlockItem(BlockInit.CRYSTAL_ORE.get(), new Item.Properties().tab(ItemGroups.ARCANECRAFT)));
-
     public static final RegistryObject<Item> CRYSTAL_SWORD = ITEMS.register("crystal_sword", CrystalSword::new);
 
     public static final RegistryObject<Item> CRYSTAL_PICKAXE = ITEMS.register("crystal_pickaxe", CrystalPickaxe::new);
@@ -46,9 +43,6 @@ public class ItemInit {
     public static final RegistryObject<Item> ARCANE_SCROLL = ITEMS.register("arcane_scroll", ArcaneScroll::new);
 
     public static final RegistryObject<Item> WAND = ITEMS.register("wand", Wand::new);
-
-    public static final RegistryObject<Item> CRYSTAL_BLOCK_ITEM = ITEMS.register("crystal_block", () ->
-            new BlockItem(BlockInit.CRYSTAL_BLOCK.get(), new Item.Properties().tab(ItemGroups.ARCANECRAFT)));
 
     public static final RegistryObject<Item> SCROLL_TABLE_ITEM = ITEMS.register("scroll_table", () ->
             new BlockItem(BlockInit.SCROLL_TABLE.get(), new Item.Properties().tab(ItemGroups.ARCANECRAFT)));

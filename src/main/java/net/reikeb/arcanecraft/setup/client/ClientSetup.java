@@ -50,7 +50,6 @@ public class ClientSetup {
             ItemBlockRenderTypes.setRenderLayer(BlockInit.RUNIC_PILLAR.get(), RenderType.cutout());
             ItemBlockRenderTypes.setRenderLayer(BlockInit.SCROLL_TABLE.get(), RenderType.cutout());
             ItemBlockRenderTypes.setRenderLayer(BlockInit.WAND_WORKBENCH.get(), RenderType.cutout());
-            ItemBlockRenderTypes.setRenderLayer(BlockInit.CRYSTAL_BLOCK.get(), RenderType.cutout());
 
             // Item Properties
             ItemProperties.register(ItemInit.ARCANE_SCROLL.get(), new ResourceLocation("spell"), (stack, p_239426_1_, player, p_239426_2_) -> {
