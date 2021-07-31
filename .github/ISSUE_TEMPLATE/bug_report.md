@@ -22,9 +22,9 @@ A clear and concise description of what you expected to happen.
 If applicable, add screenshots to help explain your problem.
 
 **Mod informations (please complete the following information):**
- - Mod Version [e.g. r1.0]
+ - Mod Version [e.g. alpha-v3]
  - Minecraft Version [e.g. 1.16.5]
- - Forge Version [e.g. 16.0.1]
+ - Forge Version [e.g. 16.0.2]
 
 **Additional context**
 Add any other context about the problem here.
