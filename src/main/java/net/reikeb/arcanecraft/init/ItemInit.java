@@ -28,8 +28,6 @@ public class ItemInit {
 
     public static final RegistryObject<Item> AMETHYST_HOE = ITEMS.register("amethyst_hoe", AmethystHoe::new);
 
-    public static final RegistryObject<Item> SACRIFICIAL_DAGGER = ITEMS.register("sacrificial_dagger", SacrificialDagger::new);
-
     public static final RegistryObject<Item> INK_VIAL = ITEMS.register("ink_vial", InkVial::new);
 
     public static final RegistryObject<Item> ARCANE_SCROLL_FOCUS = ITEMS.register("arcane_scroll_focus", ArcaneScrollFocus::new);

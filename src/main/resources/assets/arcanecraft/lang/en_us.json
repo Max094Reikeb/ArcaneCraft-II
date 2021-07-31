@@ -42,7 +42,6 @@
   "item.arcanecraft.mana_potion_effect": "Mana (0:10)",
   "item.arcanecraft.mana_potion_result": "+10 Mana max",
   "item.arcanecraft.mana_potion_used": "When Drank:",
-  "item.arcanecraft.sacrificial_dagger": "Sacrificial Dagger",
   "item.arcanecraft.wand": "Wand",
   "item.arcanecraft.wand_require_mana": "Requires %s mana",
   "itemGroup.arcanecraft": "ArcaneCraft",
