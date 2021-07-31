@@ -7,7 +7,6 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import net.reikeb.arcanecraft.ArcaneCraft;
-import net.reikeb.arcanecraft.tileentities.TileAltar;
 import net.reikeb.arcanecraft.tileentities.TileScrollTable;
 import net.reikeb.arcanecraft.tileentities.TileWandWorkbench;
 
