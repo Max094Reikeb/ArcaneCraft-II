@@ -16,9 +16,7 @@ public class ItemInit {
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS,
             ArcaneCraft.MODID);
 
-    public static final RegistryObject<Item> CRYSTAL = ITEMS.register("crystal", Crystal::new);
-
-    public static final RegistryObject<Item> CRYSTAL_DUST = ITEMS.register("crystal_dust", CrystalDust::new);
+    public static final RegistryObject<Item> AMETHYST_DUST = ITEMS.register("amethyst_dust", AmethystDust::new);
 
     public static final RegistryObject<Item> CRYSTAL_SWORD = ITEMS.register("crystal_sword", CrystalSword::new);
 
@@ -31,8 +29,6 @@ public class ItemInit {
     public static final RegistryObject<Item> CRYSTAL_HOE = ITEMS.register("crystal_hoe", CrystalHoe::new);
 
     public static final RegistryObject<Item> SACRIFICIAL_DAGGER = ITEMS.register("sacrificial_dagger", SacrificialDagger::new);
-
-    public static final RegistryObject<Item> SOUL = ITEMS.register("soul", Soul::new);
 
     public static final RegistryObject<Item> INK_VIAL = ITEMS.register("ink_vial", InkVial::new);
 

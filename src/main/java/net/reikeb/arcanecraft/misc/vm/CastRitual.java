@@ -8,13 +8,6 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LightningBolt;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.animal.Cow;
-import net.minecraft.world.entity.animal.Pig;
-import net.minecraft.world.entity.animal.Sheep;
-import net.minecraft.world.entity.monster.Skeleton;
-import net.minecraft.world.entity.monster.Spider;
-import net.minecraft.world.entity.monster.Zombie;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -27,7 +20,6 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.reikeb.arcanecraft.blocks.RunicPillar;
 import net.reikeb.arcanecraft.entities.FireSplashEntity;
 import net.reikeb.arcanecraft.init.EntityInit;
-import net.reikeb.arcanecraft.init.ItemInit;
 import net.reikeb.arcanecraft.init.PotionEffectInit;
 import net.reikeb.arcanecraft.network.NetworkManager;
 import net.reikeb.arcanecraft.network.packets.MagicSummoningPacket;
@@ -87,60 +79,10 @@ public class CastRitual {
                 }
                 finishRitual(false);
 
-            } else if ((stackInSlot0.getItem() == Blocks.SOUL_SAND.asItem()) // Soul harvest ritual
-                    && (stackInSlot1.getItem() == Items.BONE) && (!isSacrifice)) {
-                playerEntity.addEffect(new MobEffectInstance(PotionEffectInit.SOUL_TRAPPER.get(), 12000, 0));
-                this.level.playSound(null, this.pos.getX(), this.pos.getY(), this.pos.getZ(),
-                        ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.wither.ambient")),
-                        SoundSource.NEUTRAL, 5, 1);
-                finishRitual(false);
-
             } else if ((stackInSlot0.getItem() == Blocks.LILY_OF_THE_VALLEY.asItem()) // Growth ritual
                     && (stackInSlot1.getItem() == Blocks.GRASS_BLOCK.asItem()) && (!isSacrifice)) {
                 playerEntity.addEffect(new MobEffectInstance(PotionEffectInit.DRUID_BLESSING.get(), 12000, 0));
                 finishRitual(false);
-
-            } else if ((stackInSlot0.getItem() == ItemInit.SOUL.get()) // Pig summoning
-                    && (stackInSlot1.getItem() == Items.PORKCHOP) && (isSacrifice)) {
-                LivingEntity pig = new Pig(EntityType.PIG, this.level);
-                pig.moveTo(this.pos.above(), this.level.random.nextFloat() * 360F, 0);
-                this.level.addFreshEntity(pig);
-                finishRitual(true);
-
-            } else if ((stackInSlot0.getItem() == ItemInit.SOUL.get()) // Cow summoning
-                    && (stackInSlot1.getItem() == Items.BEEF) && (isSacrifice)) {
-                LivingEntity cow = new Cow(EntityType.COW, this.level);
-                cow.moveTo(this.pos.above(), this.level.random.nextFloat() * 360F, 0);
-                this.level.addFreshEntity(cow);
-                finishRitual(true);
-
-            } else if ((stackInSlot0.getItem() == ItemInit.SOUL.get()) // Zombie summoning
-                    && (stackInSlot1.getItem() == Items.ROTTEN_FLESH) && (isSacrifice)) {
-                LivingEntity zombie = new Zombie(EntityType.ZOMBIE, this.level);
-                zombie.moveTo(this.pos.above(), this.level.random.nextFloat() * 360F, 0);
-                this.level.addFreshEntity(zombie);
-                finishRitual(true);
-
-            } else if ((stackInSlot0.getItem() == ItemInit.SOUL.get()) // Sheep summoning
-                    && (stackInSlot1.getItem() == Items.MUTTON) && (isSacrifice)) {
-                LivingEntity sheep = new Sheep(EntityType.SHEEP, this.level);
-                sheep.moveTo(this.pos.above(), this.level.random.nextFloat() * 360F, 0);
-                this.level.addFreshEntity(sheep);
-                finishRitual(true);
-
-            } else if ((stackInSlot0.getItem() == ItemInit.SOUL.get()) // Skeleton summoning
-                    && (stackInSlot1.getItem() == Items.BONE) && (isSacrifice)) {
-                LivingEntity skeleton = new Skeleton(EntityType.SKELETON, this.level);
-                skeleton.moveTo(this.pos.above(), this.level.random.nextFloat() * 360F, 0);
-                this.level.addFreshEntity(skeleton);
-                finishRitual(true);
-
-            } else if ((stackInSlot0.getItem() == ItemInit.SOUL.get()) // Spider summoning
-                    && (stackInSlot1.getItem() == Items.SPIDER_EYE) && (isSacrifice)) {
-                LivingEntity spider = new Spider(EntityType.SPIDER, this.level);
-                spider.moveTo(this.pos.above(), this.level.random.nextFloat() * 360F, 0);
-                this.level.addFreshEntity(spider);
-                finishRitual(true);
 
             }
         }

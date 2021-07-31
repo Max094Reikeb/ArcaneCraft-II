@@ -6,9 +6,9 @@ import net.minecraft.world.level.block.state.BlockState;
 
 import net.reikeb.arcanecraft.setup.ItemGroups;
 
-public class Crystal extends Item {
+public class AmethystDust extends Item {
 
-    public Crystal() {
+    public AmethystDust() {
         super(new Properties()
                 .stacksTo(64)
                 .tab(ItemGroups.ARCANECRAFT));

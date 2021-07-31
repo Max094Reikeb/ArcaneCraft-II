@@ -2,7 +2,7 @@
   "display": {
     "background": "arcanecraft:textures/blocks/rune_stone.png",
     "icon": {
-      "item": "arcanecraft:crystal"
+      "item": "minecraft:amethyst_shard"
     },
     "title": {
       "translate": "advancements.arcane_craft_advancement.title"
@@ -21,7 +21,7 @@
       "conditions": {
         "items": [
           {
-            "item": "arcanecraft:crystal",
+            "item": "minecraft:amethyst_shard",
             "count": {
               "min": 1,
               "max": 64

@@ -102,7 +102,7 @@ public class RunicPillar extends Block {
             world.setBlockAndUpdate(pos, state.setValue(ACTIVE, false));
 
             if (!world.isClientSide && !playerEntity.isCreative()) {
-                ItemEntity crystalDust = new ItemEntity(world, x, (y + 3), z, new ItemStack(ItemInit.CRYSTAL_DUST.get(), 1));
+                ItemEntity crystalDust = new ItemEntity(world, x, (y + 3), z, new ItemStack(ItemInit.AMETHYST_DUST.get(), 1));
                 crystalDust.setPickUpDelay(10);
                 world.addFreshEntity(crystalDust);
             }
@@ -112,10 +112,10 @@ public class RunicPillar extends Block {
             world.playSound(null, pos, beaconSound, SoundSource.NEUTRAL, (float) 1, (float) 1);
 
         } else {
-            if (playerEntity.getItemInHand(hand).getItem() == ItemInit.CRYSTAL_DUST.get()) {
+            if (playerEntity.getItemInHand(hand).getItem() == ItemInit.AMETHYST_DUST.get()) {
                 if (!playerEntity.isCreative()) {
                     int itemInHand = playerEntity.getItemInHand(hand).getCount();
-                    playerEntity.setItemInHand(hand, (itemInHand > 1 ? new ItemStack(ItemInit.CRYSTAL_DUST.get(), (itemInHand - 1)) : ItemStack.EMPTY));
+                    playerEntity.setItemInHand(hand, (itemInHand > 1 ? new ItemStack(ItemInit.AMETHYST_DUST.get(), (itemInHand - 1)) : ItemStack.EMPTY));
                 }
 
                 world.setBlockAndUpdate(pos, state.setValue(ACTIVE, true));

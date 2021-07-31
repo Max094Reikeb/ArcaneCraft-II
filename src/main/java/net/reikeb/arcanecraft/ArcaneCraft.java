@@ -54,7 +54,7 @@ public class ArcaneCraft {
         // Custom potion recipes
         BrewingRecipeRegistry.addRecipe(
                 Ingredient.of(PotionUtils.setPotion(new ItemStack(Items.POTION), Potion.byName("awkward"))),
-                Ingredient.of(ItemInit.CRYSTAL.get()),
+                Ingredient.of(Items.AMETHYST_SHARD),
                 new ItemStack(ItemInit.MANA_POTION.get()));
     }
 
