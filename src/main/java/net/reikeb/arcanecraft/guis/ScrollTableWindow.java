@@ -5,6 +5,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
@@ -15,8 +16,6 @@ import net.reikeb.arcanecraft.containers.ScrollTableContainer;
 import net.reikeb.arcanecraft.network.NetworkManager;
 import net.reikeb.arcanecraft.network.packets.ScrollWritingPacket;
 import net.reikeb.arcanecraft.tileentities.TileScrollTable;
-
-import org.lwjgl.opengl.GL11;
 
 public class ScrollTableWindow extends AbstractContainerScreen<ScrollTableContainer> {
 
@@ -44,7 +43,8 @@ public class ScrollTableWindow extends AbstractContainerScreen<ScrollTableContai
 
     @Override
     protected void renderBg(PoseStack matrixStack, float partialTicks, int mouseX, int mouseY) {
-        GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+        RenderSystem.setShader(GameRenderer::getPositionTexShader);
+        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
         RenderSystem.setShaderTexture(0, SCROLL_TABLE_GUI);
         int relX = (this.width - this.imageWidth) / 2;
         int relY = (this.height - this.imageHeight) / 2;
