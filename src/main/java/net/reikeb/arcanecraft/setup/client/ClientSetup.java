@@ -60,8 +60,6 @@ public class ClientSetup {
                         return 4.0F;
                     } else if (spellInstance.getSpell() == SpellInit.LIGHTNING.get()) {
                         return 5.0F;
-                    } else if (spellInstance.getSpell() == SpellInit.BOLT.get()) {
-                        return 6.0F;
                     }
                 }
                 return 0.0F;
@@ -77,8 +75,6 @@ public class ClientSetup {
                         return 3.0F;
                     } else if (spellInstance.getSpell() == SpellInit.LIGHTNING.get()) {
                         return 4.0F;
-                    } else if (spellInstance.getSpell() == SpellInit.BOLT.get()) {
-                        return 5.0F;
                     }
                 }
                 return 0.0F;
@@ -96,8 +92,6 @@ public class ClientSetup {
                         return 4.0F;
                     } else if (spellInstance.getSpell() == SpellInit.LIGHTNING.get()) {
                         return 5.0F;
-                    } else if (spellInstance.getSpell() == SpellInit.BOLT.get()) {
-                        return 6.0F;
                     }
                 }
                 return 0.0F;
@@ -111,7 +105,7 @@ public class ClientSetup {
                 rendererProvider -> new MobRenderer(rendererProvider, new SlimeModel<>(rendererProvider.bakeLayer(ModelLayers.SLIME)), 0f) {
                     @Override
                     public ResourceLocation getTextureLocation(Entity entity) {
-                        return ArcaneCraft.RL("air");
+                        return ArcaneCraft.RL("textures/air.png");
                     }
                 });
 

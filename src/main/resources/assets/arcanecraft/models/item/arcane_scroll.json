@@ -33,12 +33,6 @@
         "spell": 5
       },
       "model": "arcanecraft:item/arcane_scroll_lightning"
-    },
-    {
-      "predicate": {
-        "spell": 6
-      },
-      "model": "arcanecraft:item/arcane_scroll_bolt"
     }
   ]
 }

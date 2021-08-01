@@ -32,7 +32,6 @@ public class WandInit {
     public static final RegistryObject<WandObject> ICE = WAND_DEFERRED_REGISTER.register("ice", () -> new WandObject(Lazy.of(() -> new SpellInstance(SpellInit.ICE.get(), 2))));
     public static final RegistryObject<WandObject> LIFE_DRAIN = WAND_DEFERRED_REGISTER.register("life_drain", () -> new WandObject(Lazy.of(() -> new SpellInstance(SpellInit.LIFE_DRAIN.get(), 3))));
     public static final RegistryObject<WandObject> LIGHTNING = WAND_DEFERRED_REGISTER.register("lightning", () -> new WandObject(Lazy.of(() -> new SpellInstance(SpellInit.LIGHTNING.get(), 6))));
-    public static final RegistryObject<WandObject> BOLT = WAND_DEFERRED_REGISTER.register("bolt", () -> new WandObject(Lazy.of(() -> new SpellInstance(SpellInit.BOLT.get(), 7))));
 
     public static <T extends IForgeRegistryEntry<?>> ResourceLocation getName(T type) {
         return Objects.requireNonNull(type.getRegistryName());

@@ -47,7 +47,7 @@ public class CastSpell {
             playerMana.set(cap.getMana());
         });
 
-        if ((playerMana.get() <= spellMana) && (!playerEntity.isCreative())) return;
+        if ((playerMana.get() < spellMana) && (!playerEntity.isCreative())) return;
 
         if (wandObject == WandInit.EVOKER.get()) {
             ArrowEvokerEntity arrowEvokerEntity = new ArrowEvokerEntity(EntityInit.ARROW_EVOKER_ENTITY_ENTITY_TYPE, this.playerEntity, this.world);
@@ -80,20 +80,6 @@ public class CastSpell {
             flag = true;
 
         }
-
-        /*else if (wandObject == WandInit.METEOR.get()) {
-            ArrowMeteorEntity arrowMeteorEntity = new ArrowMeteorEntity(EntityInit.ARROW_METEOR_ENTITY_ENTITY_TYPE, this.playerEntity, this.world);
-            ArrowMeteorEntity arrowMeteorEntity1 = (ArrowMeteorEntity) shootArrow(arrowMeteorEntity, "entity.evoker.cast_spell", 1.2F, 2, 0);
-            arrowMeteorEntity1.pickup = AbstractArrow.Pickup.DISALLOWED;
-            flag = true;
-
-        } else if (wandObject == WandInit.WITHER.get()) {
-            ArrowWitherEntity arrowWitherEntity = new ArrowWitherEntity(EntityInit.ARROW_WITHER_ENTITY_ENTITY_TYPE, this.playerEntity, this.world);
-            ArrowWitherEntity arrowWitherEntity1 = (ArrowWitherEntity) shootArrow(arrowWitherEntity, "entity.wither.shoot", 1.4F, 4, 0);
-            arrowWitherEntity1.pickup = AbstractArrow.Pickup.DISALLOWED;
-            flag = true;
-
-        }*/
 
         if (flag) {
             NetworkManager.INSTANCE.sendToServer(new WooMagicPacket());
