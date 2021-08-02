@@ -68,6 +68,7 @@ public class ScrollTableWindow extends AbstractContainerScreen<ScrollTableContai
 
     @Override
     public void init() {
+        super.init();
         this.addRenderableWidget(new Button(this.leftPos + 112, this.topPos + 38, 20, 20,
                 new TranslatableComponent("gui.arcanecraft.ok_button"), e -> {
             NetworkManager.INSTANCE.sendToServer(new ScrollWritingPacket());

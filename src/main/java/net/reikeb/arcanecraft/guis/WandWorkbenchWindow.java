@@ -68,6 +68,7 @@ public class WandWorkbenchWindow extends AbstractContainerScreen<WandWorkbenchCo
 
     @Override
     public void init() {
+        super.init();
         this.addRenderableWidget(new Button(this.leftPos + 78, this.topPos + 53, 20, 20,
                 new TranslatableComponent("gui.arcanecraft.ok_button"), e -> {
             NetworkManager.INSTANCE.sendToServer(new WandWorkbenchingPacket());
