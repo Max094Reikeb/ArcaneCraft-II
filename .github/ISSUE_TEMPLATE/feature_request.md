@@ -2,7 +2,7 @@
 name: Feature request
 about: Suggest an idea for ArcaneCraft II
 title: "[Feature Request]"
-labels: feature request
+labels: feature-request
 assignees: ''
 
 ---
