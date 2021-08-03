@@ -13,7 +13,7 @@ import net.reikeb.arcanecraft.potions.ManaEffect;
 
 public class PotionEffectInit {
 
-    public static final DeferredRegister<MobEffect> EFFECTS = DeferredRegister.create(ForgeRegistries.POTIONS,
+    public static final DeferredRegister<MobEffect> EFFECTS = DeferredRegister.create(ForgeRegistries.MOB_EFFECTS,
             ArcaneCraft.MODID);
 
     public static final RegistryObject<MobEffect> CHARRED_STRIKE = EFFECTS.register("charred_strike", CharredStrikeEffect::new);
