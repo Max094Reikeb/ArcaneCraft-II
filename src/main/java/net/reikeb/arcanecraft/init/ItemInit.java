@@ -40,6 +40,8 @@ public class ItemInit {
 
     public static final RegistryObject<Item> WAND = ITEMS.register("wand", Wand::new);
 
+    public static final RegistryObject<Item> GOLD_RING = ITEMS.register("gold_ring", GoldRing::new);
+
     public static final RegistryObject<Item> SCROLL_TABLE_ITEM = ITEMS.register("scroll_table", () ->
             new BlockItem(BlockInit.SCROLL_TABLE.get(), new Item.Properties().tab(ItemGroups.ARCANECRAFT)));
 
