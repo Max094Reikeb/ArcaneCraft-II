@@ -9,10 +9,12 @@ import net.minecraft.world.entity.projectile.ItemSupplier;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
+
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fmllegacy.network.FMLPlayMessages;
 import net.minecraftforge.fmllegacy.network.NetworkHooks;
+
 import net.reikeb.arcanecraft.init.EntityInit;
 
 @OnlyIn(value = Dist.CLIENT, _interface = ItemSupplier.class)
@@ -69,7 +71,7 @@ public class ArrowFireEntity extends AbstractArrow implements ItemSupplier {
             if (this.level.getBlockState(this.blockPosition()).getBlock() == Blocks.CAMPFIRE) {
                 this.level.setBlock(this.blockPosition(), Blocks.CAMPFIRE.defaultBlockState(), 3);
             }
-            this.remove(false);
+            this.remove(RemovalReason.KILLED);
         }
     }
 }

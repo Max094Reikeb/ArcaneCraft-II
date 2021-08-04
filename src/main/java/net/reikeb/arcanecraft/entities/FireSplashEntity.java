@@ -89,7 +89,7 @@ public class FireSplashEntity extends PathfinderMob {
     @Override
     public void baseTick() {
         super.baseTick();
-        this.remove(false);
+        this.remove(RemovalReason.KILLED);
     }
 
     public static AttributeSupplier.Builder createAttributes() {

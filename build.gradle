@@ -30,6 +30,11 @@ repositories {
         // Location of the maven that hosts Curios files
         url = "https://maven.theillusivec4.top/"
     }
+
+    // Patchouli Book
+    maven {
+        url = "https://maven.blamejared.com"
+    }
 }
 
 apply plugin: 'net.minecraftforge.gradle'
@@ -103,6 +108,11 @@ dependencies {
     compileOnly fg.deobf("top.theillusivec4.curios:curios-forge:${curios_version}:api")
     // At runtime, use the full Curios jar
     runtimeOnly fg.deobf("top.theillusivec4.curios:curios-forge:${curios_version}")
+
+    // Compile against the Patchouli API but do not include it at runtime
+    // compileOnly fg.deobf("vazkii.patchouli:Patchouli:${patchouli_version}:api")
+    // At runtime, use the full Patchouli jar
+    // runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:${patchouli_version}")
 }
 
 jar {

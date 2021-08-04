@@ -10,10 +10,12 @@ import net.minecraft.world.entity.projectile.ItemSupplier;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
+
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fmllegacy.network.FMLPlayMessages;
 import net.minecraftforge.fmllegacy.network.NetworkHooks;
+
 import net.reikeb.arcanecraft.init.EntityInit;
 
 @OnlyIn(value = Dist.CLIENT, _interface = ItemSupplier.class)
@@ -66,7 +68,7 @@ public class ArrowEvokerEntity extends AbstractArrow implements ItemSupplier {
             this.level.addFreshEntity(evokerFangs);
         }
         if (this.inGround) {
-            this.remove(false);
+            this.remove(RemovalReason.KILLED);
         }
     }
 }

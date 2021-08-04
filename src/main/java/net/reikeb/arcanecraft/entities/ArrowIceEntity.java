@@ -67,7 +67,7 @@ public class ArrowIceEntity extends AbstractArrow implements ItemSupplier {
         this.level.addParticle(ParticleTypes.ITEM_SNOWBALL, this.getX(), this.getY(), this.getZ(),
                 6, 1, 1);
         if (this.inGround) {
-            this.remove(false);
+            this.remove(RemovalReason.KILLED);
         }
     }
 }

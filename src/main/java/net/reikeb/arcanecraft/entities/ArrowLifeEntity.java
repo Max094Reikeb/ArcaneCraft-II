@@ -70,7 +70,7 @@ public class ArrowLifeEntity extends AbstractArrow implements ItemSupplier {
         this.level.addParticle(ParticleTypes.DAMAGE_INDICATOR, this.getX(), this.getY(), this.getZ(),
                 1, 1, 1);
         if (this.inGround) {
-            this.remove(false);
+            this.remove(RemovalReason.KILLED);
         }
     }
 }
