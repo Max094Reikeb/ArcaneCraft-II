@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "minecraft:paper"
+    },
+    {
+      "item": "arcanecraft:spell_book"
+    }
+  ],
+  "result": {
+    "item": "arcanecraft:spell_book_banner_pattern"
+  }
+}
