@@ -6,6 +6,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.Potion;
 import net.minecraft.world.item.alchemy.PotionUtils;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.level.block.entity.BannerPattern;
 
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.brewing.BrewingRecipeRegistry;
@@ -48,6 +49,10 @@ public class ArcaneCraft {
 
     public static ResourceLocation RL(String path) {
         return new ResourceLocation(MODID, path);
+    }
+
+    public static BannerPattern addBanner(String name) {
+        return BannerPattern.create(name.toUpperCase(), name, MODID + "." + name, true);
     }
 
     public void setup(final FMLCommonSetupEvent event) {

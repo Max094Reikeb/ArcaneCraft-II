@@ -61,4 +61,6 @@ public class ItemInit {
             new BlockItem(BlockInit.RUNIC_STONE_WALL.get(), new Item.Properties().tab(ItemGroups.ARCANECRAFT)));
 
     public static final RegistryObject<Item> MANA_POTION = ITEMS.register("mana_potion", ManaPotion::new);
+
+    public static final RegistryObject<Item> SPELL_BOOK_BANNER_PATTERN = ITEMS.register("spell_book_banner_pattern", SpellBookBannerPattern::new);
 }
