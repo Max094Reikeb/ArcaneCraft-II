@@ -56,6 +56,7 @@
   "item.arcanecraft.mana_potion_effect": "Mana (0:10)",
   "item.arcanecraft.mana_potion_result": "+10 Mana max",
   "item.arcanecraft.mana_potion_used": "Quand Bue:",
+  "item.arcanecraft.spell_book": "Livre de Sorts",
   "item.arcanecraft.spell_book_banner_pattern": "Motif de bannière",
   "item.arcanecraft.spell_book_banner_pattern.desc": "Livre de Sorts",
   "item.arcanecraft.wand": "Baguette",
@@ -66,5 +67,7 @@
   "spell.arcanecraft.fire": "[Éclair de Feu]",
   "spell.arcanecraft.ice": "[Blizzard]",
   "spell.arcanecraft.life_drain": "[Drain de Vie]",
-  "spell.arcanecraft.lightning": "[Appel de Tempête]"
+  "spell.arcanecraft.lightning": "[Appel de Tempête]",
+  "spell.arcanecraft.protection_circle": "[Cercle de Protection]",
+  "spell.arcanecraft.pull": "[Tirer]"
 }
