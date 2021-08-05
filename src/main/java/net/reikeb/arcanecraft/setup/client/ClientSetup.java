@@ -60,6 +60,10 @@ public class ClientSetup {
                         return 4.0F;
                     } else if (spellInstance.getSpell() == SpellInit.LIGHTNING.get()) {
                         return 5.0F;
+                    } else if (spellInstance.getSpell() == SpellInit.PULL.get()) {
+                        return 6.0F;
+                    } else if (spellInstance.getSpell() == SpellInit.PROTECTION_CIRCLE.get()) {
+                        return 7.0F;
                     }
                 }
                 return 0.0F;
@@ -75,6 +79,10 @@ public class ClientSetup {
                         return 3.0F;
                     } else if (spellInstance.getSpell() == SpellInit.LIGHTNING.get()) {
                         return 4.0F;
+                    } else if (spellInstance.getSpell() == SpellInit.PULL.get()) {
+                        return 5.0F;
+                    } else if (spellInstance.getSpell() == SpellInit.PROTECTION_CIRCLE.get()) {
+                        return 6.0F;
                     }
                 }
                 return 0.0F;
@@ -92,6 +100,10 @@ public class ClientSetup {
                         return 4.0F;
                     } else if (spellInstance.getSpell() == SpellInit.LIGHTNING.get()) {
                         return 5.0F;
+                    } else if (spellInstance.getSpell() == SpellInit.PULL.get()) {
+                        return 6.0F;
+                    } else if (spellInstance.getSpell() == SpellInit.PROTECTION_CIRCLE.get()) {
+                        return 7.0F;
                     }
                 }
                 return 0.0F;

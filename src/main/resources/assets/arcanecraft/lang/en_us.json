@@ -66,5 +66,7 @@
   "spell.arcanecraft.fire": "[Fire Bolt]",
   "spell.arcanecraft.ice": "[Snowstorm]",
   "spell.arcanecraft.life_drain": "[Life Drain]",
-  "spell.arcanecraft.lightning": "[Storm Call]"
+  "spell.arcanecraft.lightning": "[Storm Call]",
+  "spell.arcanecraft.protection_circle": "[Circle of Protection]",
+  "spell.arcanecraft.pull": "[Pull]"
 }

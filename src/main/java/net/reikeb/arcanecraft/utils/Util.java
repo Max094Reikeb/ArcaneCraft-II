@@ -1,6 +1,7 @@
 package net.reikeb.arcanecraft.utils;
 
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntitySelector;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -35,7 +36,7 @@ public class Util {
         Vec3 cam1 = player.getLookAngle();
         Vec3 cam2 = cam1.add(cam1.x * range, cam1.y * range, cam1.z * range);
         AABB aabb = player.getBoundingBox().expandTowards(cam1.scale(range)).inflate(1.0F, 1.0F, 1.0F);
-        EntityHitResult ray = findEntity(world, player, pos, cam2, aabb, null, range);
+        EntityHitResult ray = findEntity(world, player, pos, cam2, aabb, EntitySelector.LIVING_ENTITY_STILL_ALIVE, range);
 
         if (ray != null) {
             if (ray.getType() == HitResult.Type.ENTITY) {

@@ -31,6 +31,8 @@ public class SpellInit {
     public static final RegistryObject<Spell> ICE = SPELLS_DEFERRED_REGISTER.register("ice", () -> new Spell(ChatFormatting.AQUA));
     public static final RegistryObject<Spell> LIFE_DRAIN = SPELLS_DEFERRED_REGISTER.register("life_drain", () -> new Spell(ChatFormatting.DARK_RED));
     public static final RegistryObject<Spell> LIGHTNING = SPELLS_DEFERRED_REGISTER.register("lightning", () -> new Spell(ChatFormatting.YELLOW));
+    public static final RegistryObject<Spell> PULL = SPELLS_DEFERRED_REGISTER.register("pull", () -> new Spell(ChatFormatting.DARK_GREEN));
+    public static final RegistryObject<Spell> PROTECTION_CIRCLE = SPELLS_DEFERRED_REGISTER.register("protection_circle", () -> new Spell(ChatFormatting.BLUE));
 
     public static <T extends IForgeRegistryEntry<?>> ResourceLocation getName(T type) {
         return Objects.requireNonNull(type.getRegistryName());

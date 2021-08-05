@@ -32,6 +32,8 @@ public class ScrollFocusInit {
     public static final RegistryObject<ScrollFocusObject> ICE = SCROLL_FOCUS_DEFERRED_REGISTER.register("ice", () -> new ScrollFocusObject(Lazy.of(() -> new SpellInstance(SpellInit.ICE.get()))));
     public static final RegistryObject<ScrollFocusObject> LIFE_DRAIN = SCROLL_FOCUS_DEFERRED_REGISTER.register("life_drain", () -> new ScrollFocusObject(Lazy.of(() -> new SpellInstance(SpellInit.LIFE_DRAIN.get()))));
     public static final RegistryObject<ScrollFocusObject> LIGHTNING = SCROLL_FOCUS_DEFERRED_REGISTER.register("lightning", () -> new ScrollFocusObject(Lazy.of(() -> new SpellInstance(SpellInit.LIGHTNING.get()))));
+    public static final RegistryObject<ScrollFocusObject> PULL = SCROLL_FOCUS_DEFERRED_REGISTER.register("pull", () -> new ScrollFocusObject(Lazy.of(() -> new SpellInstance(SpellInit.PULL.get()))));
+    public static final RegistryObject<ScrollFocusObject> PROTECTION_CIRCLE = SCROLL_FOCUS_DEFERRED_REGISTER.register("protection_circle", () -> new ScrollFocusObject(Lazy.of(() -> new SpellInstance(SpellInit.PROTECTION_CIRCLE.get()))));
 
     public static <T extends IForgeRegistryEntry<?>> ResourceLocation getName(T type) {
         return Objects.requireNonNull(type.getRegistryName());
