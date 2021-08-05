@@ -9,7 +9,7 @@ import net.minecraftforge.common.util.*;
 
 import javax.annotation.*;
 
-public class ManaProvider<C extends ManaInterface, S extends Tag> implements ICapabilityProvider, INBTSerializable<S> {
+public class ManaProvider<C extends ManaStorage, S extends Tag> implements ICapabilityProvider, INBTSerializable<S> {
 
     private final Capability<C> capability;
     private final LazyOptional<C> implementation;
@@ -21,12 +21,12 @@ public class ManaProvider<C extends ManaInterface, S extends Tag> implements ICa
         this.direction = direction;
     }
 
-    public static <C extends ManaInterface> ManaProvider<C, Tag> from(@Nonnull final Capability<C> capability, @Nonnull final NonNullSupplier<C> impl) {
+    public static <C extends ManaStorage> ManaProvider<C, Tag> from(@Nonnull final Capability<C> capability, @Nonnull final NonNullSupplier<C> impl) {
         return from(capability, null, impl);
     }
 
     @Nonnull
-    public static <C extends ManaInterface> ManaProvider<C, Tag> from(@Nonnull final Capability<C> capability, @Nullable final Direction direction, @Nonnull final NonNullSupplier<C> impl) {
+    public static <C extends ManaStorage> ManaProvider<C, Tag> from(@Nonnull final Capability<C> capability, @Nullable final Direction direction, @Nonnull final NonNullSupplier<C> impl) {
         return new ManaProvider<>(capability, LazyOptional.of(impl), direction);
     }
 

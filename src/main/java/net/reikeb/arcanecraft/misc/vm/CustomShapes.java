@@ -10,17 +10,6 @@ import java.util.stream.Stream;
 public class CustomShapes {
 
     /**
-     * VoxelShape of the Altar
-     */
-    public static VoxelShape Altar = Stream.of(
-            Block.box(4, 3, 4, 12, 5, 12),
-            Block.box(3, 0, 3, 13, 3, 13),
-            Block.box(0, 5, 0, 16, 9, 16)
-    ).reduce((v1, v2) -> {
-        return Shapes.join(v1, v2, BooleanOp.OR);
-    }).get();
-
-    /**
      * VoxelShape of the Scroll Table
      */
     public static VoxelShape ScrollTable = Stream.of(

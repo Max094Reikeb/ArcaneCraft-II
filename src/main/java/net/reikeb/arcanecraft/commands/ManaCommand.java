@@ -15,7 +15,7 @@ import net.minecraft.server.level.ServerPlayer;
 
 import net.minecraftforge.fmllegacy.network.PacketDistributor;
 
-import net.reikeb.arcanecraft.capabilities.ManaManager;
+import net.reikeb.arcanecraft.capabilities.CapabilityMana;
 import net.reikeb.arcanecraft.network.NetworkManager;
 import net.reikeb.arcanecraft.network.packets.CurrentManaPacket;
 import net.reikeb.arcanecraft.network.packets.MaxManaPacket;
@@ -78,7 +78,7 @@ public class ManaCommand {
                     throw ERROR_PLAYER.create(gameprofile);
                 }
 
-                serverPlayerEntity.getCapability(ManaManager.MANA_CAPABILITY, null).ifPresent(cap -> {
+                serverPlayerEntity.getCapability(CapabilityMana.MANA_CAPABILITY, null).ifPresent(cap -> {
                     if (count > cap.getMaxMana()) {
                         cap.setMaxMana(count);
                         NetworkManager.INSTANCE.send(PacketDistributor.PLAYER.with(() ->
@@ -108,7 +108,7 @@ public class ManaCommand {
                     throw ERROR_PLAYER.create(gameprofile);
                 }
 
-                serverPlayerEntity.getCapability(ManaManager.MANA_CAPABILITY, null).ifPresent(cap -> {
+                serverPlayerEntity.getCapability(CapabilityMana.MANA_CAPABILITY, null).ifPresent(cap -> {
                     if (cap.getMana() > count) {
                         try {
                             throw ERROR_MAX_INFERIOR.create(count);
@@ -137,7 +137,7 @@ public class ManaCommand {
                 throw ERROR_PLAYER.create(gameprofile);
             }
 
-            serverPlayerEntity.getCapability(ManaManager.MANA_CAPABILITY, null).ifPresent(cap -> {
+            serverPlayerEntity.getCapability(CapabilityMana.MANA_CAPABILITY, null).ifPresent(cap -> {
                 int totalMana = cap.getMana() + count;
 
                 if (totalMana < 0) {
@@ -173,7 +173,7 @@ public class ManaCommand {
                 throw ERROR_PLAYER.create(gameprofile);
             }
 
-            serverPlayerEntity.getCapability(ManaManager.MANA_CAPABILITY, null).ifPresent(cap -> {
+            serverPlayerEntity.getCapability(CapabilityMana.MANA_CAPABILITY, null).ifPresent(cap -> {
                 double totalMaxMana = cap.getMaxMana() + count;
 
                 if (totalMaxMana < 0) {

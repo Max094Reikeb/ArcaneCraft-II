@@ -15,7 +15,7 @@ import net.minecraft.world.phys.AABB;
 import net.minecraftforge.fmllegacy.network.PacketDistributor;
 import net.minecraftforge.registries.ForgeRegistries;
 
-import net.reikeb.arcanecraft.capabilities.ManaManager;
+import net.reikeb.arcanecraft.capabilities.CapabilityMana;
 import net.reikeb.arcanecraft.entities.*;
 import net.reikeb.arcanecraft.init.EntityInit;
 import net.reikeb.arcanecraft.init.WandInit;
@@ -38,9 +38,6 @@ public class CastSpell {
     private final double playerY;
     private final double playerZ;
 
-    static int healingTimer = 0;
-    static int flameTimer = 0;
-
     public CastSpell(Level world, Player playerEntity, ItemStack wand) {
         this.world = world;
         this.playerEntity = playerEntity;
@@ -60,7 +57,7 @@ public class CastSpell {
             }
         }
 
-        playerEntity.getCapability(ManaManager.MANA_CAPABILITY, null).ifPresent(cap -> {
+        playerEntity.getCapability(CapabilityMana.MANA_CAPABILITY, null).ifPresent(cap -> {
             playerMana.set(cap.getMana());
         });
 
@@ -122,7 +119,7 @@ public class CastSpell {
             NetworkManager.INSTANCE.sendToServer(new WooMagicPacket());
             if (!playerEntity.isCreative()) {
                 int finalSpellMana = spellMana;
-                playerEntity.getCapability(ManaManager.MANA_CAPABILITY, null).ifPresent(cap -> {
+                playerEntity.getCapability(CapabilityMana.MANA_CAPABILITY, null).ifPresent(cap -> {
                     cap.setMana(playerMana.get() - finalSpellMana);
                     NetworkManager.INSTANCE.send(PacketDistributor.PLAYER.with(() ->
                             (ServerPlayer) playerEntity), new CurrentManaPacket(cap.getMana() - finalSpellMana));

@@ -15,7 +15,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
-import net.reikeb.arcanecraft.capabilities.ManaManager;
+import net.reikeb.arcanecraft.capabilities.CapabilityMana;
 import net.reikeb.arcanecraft.init.ItemInit;
 import net.reikeb.arcanecraft.setup.RegistryHandler;
 import net.reikeb.arcanecraft.setup.client.ClientSetup;
@@ -39,9 +39,9 @@ public class ArcaneCraft {
 
         // Registers an event with the mod specific event bus. This is needed to register new stuff.
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
+        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::preInit);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::curiosEvent);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(ClientSetup::init);
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(ManaManager::commonSetup);
 
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);
@@ -61,6 +61,10 @@ public class ArcaneCraft {
                 Ingredient.of(PotionUtils.setPotion(new ItemStack(Items.POTION), Potion.byName("awkward"))),
                 Ingredient.of(Items.AMETHYST_SHARD),
                 new ItemStack(ItemInit.MANA_POTION.get()));
+    }
+
+    public void preInit(FMLCommonSetupEvent event) {
+        CapabilityMana.register();
     }
 
     private void curiosEvent(InterModEnqueueEvent event) {

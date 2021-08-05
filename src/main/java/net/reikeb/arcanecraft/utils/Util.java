@@ -3,7 +3,10 @@ package net.reikeb.arcanecraft.utils;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntitySelector;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
@@ -125,5 +128,15 @@ public class Util {
             }
         }
         return false;
+    }
+
+    public static void layoutPlayerInventorySlots(AbstractContainerMenu container, Inventory playerInv) {
+        int si;
+        int sj;
+        for (si = 0; si < 3; ++si)
+            for (sj = 0; sj < 9; ++sj)
+                container.addSlot(new Slot(playerInv, sj + (si + 1) * 9, 8 + sj * 18, 84 + si * 18));
+        for (si = 0; si < 9; ++si)
+            container.addSlot(new Slot(playerInv, si, 8 + si * 18, 142));
     }
 }

@@ -13,6 +13,7 @@ import net.minecraftforge.items.SlotItemHandler;
 
 import net.reikeb.arcanecraft.init.ItemInit;
 import net.reikeb.arcanecraft.tileentities.TileScrollTable;
+import net.reikeb.arcanecraft.utils.Util;
 
 import static net.reikeb.arcanecraft.init.ContainerInit.SCROLL_TABLE_CONTAINER;
 
@@ -59,21 +60,11 @@ public class ScrollTableContainer extends AbstractContainerMenu {
                 });
             });
         }
-        layoutPlayerInventorySlots(playerInv);
+        Util.layoutPlayerInventorySlots(this, playerInv);
     }
 
     public TileScrollTable getTileEntity() {
         return this.tileEntity;
-    }
-
-    private void layoutPlayerInventorySlots(Inventory playerInv) {
-        int si;
-        int sj;
-        for (si = 0; si < 3; ++si)
-            for (sj = 0; sj < 9; ++sj)
-                addSlot(new Slot(playerInv, sj + (si + 1) * 9, 8 + sj * 18, 84 + si * 18));
-        for (si = 0; si < 9; ++si)
-            addSlot(new Slot(playerInv, si, 8 + si * 18, 142));
     }
 
     @Override
@@ -85,7 +76,7 @@ public class ScrollTableContainer extends AbstractContainerMenu {
     public ItemStack quickMoveStack(Player playerIn, int index) {
         ItemStack itemstack = ItemStack.EMPTY;
         Slot slot = this.slots.get(index);
-        if (slot != null && slot.hasItem()) {
+        if (slot.hasItem()) {
             ItemStack itemstack1 = slot.getItem();
             itemstack = itemstack1.copy();
             if (index < 2) {

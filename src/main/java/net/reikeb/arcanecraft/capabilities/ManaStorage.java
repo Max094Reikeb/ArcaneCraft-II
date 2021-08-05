@@ -2,20 +2,23 @@ package net.reikeb.arcanecraft.capabilities;
 
 import net.minecraft.nbt.CompoundTag;
 
+import net.minecraftforge.common.util.INBTSerializable;
+
 import javax.annotation.Nonnull;
 
-public class ManaCapability implements ManaInterface {
+public class ManaStorage implements IManaStorage, INBTSerializable<CompoundTag> {
 
     private static final String INFO_NBT_KEY = "nfo";
     private static final String MANA_NBT_KEY = "mana";
+
     private int mana;
     private double maxMana;
 
-    public ManaCapability() {
+    public ManaStorage() {
         this(0, 0);
     }
 
-    public ManaCapability(final int mana, final double maxMana) {
+    public ManaStorage(final int mana, final double maxMana) {
         this.mana = mana;
         this.maxMana = maxMana;
     }

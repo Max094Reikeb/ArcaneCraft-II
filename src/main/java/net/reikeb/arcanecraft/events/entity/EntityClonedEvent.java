@@ -5,7 +5,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 import net.reikeb.arcanecraft.ArcaneCraft;
-import net.reikeb.arcanecraft.capabilities.ManaManager;
+import net.reikeb.arcanecraft.capabilities.CapabilityMana;
 
 @Mod.EventBusSubscriber(modid = ArcaneCraft.MODID)
 public class EntityClonedEvent {
@@ -14,8 +14,8 @@ public class EntityClonedEvent {
     public static void onEntityCloned(PlayerEvent.Clone event) {
         if (event == null) return;
 
-        event.getOriginal().getCapability(ManaManager.MANA_CAPABILITY).ifPresent(oldStore -> {
-            event.getPlayer().getCapability(ManaManager.MANA_CAPABILITY).ifPresent(newStore -> {
+        event.getOriginal().getCapability(CapabilityMana.MANA_CAPABILITY).ifPresent(oldStore -> {
+            event.getPlayer().getCapability(CapabilityMana.MANA_CAPABILITY).ifPresent(newStore -> {
                 newStore.setMaxMana(oldStore.getMaxMana());
                 if (!event.isWasDeath()) {
                     newStore.setMana(oldStore.getMana());
