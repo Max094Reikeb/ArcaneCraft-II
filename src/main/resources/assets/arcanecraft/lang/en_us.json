@@ -56,6 +56,7 @@
   "item.arcanecraft.mana_potion_effect": "Mana (0:10)",
   "item.arcanecraft.mana_potion_result": "+10 Mana max",
   "item.arcanecraft.mana_potion_used": "When Drank:",
+  "item.arcanecraft.spell_book": "Spell Book",
   "item.arcanecraft.spell_book_banner_pattern": "Banner Pattern",
   "item.arcanecraft.spell_book_banner_pattern.desc": "Spell Book",
   "item.arcanecraft.wand": "Wand",

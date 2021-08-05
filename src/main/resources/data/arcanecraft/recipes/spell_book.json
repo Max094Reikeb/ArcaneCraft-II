@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "arcanecraft:amethyst_dust"
+    },
+    {
+      "item": "arcanecraft:amethyst_dust"
+    },
+    {
+      "item": "arcanecraft:amethyst_dust"
+    },
+    {
+      "item": "minecraft:paper"
+    }
+  ],
+  "result": {
+    "item": "arcanecraft:spell_book"
+  }
+}
