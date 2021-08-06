@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "arcanecraft:items/crystal_dust"
+    "layer0": "arcanecraft:items/amethyst_dust"
   }
 }
