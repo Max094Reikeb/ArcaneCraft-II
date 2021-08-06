@@ -17,17 +17,21 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 
+import net.minecraftforge.common.Tags;
+
+import net.reikeb.arcanecraft.ArcaneCraft;
 import net.reikeb.arcanecraft.setup.ItemGroups;
 import net.reikeb.arcanecraft.utils.Util;
 
 import java.util.Set;
 
-public class AmethystHammer extends PickaxeItem {
+public class AmethystHammer extends DiggerItem {
 
     private static final Set<Block> NOT_EFFECTIVE_BLOCKS = ImmutableSet.of(Blocks.BEDROCK, Blocks.LAVA, Blocks.WATER);
+    private static final Tags.IOptionalNamedTag<Block> MINEABLE_WITH_HAMMER = BlockTags.createOptional(ArcaneCraft.RL("mineable/hammer"));
 
     public AmethystHammer() {
-        super(new Tier() {
+        super(1F, -2.8F, new Tier() {
             @Override
             public int getUses() {
                 return 512;
@@ -35,29 +39,29 @@ public class AmethystHammer extends PickaxeItem {
 
             @Override
             public float getSpeed() {
-                return 6f;
+                return 6.0F;
             }
 
             @Override
             public float getAttackDamageBonus() {
-                return 2f;
+                return 2.0F;
             }
 
             @Override
             public int getLevel() {
-                return 2;
+                return 3;
             }
 
             @Override
             public int getEnchantmentValue() {
-                return 33;
+                return 15;
             }
 
             @Override
             public Ingredient getRepairIngredient() {
                 return Ingredient.of(new ItemStack(Items.AMETHYST_SHARD, 1));
             }
-        }, 1, -4f, new Item.Properties().tab(ItemGroups.ARCANECRAFT));
+        }, MINEABLE_WITH_HAMMER, new Item.Properties().tab(ItemGroups.ARCANECRAFT));
     }
 
     public boolean mineBlock(ItemStack stack, Level world, BlockState state, BlockPos pos, LivingEntity entity) {
