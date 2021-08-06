@@ -65,4 +65,6 @@ public class ItemInit {
     public static final RegistryObject<Item> MANA_POTION = ITEMS.register("mana_potion", ManaPotion::new);
 
     public static final RegistryObject<Item> SPELL_BOOK_BANNER_PATTERN = ITEMS.register("spell_book_banner_pattern", SpellBookBannerPattern::new);
+
+    public static final RegistryObject<Item> WAND_BANNER_PATTERN = ITEMS.register("wand_banner_pattern", WandBannerPattern::new);
 }
