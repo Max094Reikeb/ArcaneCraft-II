@@ -6,6 +6,7 @@ import net.minecraftforge.fml.common.Mod;
 
 import net.reikeb.arcanecraft.ArcaneCraft;
 import net.reikeb.arcanecraft.capabilities.CapabilityMana;
+import net.reikeb.arcanecraft.capabilities.ManaStorage;
 
 @Mod.EventBusSubscriber(modid = ArcaneCraft.MODID)
 public class EntityClonedEvent {
@@ -14,13 +15,14 @@ public class EntityClonedEvent {
     public static void onEntityCloned(PlayerEvent.Clone event) {
         if (event == null) return;
 
-        event.getOriginal().getCapability(CapabilityMana.MANA_CAPABILITY).ifPresent(oldStore -> {
-            event.getPlayer().getCapability(CapabilityMana.MANA_CAPABILITY).ifPresent(newStore -> {
-                newStore.setMaxMana(oldStore.getMaxMana());
-                if (!event.isWasDeath()) {
-                    newStore.setMana(oldStore.getMana());
-                }
-            });
-        });
+        ManaStorage oldManaStorage = event.getOriginal().getCapability(CapabilityMana.MANA_CAPABILITY, null).orElseThrow(() ->
+                new IllegalStateException("Tried to get my capability but it wasn't there wtf"));
+        ManaStorage newManaStorage = event.getPlayer().getCapability(CapabilityMana.MANA_CAPABILITY, null).orElseThrow(() ->
+                new IllegalStateException("Tried to get my capability but it wasn't there wtf"));
+
+        newManaStorage.setMaxMana(oldManaStorage.getMaxMana());
+        if (!event.isWasDeath()) {
+            newManaStorage.setMana(oldManaStorage.getMana());
+        }
     }
 }

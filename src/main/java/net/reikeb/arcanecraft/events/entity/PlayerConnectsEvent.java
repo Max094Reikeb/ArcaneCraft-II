@@ -10,6 +10,7 @@ import net.minecraftforge.fmllegacy.network.PacketDistributor;
 
 import net.reikeb.arcanecraft.ArcaneCraft;
 import net.reikeb.arcanecraft.capabilities.CapabilityMana;
+import net.reikeb.arcanecraft.capabilities.ManaStorage;
 import net.reikeb.arcanecraft.network.NetworkManager;
 import net.reikeb.arcanecraft.network.packets.CurrentManaPacket;
 import net.reikeb.arcanecraft.network.packets.MaxManaPacket;
@@ -21,11 +22,12 @@ public class PlayerConnectsEvent {
     public static void playerConnects(PlayerEvent.PlayerLoggedInEvent event) {
         Player playerEntity = event.getPlayer();
 
-        playerEntity.getCapability(CapabilityMana.MANA_CAPABILITY, null).ifPresent(cap -> {
-            NetworkManager.INSTANCE.send(PacketDistributor.PLAYER.with(() ->
-                    (ServerPlayer) playerEntity), new MaxManaPacket((int) cap.getMaxMana()));
-            NetworkManager.INSTANCE.send(PacketDistributor.PLAYER.with(() ->
-                    (ServerPlayer) playerEntity), new CurrentManaPacket(cap.getMana()));
-        });
+        ManaStorage manaStorage = playerEntity.getCapability(CapabilityMana.MANA_CAPABILITY, null).orElseThrow(() ->
+                new IllegalStateException("Tried to get my capability but it wasn't there wtf"));
+
+        NetworkManager.INSTANCE.send(PacketDistributor.PLAYER.with(() ->
+                (ServerPlayer) playerEntity), new MaxManaPacket((int) manaStorage.getMaxMana()));
+        NetworkManager.INSTANCE.send(PacketDistributor.PLAYER.with(() ->
+                (ServerPlayer) playerEntity), new CurrentManaPacket(manaStorage.getMana()));
     }
 }

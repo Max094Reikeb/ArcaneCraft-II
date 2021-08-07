@@ -16,6 +16,7 @@ import net.minecraftforge.fmllegacy.network.PacketDistributor;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import net.reikeb.arcanecraft.capabilities.CapabilityMana;
+import net.reikeb.arcanecraft.capabilities.ManaStorage;
 import net.reikeb.arcanecraft.entities.*;
 import net.reikeb.arcanecraft.init.EntityInit;
 import net.reikeb.arcanecraft.init.WandInit;
@@ -26,7 +27,6 @@ import net.reikeb.arcanecraft.utils.Util;
 
 import java.util.Comparator;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 public class CastSpell {
@@ -47,8 +47,11 @@ public class CastSpell {
 
         WandObject wandObject = SpellUtils.getWand(wand);
         boolean flag = false;
-        AtomicInteger playerMana = new AtomicInteger();
         int spellMana = 0;
+
+        ManaStorage manaStorage = playerEntity.getCapability(CapabilityMana.MANA_CAPABILITY, null).orElseThrow(() ->
+                new IllegalStateException("Tried to get my capability but it wasn't there wtf"));
+        int playerMana = manaStorage.getMana();
 
         List<SpellInstance> spells = SpellUtils.getSpell(wand);
         if (!spells.isEmpty()) {
@@ -57,11 +60,7 @@ public class CastSpell {
             }
         }
 
-        playerEntity.getCapability(CapabilityMana.MANA_CAPABILITY, null).ifPresent(cap -> {
-            playerMana.set(cap.getMana());
-        });
-
-        if ((playerMana.get() < spellMana) && (!playerEntity.isCreative())) return;
+        if ((playerMana < spellMana) && (!playerEntity.isCreative())) return;
 
         if (wandObject == WandInit.EVOKER.get()) {
             ArrowEvokerEntity arrowEvokerEntity = new ArrowEvokerEntity(EntityInit.ARROW_EVOKER_ENTITY_ENTITY_TYPE, this.playerEntity, this.world);
@@ -118,12 +117,9 @@ public class CastSpell {
         if (flag) {
             NetworkManager.INSTANCE.sendToServer(new WooMagicPacket());
             if (!playerEntity.isCreative()) {
-                int finalSpellMana = spellMana;
-                playerEntity.getCapability(CapabilityMana.MANA_CAPABILITY, null).ifPresent(cap -> {
-                    cap.setMana(playerMana.get() - finalSpellMana);
-                    NetworkManager.INSTANCE.send(PacketDistributor.PLAYER.with(() ->
-                            (ServerPlayer) playerEntity), new CurrentManaPacket(cap.getMana() - finalSpellMana));
-                });
+                manaStorage.setMana(playerMana - spellMana);
+                NetworkManager.INSTANCE.send(PacketDistributor.PLAYER.with(() ->
+                        (ServerPlayer) playerEntity), new CurrentManaPacket(manaStorage.getMana() - spellMana));
             }
         }
     }
