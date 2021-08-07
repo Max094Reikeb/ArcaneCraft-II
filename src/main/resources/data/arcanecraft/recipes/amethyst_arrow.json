@@ -1,0 +1,24 @@
+{
+  "group": "arcanecraft",
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " 1 ",
+    " 4 ",
+    " 7 "
+  ],
+  "key": {
+    "1": {
+      "item": "minecraft:amethyst_shard"
+    },
+    "4": {
+      "item": "minecraft:stick"
+    },
+    "7": {
+      "item": "minecraft:feather"
+    }
+  },
+  "result": {
+    "item": "arcanecraft:amethyst_arrow",
+    "count": 1
+  }
+}

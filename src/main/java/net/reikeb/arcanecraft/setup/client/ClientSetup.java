@@ -28,10 +28,12 @@ import net.reikeb.arcanecraft.init.BlockInit;
 import net.reikeb.arcanecraft.init.EntityInit;
 import net.reikeb.arcanecraft.init.ItemInit;
 import net.reikeb.arcanecraft.init.SpellInit;
+import net.reikeb.arcanecraft.setup.client.renderer.AmethystArrowRenderer;
 import net.reikeb.arcanecraft.spell.SpellInstance;
 import net.reikeb.arcanecraft.spell.SpellUtils;
 
-import static net.reikeb.arcanecraft.init.ContainerInit.*;
+import static net.reikeb.arcanecraft.init.ContainerInit.SCROLL_TABLE_CONTAINER;
+import static net.reikeb.arcanecraft.init.ContainerInit.WAND_WORKBENCH_CONTAINER;
 
 @Mod.EventBusSubscriber(modid = ArcaneCraft.MODID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ClientSetup {
@@ -122,6 +124,8 @@ public class ClientSetup {
                 });
 
         // Setup arrows renderers
+        event.registerEntityRenderer(EntityInit.AMETHYST_ARROW_ENTITY_TYPE, AmethystArrowRenderer::new);
+
         event.registerEntityRenderer(EntityInit.ARROW_EVOKER_ENTITY_ENTITY_TYPE,
                 renderManager -> new ThrownItemRenderer<>(renderManager, 1.0F, false));
         event.registerEntityRenderer(EntityInit.ARROW_FIRE_ENTITY_ENTITY_TYPE,
