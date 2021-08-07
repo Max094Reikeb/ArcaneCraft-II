@@ -8,7 +8,7 @@ import javax.annotation.Nonnull;
 
 public class ManaStorage implements IManaStorage, INBTSerializable<CompoundTag> {
 
-    private static final String INFO_NBT_KEY = "nfo";
+    private static final String MAX_MANA_NBT_KEY = "maxMana";
     private static final String MANA_NBT_KEY = "mana";
 
     private int mana;
@@ -48,13 +48,13 @@ public class ManaStorage implements IManaStorage, INBTSerializable<CompoundTag> 
     public CompoundTag serializeNBT() {
         final CompoundTag nbt = new CompoundTag();
         nbt.putInt(MANA_NBT_KEY, this.getMana());
-        nbt.putDouble(INFO_NBT_KEY, this.getMaxMana());
+        nbt.putDouble(MAX_MANA_NBT_KEY, this.getMaxMana());
         return nbt;
     }
 
     @Override
     public void deserializeNBT(@Nonnull final CompoundTag nbt) {
         this.setMana(nbt.getInt(MANA_NBT_KEY));
-        this.setMaxMana(nbt.getDouble(INFO_NBT_KEY));
+        this.setMaxMana(nbt.getDouble(MAX_MANA_NBT_KEY));
     }
 }
