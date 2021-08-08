@@ -33,7 +33,8 @@ repositories {
 
     // Patchouli Book
     maven {
-        url = "https://maven.blamejared.com"
+        // Location of the maven that hosts Patchouli files
+        url = "https://maven.blamejared.com/"
     }
 }
 
