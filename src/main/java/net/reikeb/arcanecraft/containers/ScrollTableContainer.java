@@ -5,7 +5,6 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.MenuType;
-import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 
 import net.minecraftforge.items.CapabilityItemHandler;
@@ -74,38 +73,6 @@ public class ScrollTableContainer extends AbstractContainerMenu {
 
     @Override
     public ItemStack quickMoveStack(Player playerIn, int index) {
-        ItemStack itemstack = ItemStack.EMPTY;
-        Slot slot = this.slots.get(index);
-        if (slot.hasItem()) {
-            ItemStack itemstack1 = slot.getItem();
-            itemstack = itemstack1.copy();
-            if (index < 2) {
-                if (!this.moveItemStackTo(itemstack1, 2, this.slots.size(), true)) {
-                    return ItemStack.EMPTY;
-                }
-                slot.onQuickCraft(itemstack1, itemstack);
-            } else if (!this.moveItemStackTo(itemstack1, 0, 2, false)) {
-                if (index < 2 + 27) {
-                    if (!this.moveItemStackTo(itemstack1, 2 + 27, this.slots.size(), true)) {
-                        return ItemStack.EMPTY;
-                    }
-                } else {
-                    if (!this.moveItemStackTo(itemstack1, 2, 2 + 27, false)) {
-                        return ItemStack.EMPTY;
-                    }
-                }
-                return ItemStack.EMPTY;
-            }
-            if (itemstack1.getCount() == 0) {
-                slot.set(ItemStack.EMPTY);
-            } else {
-                slot.setChanged();
-            }
-            if (itemstack1.getCount() == itemstack.getCount()) {
-                return ItemStack.EMPTY;
-            }
-            slot.onTake(playerIn, itemstack1);
-        }
-        return itemstack;
+        return Util.quickMoveStack(this, playerIn, index, 2);
     }
 }
