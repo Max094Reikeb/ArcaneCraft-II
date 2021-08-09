@@ -2,8 +2,6 @@ package net.reikeb.arcanecraft.containers;
 
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.ItemStack;
 
@@ -12,11 +10,10 @@ import net.minecraftforge.items.SlotItemHandler;
 
 import net.reikeb.arcanecraft.init.ItemInit;
 import net.reikeb.arcanecraft.tileentities.TileScrollTable;
-import net.reikeb.arcanecraft.utils.Util;
 
 import static net.reikeb.arcanecraft.init.ContainerInit.SCROLL_TABLE_CONTAINER;
 
-public class ScrollTableContainer extends AbstractContainerMenu {
+public class ScrollTableContainer extends AbstractContainer {
 
     public TileScrollTable tileEntity;
 
@@ -59,20 +56,10 @@ public class ScrollTableContainer extends AbstractContainerMenu {
                 });
             });
         }
-        Util.layoutPlayerInventorySlots(this, playerInv);
+        this.layoutPlayerInventorySlots(playerInv);
     }
 
     public TileScrollTable getTileEntity() {
         return this.tileEntity;
-    }
-
-    @Override
-    public boolean stillValid(Player playerEntity) {
-        return true;
-    }
-
-    @Override
-    public ItemStack quickMoveStack(Player playerIn, int index) {
-        return Util.quickMoveStack(this, playerIn, index, 2);
     }
 }

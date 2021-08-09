@@ -1,12 +1,15 @@
 package net.reikeb.arcanecraft.utils;
 
+import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.PoseStack;
+
+import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.client.renderer.GameRenderer;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntitySelector;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
@@ -130,49 +133,16 @@ public class Util {
         return false;
     }
 
-    public static void layoutPlayerInventorySlots(AbstractContainerMenu container, Inventory playerInv) {
-        int si;
-        int sj;
-        for (si = 0; si < 3; ++si)
-            for (sj = 0; sj < 9; ++sj)
-                container.addSlot(new Slot(playerInv, sj + (si + 1) * 9, 8 + sj * 18, 84 + si * 18));
-        for (si = 0; si < 9; ++si)
-            container.addSlot(new Slot(playerInv, si, 8 + si * 18, 142));
+    public static void bind(ResourceLocation res) {
+        RenderSystem.setShaderTexture(0, res);
     }
 
-    public static ItemStack quickMoveStack(AbstractContainerMenu container, Player playerIn, int index, int slots) {
-        ItemStack itemstack = ItemStack.EMPTY;
-        Slot slot = container.slots.get(index);
-        if (slot.hasItem()) {
-            ItemStack itemstack1 = slot.getItem();
-            itemstack = itemstack1.copy();
-            if (index < slots) {
-                if (!container.moveItemStackTo(itemstack1, slots, container.slots.size(), true)) {
-                    return ItemStack.EMPTY;
-                }
-                slot.onQuickCraft(itemstack1, itemstack);
-            } else if (!container.moveItemStackTo(itemstack1, 0, slots, false)) {
-                if (index < slots + 27) {
-                    if (!container.moveItemStackTo(itemstack1, slots + 27, container.slots.size(), true)) {
-                        return ItemStack.EMPTY;
-                    }
-                } else {
-                    if (!container.moveItemStackTo(itemstack1, slots, slots + 27, false)) {
-                        return ItemStack.EMPTY;
-                    }
-                }
-                return ItemStack.EMPTY;
-            }
-            if (itemstack1.getCount() == 0) {
-                slot.set(ItemStack.EMPTY);
-            } else {
-                slot.setChanged();
-            }
-            if (itemstack1.getCount() == itemstack.getCount()) {
-                return ItemStack.EMPTY;
-            }
-            slot.onTake(playerIn, itemstack1);
-        }
-        return itemstack;
+    public static void render(AbstractContainerScreen screen, PoseStack matrixStack, ResourceLocation res) {
+        RenderSystem.setShader(GameRenderer::getPositionTexShader);
+        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+        bind(res);
+        int relX = (screen.width - screen.imageWidth) / 2;
+        int relY = (screen.height - screen.imageHeight) / 2;
+        screen.blit(matrixStack, relX, relY, 0, 0, screen.imageWidth, screen.imageHeight);
     }
 }

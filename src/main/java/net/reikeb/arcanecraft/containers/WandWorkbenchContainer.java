@@ -3,8 +3,8 @@ package net.reikeb.arcanecraft.containers;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.MenuType;
+import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 
 import net.minecraftforge.items.CapabilityItemHandler;
@@ -12,11 +12,10 @@ import net.minecraftforge.items.SlotItemHandler;
 
 import net.reikeb.arcanecraft.init.ItemInit;
 import net.reikeb.arcanecraft.tileentities.TileWandWorkbench;
-import net.reikeb.arcanecraft.utils.Util;
 
 import static net.reikeb.arcanecraft.init.ContainerInit.WAND_WORKBENCH_CONTAINER;
 
-public class WandWorkbenchContainer extends AbstractContainerMenu {
+public class WandWorkbenchContainer extends AbstractContainer {
 
     public TileWandWorkbench tileEntity;
 
@@ -50,7 +49,7 @@ public class WandWorkbenchContainer extends AbstractContainerMenu {
                 });
             });
         }
-        Util.layoutPlayerInventorySlots(this, playerInv);
+        this.layoutPlayerInventorySlots(playerInv);
     }
 
     public TileWandWorkbench getTileEntity() {
@@ -58,12 +57,39 @@ public class WandWorkbenchContainer extends AbstractContainerMenu {
     }
 
     @Override
-    public boolean stillValid(Player playerEntity) {
-        return true;
-    }
-
-    @Override
     public ItemStack quickMoveStack(Player playerIn, int index) {
-        return Util.quickMoveStack(this, playerIn, index, 1);
+        ItemStack itemstack = ItemStack.EMPTY;
+        Slot slot = this.slots.get(index);
+        if (slot.hasItem()) {
+            ItemStack itemstack1 = slot.getItem();
+            itemstack = itemstack1.copy();
+            if (index < 1) {
+                if (!this.moveItemStackTo(itemstack1, 1, this.slots.size(), true)) {
+                    return ItemStack.EMPTY;
+                }
+                slot.onQuickCraft(itemstack1, itemstack);
+            } else if (!this.moveItemStackTo(itemstack1, 0, 1, false)) {
+                if (index < 1 + 27) {
+                    if (!this.moveItemStackTo(itemstack1, 1 + 27, this.slots.size(), true)) {
+                        return ItemStack.EMPTY;
+                    }
+                } else {
+                    if (!this.moveItemStackTo(itemstack1, 1, 1 + 27, false)) {
+                        return ItemStack.EMPTY;
+                    }
+                }
+                return ItemStack.EMPTY;
+            }
+            if (itemstack1.getCount() == 0) {
+                slot.set(ItemStack.EMPTY);
+            } else {
+                slot.setChanged();
+            }
+            if (itemstack1.getCount() == itemstack.getCount()) {
+                return ItemStack.EMPTY;
+            }
+            slot.onTake(playerIn, itemstack1);
+        }
+        return itemstack;
     }
 }
