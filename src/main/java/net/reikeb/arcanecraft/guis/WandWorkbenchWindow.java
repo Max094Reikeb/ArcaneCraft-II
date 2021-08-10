@@ -1,7 +1,5 @@
 package net.reikeb.arcanecraft.guis;
 
-import com.mojang.blaze3d.vertex.PoseStack;
-
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
@@ -13,7 +11,6 @@ import net.reikeb.arcanecraft.containers.WandWorkbenchContainer;
 import net.reikeb.arcanecraft.network.NetworkManager;
 import net.reikeb.arcanecraft.network.packets.WandWorkbenchingPacket;
 import net.reikeb.arcanecraft.tileentities.TileWandWorkbench;
-import net.reikeb.arcanecraft.utils.Util;
 
 public class WandWorkbenchWindow extends AbstractWindow<WandWorkbenchContainer> {
 
@@ -21,13 +18,8 @@ public class WandWorkbenchWindow extends AbstractWindow<WandWorkbenchContainer> 
     public TileWandWorkbench tileEntity;
 
     public WandWorkbenchWindow(WandWorkbenchContainer container, Inventory inv, Component title) {
-        super(container, inv, title);
+        super(container, inv, title, WAND_WORKBENCH_GUI);
         this.tileEntity = container.getTileEntity();
-    }
-
-    @Override
-    protected void renderBg(PoseStack matrixStack, float partialTicks, int mouseX, int mouseY) {
-        Util.render(this, matrixStack, WAND_WORKBENCH_GUI);
     }
 
     @Override
