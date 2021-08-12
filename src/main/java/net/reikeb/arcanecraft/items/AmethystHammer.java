@@ -18,6 +18,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 
 import net.minecraftforge.common.Tags;
+import net.minecraftforge.common.ToolAction;
+import net.minecraftforge.common.ToolActions;
 
 import net.reikeb.arcanecraft.ArcaneCraft;
 import net.reikeb.arcanecraft.setup.ItemGroups;
@@ -64,6 +66,12 @@ public class AmethystHammer extends DiggerItem {
         }, MINEABLE_WITH_HAMMER, new Item.Properties().tab(ItemGroups.ARCANECRAFT));
     }
 
+    @Override
+    public boolean canPerformAction(ItemStack stack, ToolAction toolAction) {
+        return (toolAction.equals(ToolActions.SHOVEL_DIG) || (toolAction.equals(ToolActions.AXE_DIG)) ||
+                (toolAction.equals(ToolActions.PICKAXE_DIG)));
+    }
+
     public boolean mineBlock(ItemStack stack, Level world, BlockState state, BlockPos pos, LivingEntity entity) {
         if (!world.isClientSide && state.getDestroySpeed(world, pos) != 0.0F) {
             stack.hurtAndBreak(1, entity, (e) -> {
@@ -74,7 +82,7 @@ public class AmethystHammer extends DiggerItem {
         return true;
     }
 
-    public static void attemptBreakNeighbors(Level world, BlockPos pos, Player player, Set<Block> notEffectiveOn, boolean checkHarvestLevel,int radioImpar) {
+    public static void attemptBreakNeighbors(Level world, BlockPos pos, Player player, Set<Block> notEffectiveOn, boolean checkHarvestLevel, int radioImpar) {
         world.setBlockAndUpdate(pos, Blocks.GLASS.defaultBlockState());
         BlockHitResult trace = Util.rayTrace(world, player, ClipContext.Fluid.ANY);
         world.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
@@ -89,9 +97,9 @@ public class AmethystHammer extends DiggerItem {
 
                     BlockPos target = null;
 
-                    if (face == Direction.UP    || face == Direction.DOWN)  target = pos.offset(a, 0, b);
+                    if (face == Direction.UP || face == Direction.DOWN) target = pos.offset(a, 0, b);
                     if (face == Direction.NORTH || face == Direction.SOUTH) target = pos.offset(a, b, 0);
-                    if (face == Direction.EAST  || face == Direction.WEST)  target = pos.offset(0, a, b);
+                    if (face == Direction.EAST || face == Direction.WEST) target = pos.offset(0, a, b);
 
                     attemptBreak(world, target, player, notEffectiveOn, checkHarvestLevel);
                 }
