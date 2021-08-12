@@ -34,7 +34,7 @@ import net.minecraftforge.fmllegacy.network.NetworkHooks;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import net.reikeb.arcanecraft.init.ItemInit;
-import net.reikeb.arcanecraft.misc.vm.CustomShapes;
+import net.reikeb.arcanecraft.misc.CustomShapes;
 import net.reikeb.arcanecraft.tileentities.TileWandWorkbench;
 
 import java.util.ArrayList;

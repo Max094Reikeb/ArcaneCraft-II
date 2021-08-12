@@ -22,7 +22,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 
 import net.minecraftforge.fmllegacy.network.NetworkHooks;
 
-import net.reikeb.arcanecraft.misc.vm.CustomShapes;
+import net.reikeb.arcanecraft.misc.CustomShapes;
 import net.reikeb.arcanecraft.tileentities.TileScrollTable;
 
 import java.util.Collections;
