@@ -7,8 +7,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.storage.loot.LootContext;
 
-import net.minecraftforge.common.ToolType;
-
 import java.util.Collections;
 import java.util.List;
 
@@ -19,9 +17,7 @@ public class RunicStoneWall extends WallBlock {
                 .sound(SoundType.STONE)
                 .strength(1.1f, 17.5f)
                 .lightLevel(s -> 0)
-                .harvestLevel(0)
-                .noOcclusion()
-                .harvestTool(ToolType.PICKAXE));
+                .noOcclusion());
     }
 
     @Override

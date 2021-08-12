@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "arcanecraft:runic_stone",
+    "arcanecraft:runic_stone_slab",
+    "arcanecraft:runic_stone_stairs",
+    "arcanecraft:runic_stone_wall",
+    "arcanecraft:wand_workbench"
+  ]
+}

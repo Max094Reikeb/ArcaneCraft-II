@@ -20,7 +20,6 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-import net.minecraftforge.common.ToolType;
 import net.minecraftforge.fmllegacy.network.NetworkHooks;
 
 import net.reikeb.arcanecraft.misc.vm.CustomShapes;
@@ -36,8 +35,6 @@ public class ScrollTable extends Block implements EntityBlock {
                 .sound(SoundType.WOOD)
                 .strength(1f, 10f)
                 .lightLevel(s -> 0)
-                .harvestLevel(1)
-                .harvestTool(ToolType.AXE)
                 .noOcclusion());
     }
 

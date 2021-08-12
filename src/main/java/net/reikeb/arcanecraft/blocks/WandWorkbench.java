@@ -30,7 +30,6 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.common.ToolType;
 import net.minecraftforge.fmllegacy.network.NetworkHooks;
 import net.minecraftforge.registries.ForgeRegistries;
 
@@ -52,8 +51,6 @@ public class WandWorkbench extends Block implements EntityBlock {
                 .sound(SoundType.METAL)
                 .strength(1f, 10f)
                 .lightLevel(s -> 0)
-                .harvestLevel(1)
-                .harvestTool(ToolType.PICKAXE)
                 .noOcclusion());
         this.registerDefaultState(this.getStateDefinition().any()
                 .setValue(USED, false));
