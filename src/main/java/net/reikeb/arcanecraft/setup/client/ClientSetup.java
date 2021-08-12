@@ -22,6 +22,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 
 import net.reikeb.arcanecraft.ArcaneCraft;
 import net.reikeb.arcanecraft.IntegrationHelper;
+import net.reikeb.arcanecraft.guis.CastingTableWindow;
 import net.reikeb.arcanecraft.guis.ScrollTableWindow;
 import net.reikeb.arcanecraft.guis.WandWorkbenchWindow;
 import net.reikeb.arcanecraft.init.BlockInit;
@@ -32,14 +33,14 @@ import net.reikeb.arcanecraft.setup.client.renderer.AmethystArrowRenderer;
 import net.reikeb.arcanecraft.spell.SpellInstance;
 import net.reikeb.arcanecraft.spell.SpellUtils;
 
-import static net.reikeb.arcanecraft.init.ContainerInit.SCROLL_TABLE_CONTAINER;
-import static net.reikeb.arcanecraft.init.ContainerInit.WAND_WORKBENCH_CONTAINER;
+import static net.reikeb.arcanecraft.init.ContainerInit.*;
 
 @Mod.EventBusSubscriber(modid = ArcaneCraft.MODID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ClientSetup {
 
     public static void init(final FMLClientSetupEvent event) {
         // Connect Containers and Windows
+        MenuScreens.register(CASTING_TABLE_CONTAINER.get(), CastingTableWindow::new);
         MenuScreens.register(SCROLL_TABLE_CONTAINER.get(), ScrollTableWindow::new);
         MenuScreens.register(WAND_WORKBENCH_CONTAINER.get(), WandWorkbenchWindow::new);
 

@@ -14,6 +14,7 @@ public class BlockInit {
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS,
             ArcaneCraft.MODID);
 
+    public static final RegistryObject<CastingTable> CASTING_TABLE = BLOCKS.register("casting_table", CastingTable::new);
     public static final RegistryObject<ScrollTable> SCROLL_TABLE = BLOCKS.register("scroll_table", ScrollTable::new);
     public static final RegistryObject<WandWorkbench> WAND_WORKBENCH = BLOCKS.register("wand_workbench", WandWorkbench::new);
     public static final RegistryObject<RunicStone> RUNIC_STONE = BLOCKS.register("runic_stone", RunicStone::new);

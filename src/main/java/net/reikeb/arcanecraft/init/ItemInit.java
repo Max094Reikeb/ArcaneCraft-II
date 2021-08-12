@@ -44,6 +44,9 @@ public class ItemInit {
 
     public static final RegistryObject<Item> SPELL_BOOK = ITEMS.register("spell_book", SpellBook::new);
 
+    public static final RegistryObject<Item> CASTING_TABLE_ITEM = ITEMS.register("casting_table", () ->
+            new BlockItem(BlockInit.CASTING_TABLE.get(), new Item.Properties().tab(ItemGroups.ARCANECRAFT)));
+
     public static final RegistryObject<Item> SCROLL_TABLE_ITEM = ITEMS.register("scroll_table", () ->
             new BlockItem(BlockInit.SCROLL_TABLE.get(), new Item.Properties().tab(ItemGroups.ARCANECRAFT)));
 

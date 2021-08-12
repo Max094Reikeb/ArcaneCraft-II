@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-    "arcanecraft:scroll_table"
+    "arcanecraft:scroll_table",
+    "arcanecraft:casting_table"
   ]
 }
