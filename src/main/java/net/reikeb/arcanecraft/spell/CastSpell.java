@@ -12,7 +12,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 
-import net.minecraftforge.fmllegacy.network.PacketDistributor;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import net.reikeb.arcanecraft.capabilities.CapabilityMana;
@@ -20,8 +19,8 @@ import net.reikeb.arcanecraft.capabilities.ManaStorage;
 import net.reikeb.arcanecraft.entities.*;
 import net.reikeb.arcanecraft.init.EntityInit;
 import net.reikeb.arcanecraft.init.WandInit;
+import net.reikeb.arcanecraft.misc.vm.Mana;
 import net.reikeb.arcanecraft.network.NetworkManager;
-import net.reikeb.arcanecraft.network.packets.CurrentManaPacket;
 import net.reikeb.arcanecraft.network.packets.WooMagicPacket;
 import net.reikeb.arcanecraft.utils.Util;
 
@@ -51,7 +50,6 @@ public class CastSpell {
 
         ManaStorage manaStorage = playerEntity.getCapability(CapabilityMana.MANA_CAPABILITY, null).orElseThrow(() ->
                 new IllegalStateException("Tried to get my capability but it wasn't there wtf"));
-        int playerMana = manaStorage.getMana();
 
         List<SpellInstance> spells = SpellUtils.getSpell(wand);
         if (!spells.isEmpty()) {
@@ -60,7 +58,7 @@ public class CastSpell {
             }
         }
 
-        if ((playerMana < spellMana) && (!playerEntity.isCreative())) return;
+        if ((manaStorage.getMana() < spellMana) && (!playerEntity.isCreative())) return;
 
         if (wandObject == WandInit.EVOKER.get()) {
             ArrowEvokerEntity arrowEvokerEntity = new ArrowEvokerEntity(EntityInit.ARROW_EVOKER_ENTITY_ENTITY_TYPE, this.playerEntity, this.world);
@@ -103,12 +101,14 @@ public class CastSpell {
             List<LivingEntity> livingEntities = this.world.getEntitiesOfClass(LivingEntity.class,
                     new AABB(playerX - 6, playerY - 6, playerZ - 6,
                             playerX + 6, playerY + 6, playerZ + 6),
-                            EntitySelector.LIVING_ENTITY_STILL_ALIVE).stream().sorted(new Object() {
-                                Comparator<Entity> compareDistOf(double x, double y, double z) {
-                                    return Comparator.comparing(axis -> axis.distanceToSqr(x, y, z));
-                                }}.compareDistOf(playerX, playerY, playerZ)).collect(Collectors.toList());
+                    EntitySelector.LIVING_ENTITY_STILL_ALIVE).stream().sorted(new Object() {
+                Comparator<Entity> compareDistOf(double x, double y, double z) {
+                    return Comparator.comparing(axis -> axis.distanceToSqr(x, y, z));
+                }
+            }.compareDistOf(playerX, playerY, playerZ)).collect(Collectors.toList());
             for (LivingEntity entity : livingEntities) {
-                if (!(entity instanceof Player)) entity.setDeltaMovement(entity.getLookAngle().reverse().multiply(0.7D,0,0.7D));
+                if (!(entity instanceof Player))
+                    entity.setDeltaMovement(entity.getLookAngle().reverse().multiply(0.7D, 0, 0.7D));
             }
             flag = true;
 
@@ -117,9 +117,7 @@ public class CastSpell {
         if (flag) {
             NetworkManager.INSTANCE.sendToServer(new WooMagicPacket());
             if (!playerEntity.isCreative()) {
-                manaStorage.setMana(playerMana - spellMana);
-                NetworkManager.INSTANCE.send(PacketDistributor.PLAYER.with(() ->
-                        (ServerPlayer) playerEntity), new CurrentManaPacket(manaStorage.getMana() - spellMana));
+                Mana.addCurrentMana(manaStorage, (ServerPlayer) playerEntity, -spellMana);
             }
         }
     }

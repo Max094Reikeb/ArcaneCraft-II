@@ -13,6 +13,11 @@ public interface IManaStorage {
     double getMaxMana();
 
     /**
+     * Returns a number between 0 and 1 that defines the progress of mana.
+     */
+    float getManaProgress();
+
+    /**
      * Sets the amount of current mana to a specific number.
      * @param mana The amount of current mana to set.
      */
@@ -23,4 +28,10 @@ public interface IManaStorage {
      * @param maxMana The amount of maximum mana to set.
      */
     void setMaxMana(double maxMana);
+
+    /**
+     * Sets the amount of mana progress to a specific number.
+     * @param manaProgress the amount of mana progress to set.
+     */
+    void setManaProgress(float manaProgress);
 }

@@ -29,5 +29,6 @@ public class NetworkManager {
         INSTANCE.registerMessage(index++, WandWorkbenchingPacket.class, WandWorkbenchingPacket::encode, WandWorkbenchingPacket::decode, WandWorkbenchingPacket::whenThisPacketIsReceived);
         INSTANCE.registerMessage(index++, MaxManaPacket.class, MaxManaPacket::encode, MaxManaPacket::decode, MaxManaPacket::whenThisPacketIsReceived);
         INSTANCE.registerMessage(index++, CurrentManaPacket.class, CurrentManaPacket::encode, CurrentManaPacket::decode, CurrentManaPacket::whenThisPacketIsReceived);
+        INSTANCE.registerMessage(index++, ManaProgressPacket.class, ManaProgressPacket::encode, ManaProgressPacket::decode, ManaProgressPacket::whenThisPacketIsReceived);
     }
 }

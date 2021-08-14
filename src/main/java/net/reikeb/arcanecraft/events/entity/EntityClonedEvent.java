@@ -21,6 +21,7 @@ public class EntityClonedEvent {
                 new IllegalStateException("Tried to get my capability but it wasn't there wtf"));
 
         newManaStorage.setMaxMana(oldManaStorage.getMaxMana());
+        newManaStorage.setManaProgress(oldManaStorage.getManaProgress());
         if (!event.isWasDeath()) {
             newManaStorage.setMana(oldManaStorage.getMana());
         }

@@ -2,6 +2,7 @@ package net.reikeb.arcanecraft.commands;
 
 import com.mojang.authlib.GameProfile;
 import com.mojang.brigadier.CommandDispatcher;
+import com.mojang.brigadier.arguments.FloatArgumentType;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.exceptions.DynamicCommandExceptionType;
@@ -13,13 +14,9 @@ import net.minecraft.network.chat.ComponentUtils;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerPlayer;
 
-import net.minecraftforge.fmllegacy.network.PacketDistributor;
-
 import net.reikeb.arcanecraft.capabilities.CapabilityMana;
 import net.reikeb.arcanecraft.capabilities.ManaStorage;
-import net.reikeb.arcanecraft.network.NetworkManager;
-import net.reikeb.arcanecraft.network.packets.CurrentManaPacket;
-import net.reikeb.arcanecraft.network.packets.MaxManaPacket;
+import net.reikeb.arcanecraft.misc.vm.Mana;
 
 import java.util.Collection;
 
@@ -37,6 +34,14 @@ public class ManaCommand {
         return new TranslatableComponent("command.arcanecraft.mana.inferior_current", error);
     });
 
+    private static final DynamicCommandExceptionType ERROR_NEGATIVE_PROGRESS = new DynamicCommandExceptionType((error) -> {
+        return new TranslatableComponent("command.arcanecraft.mana.negative_progress", error);
+    });
+
+    private static final DynamicCommandExceptionType ERROR_HIGH_PROGRESS = new DynamicCommandExceptionType((error) -> {
+        return new TranslatableComponent("command.arcanecraft.mana.high_progress", error);
+    });
+
     private static final DynamicCommandExceptionType ERROR_PLAYER = new DynamicCommandExceptionType((error) -> {
         return new TranslatableComponent("command.arcanecraft.null_player", error);
     });
@@ -45,6 +50,11 @@ public class ManaCommand {
         commandDispatcher.register(Commands.literal("mana").requires(commandSource -> {
             return commandSource.hasPermission(2);
         }).then(Commands.literal("set")
+                .then(Commands.literal("progress")
+                        .then(Commands.argument("target", GameProfileArgument.gameProfile())
+                                .then(Commands.argument("count", FloatArgumentType.floatArg()).executes((command) -> {
+                                    return setManaProgress(command.getSource(), GameProfileArgument.getGameProfiles(command, "target"), FloatArgumentType.getFloat(command, "count"));
+                                }))))
                 .then(Commands.literal("current")
                         .then(Commands.argument("target", GameProfileArgument.gameProfile())
                                 .then(Commands.argument("count", IntegerArgumentType.integer()).executes((command) -> {
@@ -68,6 +78,30 @@ public class ManaCommand {
                                 }))))));
     }
 
+    private static int setManaProgress(CommandSourceStack source, Collection<GameProfile> target, float count) throws CommandSyntaxException {
+        if (count < 0.0F) {
+            throw ERROR_NEGATIVE_PROGRESS.create(count);
+        } else if (count > 1.0F) {
+            throw ERROR_HIGH_PROGRESS.create(count);
+        } else {
+            for (GameProfile gameprofile : target) {
+                ServerPlayer serverPlayerEntity = source.getServer().getPlayerList().getPlayer(gameprofile.getId());
+
+                if (serverPlayerEntity == null) {
+                    throw ERROR_PLAYER.create(gameprofile);
+                }
+
+                ManaStorage manaStorage = serverPlayerEntity.getCapability(CapabilityMana.MANA_CAPABILITY, null).orElseThrow(() ->
+                        new IllegalStateException("Tried to get my capability but it wasn't there wtf"));
+                Mana.setProgressMana(manaStorage, serverPlayerEntity, count);
+
+                source.sendSuccess(new TranslatableComponent("command.arcanecraft.mana.progress_set", ComponentUtils.getDisplayName(gameprofile), count), true);
+            }
+        }
+
+        return (int) count;
+    }
+
     private static int setCurrentMana(CommandSourceStack source, Collection<GameProfile> target, int count) throws CommandSyntaxException {
         if (count < 0) {
             throw ERROR_NEGATIVE_MANA.create(count);
@@ -82,14 +116,9 @@ public class ManaCommand {
                 ManaStorage manaStorage = serverPlayerEntity.getCapability(CapabilityMana.MANA_CAPABILITY, null).orElseThrow(() ->
                         new IllegalStateException("Tried to get my capability but it wasn't there wtf"));
                 if (count > manaStorage.getMaxMana()) {
-                    manaStorage.setMaxMana(count);
-                    NetworkManager.INSTANCE.send(PacketDistributor.PLAYER.with(() ->
-                            serverPlayerEntity), new MaxManaPacket(count));
+                    Mana.setMaxMana(manaStorage, serverPlayerEntity, count);
                 }
-
-                manaStorage.setMana(count);
-                NetworkManager.INSTANCE.send(PacketDistributor.PLAYER.with(() ->
-                        serverPlayerEntity), new CurrentManaPacket(count));
+                Mana.setCurrentMana(manaStorage, serverPlayerEntity, count);
 
                 source.sendSuccess(new TranslatableComponent("command.arcanecraft.mana.current_set", ComponentUtils.getDisplayName(gameprofile), count), true);
             }
@@ -111,13 +140,10 @@ public class ManaCommand {
 
                 ManaStorage manaStorage = serverPlayerEntity.getCapability(CapabilityMana.MANA_CAPABILITY, null).orElseThrow(() ->
                         new IllegalStateException("Tried to get my capability but it wasn't there wtf"));
-                if (manaStorage.getMaxMana() > count) {
+                if (manaStorage.getMana() > count) {
                     throw ERROR_MAX_INFERIOR.create(count);
                 }
-
-                manaStorage.setMaxMana(count);
-                NetworkManager.INSTANCE.send(PacketDistributor.PLAYER.with(() ->
-                        serverPlayerEntity), new MaxManaPacket(count));
+                Mana.setMaxMana(manaStorage, serverPlayerEntity, count);
 
                 source.sendSuccess(new TranslatableComponent("command.arcanecraft.mana.max_set", ComponentUtils.getDisplayName(gameprofile), count), true);
             }
@@ -136,21 +162,13 @@ public class ManaCommand {
 
             ManaStorage manaStorage = serverPlayerEntity.getCapability(CapabilityMana.MANA_CAPABILITY, null).orElseThrow(() ->
                     new IllegalStateException("Tried to get my capability but it wasn't there wtf"));
-            int totalMana = manaStorage.getMana() + count;
-
-            if (totalMana < 0) {
-                throw ERROR_NEGATIVE_MANA.create(totalMana);
+            if ((manaStorage.getMana() + count) < 0) {
+                throw ERROR_NEGATIVE_MANA.create((manaStorage.getMana() + count));
             }
-
-            if (totalMana > manaStorage.getMaxMana()) {
-                manaStorage.setMaxMana(totalMana);
-                NetworkManager.INSTANCE.send(PacketDistributor.PLAYER.with(() ->
-                        serverPlayerEntity), new MaxManaPacket(totalMana));
+            if ((manaStorage.getMana() + count) > manaStorage.getMaxMana()) {
+                Mana.setMaxMana(manaStorage, serverPlayerEntity, (manaStorage.getMana() + count));
             }
-
-            manaStorage.setMana(totalMana);
-            NetworkManager.INSTANCE.send(PacketDistributor.PLAYER.with(() ->
-                    serverPlayerEntity), new CurrentManaPacket(totalMana));
+            Mana.addCurrentMana(manaStorage, serverPlayerEntity, count);
 
             source.sendSuccess(new TranslatableComponent("command.arcanecraft.mana.current_add", count, ComponentUtils.getDisplayName(gameprofile)), true);
         }
@@ -168,19 +186,13 @@ public class ManaCommand {
 
             ManaStorage manaStorage = serverPlayerEntity.getCapability(CapabilityMana.MANA_CAPABILITY, null).orElseThrow(() ->
                     new IllegalStateException("Tried to get my capability but it wasn't there wtf"));
-            double totalMaxMana = manaStorage.getMaxMana() + count;
-
-            if (totalMaxMana < 0) {
-                throw ERROR_NEGATIVE_MAX_MANA.create(totalMaxMana);
+            if ((manaStorage.getMaxMana() + count) < 0) {
+                throw ERROR_NEGATIVE_MAX_MANA.create(manaStorage.getMaxMana() + count);
             }
-
-            if (manaStorage.getMana() > totalMaxMana) {
-                throw ERROR_MAX_INFERIOR.create(totalMaxMana);
+            if (manaStorage.getMana() > (manaStorage.getMaxMana() + count)) {
+                throw ERROR_MAX_INFERIOR.create(manaStorage.getMaxMana() + count);
             }
-
-            manaStorage.setMaxMana(totalMaxMana);
-            NetworkManager.INSTANCE.send(PacketDistributor.PLAYER.with(() ->
-                    serverPlayerEntity), new MaxManaPacket((int) totalMaxMana));
+            Mana.addMaxMana(manaStorage, serverPlayerEntity, count);
 
             source.sendSuccess(new TranslatableComponent("command.arcanecraft.mana.max_add", count, ComponentUtils.getDisplayName(gameprofile)), true);
         }

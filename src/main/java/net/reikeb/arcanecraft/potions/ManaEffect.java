@@ -6,13 +6,10 @@ import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.entity.LivingEntity;
 
-import net.minecraftforge.fmllegacy.network.PacketDistributor;
-
 import net.reikeb.arcanecraft.ArcaneCraft;
 import net.reikeb.arcanecraft.capabilities.CapabilityMana;
 import net.reikeb.arcanecraft.capabilities.ManaStorage;
-import net.reikeb.arcanecraft.network.NetworkManager;
-import net.reikeb.arcanecraft.network.packets.MaxManaPacket;
+import net.reikeb.arcanecraft.misc.vm.Mana;
 
 public class ManaEffect extends MobEffect {
 
@@ -47,8 +44,6 @@ public class ManaEffect extends MobEffect {
 
         ManaStorage manaStorage = entity.getCapability(CapabilityMana.MANA_CAPABILITY, null).orElseThrow(() ->
                         new IllegalStateException("Tried to get my capability but it wasn't there wtf"));
-        manaStorage.setMaxMana((manaStorage.getMaxMana()) + 0.05);
-        NetworkManager.INSTANCE.send(PacketDistributor.PLAYER.with(() ->
-                (ServerPlayer) entity), new MaxManaPacket((int) (manaStorage.getMaxMana() + 0.05)));
+        Mana.addMaxMana(manaStorage, (ServerPlayer) entity, 0.05);
     }
 }

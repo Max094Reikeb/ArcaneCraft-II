@@ -13,6 +13,7 @@ import net.reikeb.arcanecraft.capabilities.CapabilityMana;
 import net.reikeb.arcanecraft.capabilities.ManaStorage;
 import net.reikeb.arcanecraft.network.NetworkManager;
 import net.reikeb.arcanecraft.network.packets.CurrentManaPacket;
+import net.reikeb.arcanecraft.network.packets.ManaProgressPacket;
 import net.reikeb.arcanecraft.network.packets.MaxManaPacket;
 
 @Mod.EventBusSubscriber(modid = ArcaneCraft.MODID)
@@ -26,8 +27,10 @@ public class PlayerConnectsEvent {
                 new IllegalStateException("Tried to get my capability but it wasn't there wtf"));
 
         NetworkManager.INSTANCE.send(PacketDistributor.PLAYER.with(() ->
+                (ServerPlayer) playerEntity), new CurrentManaPacket(manaStorage.getMana()));
+        NetworkManager.INSTANCE.send(PacketDistributor.PLAYER.with(() ->
                 (ServerPlayer) playerEntity), new MaxManaPacket((int) manaStorage.getMaxMana()));
         NetworkManager.INSTANCE.send(PacketDistributor.PLAYER.with(() ->
-                (ServerPlayer) playerEntity), new CurrentManaPacket(manaStorage.getMana()));
+                (ServerPlayer) playerEntity), new ManaProgressPacket(manaStorage.getManaProgress()));
     }
 }
