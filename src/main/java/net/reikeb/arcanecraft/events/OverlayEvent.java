@@ -52,7 +52,7 @@ public class OverlayEvent {
         Minecraft.getInstance().getProfiler().push("manaBar");
         Util.bind(MANA_BARS);
         int i = maxManaValue - currentManaValue;
-        if (i > 0) {
+        if (i >= 0) {
             int k = (int) (manaProgress * 183.0F);
             int l = heightWindow - 49 + 3;
             Minecraft.getInstance().gui.blit(mStack, x, l, MANA_BAR_U, MANA_BAR_V, MANA_BAR_WIDTH, MANA_BAR_HEIGHT);
