@@ -30,6 +30,7 @@ import net.reikeb.arcanecraft.init.EntityInit;
 import net.reikeb.arcanecraft.init.ItemInit;
 import net.reikeb.arcanecraft.init.SpellInit;
 import net.reikeb.arcanecraft.setup.client.renderer.AmethystArrowRenderer;
+import net.reikeb.arcanecraft.setup.client.renderer.ManaOrbRenderer;
 import net.reikeb.arcanecraft.spell.SpellInstance;
 import net.reikeb.arcanecraft.spell.SpellUtils;
 
@@ -126,6 +127,7 @@ public class ClientSetup {
 
         // Setup arrows renderers
         event.registerEntityRenderer(EntityInit.AMETHYST_ARROW_ENTITY_TYPE, AmethystArrowRenderer::new);
+        event.registerEntityRenderer(EntityInit.MANA_ORB_ENTITY_TYPE, ManaOrbRenderer::new);
 
         event.registerEntityRenderer(EntityInit.ARROW_EVOKER_ENTITY_ENTITY_TYPE,
                 renderManager -> new ThrownItemRenderer<>(renderManager, 1.0F, false));

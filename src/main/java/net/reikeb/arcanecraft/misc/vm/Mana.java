@@ -3,9 +3,11 @@ package net.reikeb.arcanecraft.misc.vm;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fmllegacy.network.PacketDistributor;
 
 import net.reikeb.arcanecraft.capabilities.ManaStorage;
+import net.reikeb.arcanecraft.events.local.PlayerManaEvent;
 import net.reikeb.arcanecraft.network.NetworkManager;
 import net.reikeb.arcanecraft.network.packets.CurrentManaPacket;
 import net.reikeb.arcanecraft.network.packets.ManaProgressPacket;
@@ -21,6 +23,8 @@ public class Mana {
      * @param count        The number of current mana we're adding to the mana storage
      */
     public static void addCurrentMana(ManaStorage manaStorage, ServerPlayer serverPlayer, int count) {
+        if (MinecraftForge.EVENT_BUS.post(new PlayerManaEvent.ManaChangeCurrent(serverPlayer, count))) return;
+
         // Add current mana
         int currentMana = manaStorage.getMana();
         currentMana += count;
@@ -41,6 +45,8 @@ public class Mana {
      * @param count        The number of current mana we're setting the mana storage to
      */
     public static void setCurrentMana(ManaStorage manaStorage, ServerPlayer serverPlayer, int count) {
+        if (MinecraftForge.EVENT_BUS.post(new PlayerManaEvent.ManaChangeCurrent(serverPlayer, count))) return;
+
         // Set current mana
         manaStorage.setMana(count);
         NetworkManager.INSTANCE.send(PacketDistributor.PLAYER.with(() ->
@@ -59,6 +65,8 @@ public class Mana {
      * @param count        The number of maximum mana we're adding to the mana storage
      */
     public static void addMaxMana(ManaStorage manaStorage, ServerPlayer serverPlayer, double count) {
+        if (MinecraftForge.EVENT_BUS.post(new PlayerManaEvent.ManaChangeMaximum(serverPlayer, count))) return;
+
         // Add maximum mana
         double maxMana = manaStorage.getMaxMana();
         maxMana += count;
@@ -79,6 +87,8 @@ public class Mana {
      * @param count        The number of maximum mana we're setting the mana storage to
      */
     public static void setMaxMana(ManaStorage manaStorage, ServerPlayer serverPlayer, double count) {
+        if (MinecraftForge.EVENT_BUS.post(new PlayerManaEvent.ManaChangeMaximum(serverPlayer, count))) return;
+
         // Set maximum mana
         manaStorage.setMaxMana(count);
         NetworkManager.INSTANCE.send(PacketDistributor.PLAYER.with(() ->
