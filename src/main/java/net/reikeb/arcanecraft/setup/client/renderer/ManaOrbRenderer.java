@@ -15,11 +15,12 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 
+import net.reikeb.arcanecraft.ArcaneCraft;
 import net.reikeb.arcanecraft.entities.ManaOrb;
 
 public class ManaOrbRenderer extends EntityRenderer<ManaOrb> {
 
-    private static final ResourceLocation MANA_ORB_LOCATION = new ResourceLocation("minecraft:textures/entity/experience_orb.png");
+    private static final ResourceLocation MANA_ORB_LOCATION = ArcaneCraft.RL("textures/entity/mana_orb.png");
     private static final RenderType RENDER_TYPE;
 
     public ManaOrbRenderer(Context context) {
