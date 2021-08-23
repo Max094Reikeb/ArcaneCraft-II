@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/crop",
+  "textures": {
+    "crop": "arcanecraft:blocks/mana_berry_stage1"
+  }
+}

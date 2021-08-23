@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "age=0": {
+      "model": "arcanecraft:block/mana_berry_stage0"
+    },
+    "age=1": {
+      "model": "arcanecraft:block/mana_berry_stage1"
+    },
+    "age=2": {
+      "model": "arcanecraft:block/mana_berry_stage2"
+    },
+    "age=3": {
+      "model": "arcanecraft:block/mana_berry_stage3"
+    },
+    "age=4": {
+      "model": "arcanecraft:block/mana_berry_stage4"
+    }
+  }
+}

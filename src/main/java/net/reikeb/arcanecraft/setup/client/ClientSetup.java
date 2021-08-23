@@ -42,6 +42,7 @@ public class ClientSetup {
             // Cutout
             ItemBlockRenderTypes.setRenderLayer(BlockInit.SCROLL_TABLE.get(), RenderType.cutout());
             ItemBlockRenderTypes.setRenderLayer(BlockInit.WAND_WORKBENCH.get(), RenderType.cutout());
+            ItemBlockRenderTypes.setRenderLayer(BlockInit.MANA_BERRY.get(), RenderType.cutout());
 
             // Item Properties
             ItemProperties.register(ItemInit.ARCANE_SCROLL.get(), new ResourceLocation("spell"), (stack, p_239426_1_, player, p_239426_2_) -> {

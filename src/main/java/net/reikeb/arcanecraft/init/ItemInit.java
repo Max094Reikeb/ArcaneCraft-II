@@ -2,6 +2,7 @@ package net.reikeb.arcanecraft.init;
 
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemNameBlockItem;
 
 import net.minecraftforge.fmllegacy.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
@@ -66,6 +67,9 @@ public class ItemInit {
             new BlockItem(BlockInit.RUNIC_STONE_WALL.get(), new Item.Properties().tab(ItemGroups.ARCANECRAFT)));
 
     public static final RegistryObject<Item> MANA_POTION = ITEMS.register("mana_potion", ManaPotion::new);
+
+    public static final RegistryObject<Item> MANA_BERRY_SEEDS = ITEMS.register("mana_berry_seeds", () ->
+            new ItemNameBlockItem(BlockInit.MANA_BERRY.get(), new Item.Properties().tab(ItemGroups.ARCANECRAFT)));
 
     public static final RegistryObject<Item> AMETHYST_ARROW = ITEMS.register("amethyst_arrow", AmethystArrowItem::new);
 
