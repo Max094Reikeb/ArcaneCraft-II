@@ -1,16 +1,11 @@
 package net.reikeb.arcanecraft.setup.client;
 
 import net.minecraft.client.gui.screens.MenuScreens;
-import net.minecraft.client.model.SlimeModel;
-import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.entity.MobRenderer;
-import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.Entity;
 
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
@@ -26,11 +21,8 @@ import net.reikeb.arcanecraft.guis.CastingTableWindow;
 import net.reikeb.arcanecraft.guis.ScrollTableWindow;
 import net.reikeb.arcanecraft.guis.WandWorkbenchWindow;
 import net.reikeb.arcanecraft.init.BlockInit;
-import net.reikeb.arcanecraft.init.EntityInit;
 import net.reikeb.arcanecraft.init.ItemInit;
 import net.reikeb.arcanecraft.init.SpellInit;
-import net.reikeb.arcanecraft.setup.client.renderer.AmethystArrowRenderer;
-import net.reikeb.arcanecraft.setup.client.renderer.ManaOrbRenderer;
 import net.reikeb.arcanecraft.spell.SpellInstance;
 import net.reikeb.arcanecraft.spell.SpellUtils;
 
@@ -92,7 +84,7 @@ public class ClientSetup {
                 return 0.0F;
             });
 
-        ItemProperties.register(ItemInit.WAND.get(), new ResourceLocation("spell"), (stack, p_239426_1_, player, p_239426_2_) -> {
+            ItemProperties.register(ItemInit.WAND.get(), new ResourceLocation("spell"), (stack, p_239426_1_, player, p_239426_2_) -> {
                 for (SpellInstance spellInstance : SpellUtils.getSpell(stack)) {
                     if (spellInstance.getSpell() == SpellInit.EVOKER.get()) {
                         return 1.0F;
@@ -117,28 +109,7 @@ public class ClientSetup {
 
     @SubscribeEvent
     public static void registerModels(EntityRenderersEvent.RegisterRenderers event) {
-        event.registerEntityRenderer(EntityInit.FIRE_SPLASH_ENTITY_ENTITY_TYPE,
-                rendererProvider -> new MobRenderer(rendererProvider, new SlimeModel<>(rendererProvider.bakeLayer(ModelLayers.SLIME)), 0f) {
-                    @Override
-                    public ResourceLocation getTextureLocation(Entity entity) {
-                        return ArcaneCraft.RL("textures/air.png");
-                    }
-                });
-
-        // Setup arrows renderers
-        event.registerEntityRenderer(EntityInit.AMETHYST_ARROW_ENTITY_TYPE, AmethystArrowRenderer::new);
-        event.registerEntityRenderer(EntityInit.MANA_ORB_ENTITY_TYPE, ManaOrbRenderer::new);
-
-        event.registerEntityRenderer(EntityInit.ARROW_EVOKER_ENTITY_ENTITY_TYPE,
-                renderManager -> new ThrownItemRenderer<>(renderManager, 1.0F, false));
-        event.registerEntityRenderer(EntityInit.ARROW_FIRE_ENTITY_ENTITY_TYPE,
-                renderManager -> new ThrownItemRenderer<>(renderManager, 1.0F, false));
-        event.registerEntityRenderer(EntityInit.ARROW_ICE_ENTITY_ENTITY_TYPE,
-                renderManager -> new ThrownItemRenderer<>(renderManager, 1.0F, false));
-        event.registerEntityRenderer(EntityInit.ARROW_LIFE_ENTITY_ENTITY_TYPE,
-                renderManager -> new ThrownItemRenderer<>(renderManager, 1.0F, false));
-        event.registerEntityRenderer(EntityInit.ARROW_LIGHTNING_ENTITY_ENTITY_TYPE,
-                renderManager -> new ThrownItemRenderer<>(renderManager, 1.0F, false));
+        ResourcesSetup.setupRenderers(event);
     }
 
     @SubscribeEvent
