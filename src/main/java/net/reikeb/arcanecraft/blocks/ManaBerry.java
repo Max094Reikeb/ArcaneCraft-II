@@ -17,6 +17,7 @@ import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
@@ -87,7 +88,7 @@ public class ManaBerry extends BushBlock implements BonemealableBlock {
     public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
         if ((!worldIn.isClientSide) && (state.getValue(AGE_4) == MAX_AGE)) {
             worldIn.setBlockAndUpdate(pos, state.setValue(AGE_4, (state.getValue(AGE_4) - 1)));
-            worldIn.addFreshEntity(new ManaOrb(worldIn, pos.getX(), pos.getY() + 0.5D, pos.getZ(), (worldIn.random.nextInt(4) + 1)));
+            ManaOrb.award((ServerLevel) worldIn, Vec3.atCenterOf(pos), (worldIn.random.nextInt(4) + 1));
             return InteractionResult.SUCCESS;
         }
         return InteractionResult.PASS;
