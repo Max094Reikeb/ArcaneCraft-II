@@ -101,9 +101,9 @@ dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
 
     // Compile against the JEI API but do not include it at runtime
-    // compileOnly fg.deobf("mezz.jei:jei-${jei_mc_version}:${jei_version}:api")
+    compileOnly fg.deobf("mezz.jei:jei-${jei_mc_version}:${jei_version}:api")
     // At runtime, use the full JEI jar
-    // runtimeOnly fg.deobf("mezz.jei:jei-${jei_mc_version}:${jei_version}")
+    runtimeOnly fg.deobf("mezz.jei:jei-${jei_mc_version}:${jei_version}")
 
     // Compile against the Curios API but do not include it at runtime
     compileOnly fg.deobf("top.theillusivec4.curios:curios-forge:${curios_version}:api")

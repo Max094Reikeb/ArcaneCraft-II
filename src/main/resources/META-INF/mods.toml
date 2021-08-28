@@ -17,7 +17,7 @@ ArcaneCraft II is the recreation of ArcaneCraft.
 [[dependencies.arcanecraft]] #optional
     modId="forge"
     mandatory=true
-    versionRange="[37.0.44,)"
+    versionRange="[37.0.45,)"
     ordering="NONE"
     side="BOTH"
 
