@@ -1,9 +1,7 @@
 package net.reikeb.arcanecraft.entities;
 
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.AbstractArrow;
@@ -14,8 +12,6 @@ import net.reikeb.arcanecraft.init.EntityInit;
 import net.reikeb.arcanecraft.init.ItemInit;
 
 public class AmethystArrow extends AbstractArrow {
-
-    private int duration = 200;
 
     public AmethystArrow(EntityType<? extends AmethystArrow> type, Level world) {
         super(type, world);
@@ -42,20 +38,6 @@ public class AmethystArrow extends AbstractArrow {
 
     protected void doPostHurtEffects(LivingEntity entity) {
         super.doPostHurtEffects(entity);
-        MobEffectInstance effect = new MobEffectInstance(MobEffects.GLOWING, this.duration, 0);
-        entity.addEffect(effect, this.getEffectSource());
-    }
-
-    public void readAdditionalSaveData(CompoundTag nbt) {
-        super.readAdditionalSaveData(nbt);
-        if (nbt.contains("Duration")) {
-            this.duration = nbt.getInt("Duration");
-        }
-
-    }
-
-    public void addAdditionalSaveData(CompoundTag nbt) {
-        super.addAdditionalSaveData(nbt);
-        nbt.putInt("Duration", this.duration);
+        entity.hurt(DamageSource.MAGIC, 5.0F);
     }
 }
