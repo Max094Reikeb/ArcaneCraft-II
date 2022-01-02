@@ -68,6 +68,9 @@ public class ItemInit {
 
     public static final RegistryObject<Item> MANA_POTION = ITEMS.register("mana_potion", ManaPotion::new);
 
+    public static final RegistryObject<Item> MANA_PLANT_SEEDS = ITEMS.register("mana_plant", () ->
+            new BlockItem(BlockInit.MANA_PLANT.get(), new Item.Properties().tab(ItemGroups.ARCANECRAFT)));
+
     public static final RegistryObject<Item> MANA_BERRY_SEEDS = ITEMS.register("mana_berry_seeds", () ->
             new ItemNameBlockItem(BlockInit.MANA_BERRY.get(), new Item.Properties().tab(ItemGroups.ARCANECRAFT)));
 

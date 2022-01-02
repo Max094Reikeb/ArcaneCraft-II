@@ -21,5 +21,6 @@ public class BlockInit {
     public static final RegistryObject<RunicStoneSlab> RUNIC_STONE_SLAB = BLOCKS.register("runic_stone_slab", RunicStoneSlab::new);
     public static final RegistryObject<RunicStoneStairs> RUNIC_STONE_STAIRS = BLOCKS.register("runic_stone_stairs", RunicStoneStairs::new);
     public static final RegistryObject<RunicStoneWall> RUNIC_STONE_WALL = BLOCKS.register("runic_stone_wall", RunicStoneWall::new);
+    public static final RegistryObject<ManaPlant> MANA_PLANT = BLOCKS.register("mana_plant", ManaPlant::new);
     public static final RegistryObject<ManaBerry> MANA_BERRY = BLOCKS.register("mana_berry", ManaBerry::new);
 }
