@@ -31,16 +31,7 @@ public class ResourcesSetup {
         // Setup arrows renderers
         event.registerEntityRenderer(EntityInit.AMETHYST_ARROW_ENTITY_TYPE, AmethystArrowRenderer::new);
         event.registerEntityRenderer(EntityInit.MANA_ORB_ENTITY_TYPE, ManaOrbRenderer::new);
-
-        event.registerEntityRenderer(EntityInit.ARROW_EVOKER_ENTITY_ENTITY_TYPE,
-                renderManager -> new ThrownItemRenderer<>(renderManager, 1.0F, false));
-        event.registerEntityRenderer(EntityInit.ARROW_FIRE_ENTITY_ENTITY_TYPE,
-                renderManager -> new ThrownItemRenderer<>(renderManager, 1.0F, false));
-        event.registerEntityRenderer(EntityInit.ARROW_ICE_ENTITY_ENTITY_TYPE,
-                renderManager -> new ThrownItemRenderer<>(renderManager, 1.0F, false));
-        event.registerEntityRenderer(EntityInit.ARROW_LIFE_ENTITY_ENTITY_TYPE,
-                renderManager -> new ThrownItemRenderer<>(renderManager, 1.0F, false));
-        event.registerEntityRenderer(EntityInit.ARROW_LIGHTNING_ENTITY_ENTITY_TYPE,
+        event.registerEntityRenderer(EntityInit.ABSTRACT_SPELL_ARROW_TYPE,
                 renderManager -> new ThrownItemRenderer<>(renderManager, 1.0F, false));
     }
 }

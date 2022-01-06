@@ -16,8 +16,8 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 import net.reikeb.arcanecraft.capabilities.CapabilityMana;
 import net.reikeb.arcanecraft.capabilities.ManaStorage;
-import net.reikeb.arcanecraft.entities.*;
-import net.reikeb.arcanecraft.init.EntityInit;
+import net.reikeb.arcanecraft.entities.AbstractSpellArrow;
+import net.reikeb.arcanecraft.init.SpellInit;
 import net.reikeb.arcanecraft.init.WandInit;
 import net.reikeb.arcanecraft.misc.vm.Mana;
 import net.reikeb.arcanecraft.network.NetworkManager;
@@ -61,33 +61,33 @@ public class CastSpell {
         if ((manaStorage.getMana() < spellMana) && (!playerEntity.isCreative())) return;
 
         if (wandObject == WandInit.EVOKER.get()) {
-            ArrowEvokerEntity arrowEvokerEntity = new ArrowEvokerEntity(EntityInit.ARROW_EVOKER_ENTITY_ENTITY_TYPE, this.playerEntity, this.world);
-            ArrowEvokerEntity arrowEvokerEntity1 = (ArrowEvokerEntity) shootArrow(arrowEvokerEntity, "entity.evoker.cast_spell", 0.7000000000000001f, 2.5, 0);
-            arrowEvokerEntity1.pickup = AbstractArrow.Pickup.DISALLOWED;
+            AbstractSpellArrow arrowEvoker = new AbstractSpellArrow(SpellInit.EVOKER.get(), this.playerEntity, this.world);
+            AbstractSpellArrow arrowEvoker1 = shootArrow(arrowEvoker, "entity.evoker.cast_spell", 0.7000000000000001f, 2.5, 0);
+            arrowEvoker1.pickup = AbstractArrow.Pickup.DISALLOWED;
             flag = true;
 
         } else if (wandObject == WandInit.FIRE.get()) {
-            ArrowFireEntity arrowFireEntity = new ArrowFireEntity(EntityInit.ARROW_FIRE_ENTITY_ENTITY_TYPE, this.playerEntity, this.world);
-            ArrowFireEntity arrowFireEntity1 = (ArrowFireEntity) shootArrow(arrowFireEntity, "entity.blaze.shoot", 0.7000000000000001f, 3, 0);
-            arrowFireEntity1.pickup = AbstractArrow.Pickup.DISALLOWED;
+            AbstractSpellArrow arrowFire = new AbstractSpellArrow(SpellInit.FIRE.get(), this.playerEntity, this.world);
+            AbstractSpellArrow arrowFire1 = shootArrow(arrowFire, "entity.blaze.shoot", 0.7000000000000001f, 3, 0);
+            arrowFire1.pickup = AbstractArrow.Pickup.DISALLOWED;
             flag = true;
 
         } else if (wandObject == WandInit.ICE.get()) {
-            ArrowIceEntity arrowIceEntity = new ArrowIceEntity(EntityInit.ARROW_ICE_ENTITY_ENTITY_TYPE, this.playerEntity, this.world);
-            ArrowIceEntity arrowIceEntity1 = (ArrowIceEntity) shootArrow(arrowIceEntity, "entity.evoker.cast_spell", 0.7000000000000001f, 2, 0);
-            arrowIceEntity1.pickup = AbstractArrow.Pickup.DISALLOWED;
+            AbstractSpellArrow arrowIce = new AbstractSpellArrow(SpellInit.ICE.get(), this.playerEntity, this.world);
+            AbstractSpellArrow arrowIce1 = shootArrow(arrowIce, "entity.evoker.cast_spell", 0.7000000000000001f, 2, 0);
+            arrowIce1.pickup = AbstractArrow.Pickup.DISALLOWED;
             flag = true;
 
         } else if (wandObject == WandInit.LIFE_DRAIN.get()) {
-            ArrowLifeEntity arrowLifeEntity = new ArrowLifeEntity(EntityInit.ARROW_LIFE_ENTITY_ENTITY_TYPE, this.playerEntity, this.world);
-            ArrowLifeEntity arrowLifeEntity1 = (ArrowLifeEntity) shootArrow(arrowLifeEntity, "entity.illusioner.cast_spell", 0.4f, 2, 0);
-            arrowLifeEntity1.pickup = AbstractArrow.Pickup.DISALLOWED;
+            AbstractSpellArrow arrowLife = new AbstractSpellArrow(SpellInit.LIFE_DRAIN.get(), this.playerEntity, this.world);
+            AbstractSpellArrow arrowLife1 = shootArrow(arrowLife, "entity.illusioner.cast_spell", 0.4f, 2, 0);
+            arrowLife1.pickup = AbstractArrow.Pickup.DISALLOWED;
             flag = true;
 
         } else if (wandObject == WandInit.LIGHTNING.get()) {
-            ArrowLightningEntity arrowLightningEntity = new ArrowLightningEntity(EntityInit.ARROW_LIGHTNING_ENTITY_ENTITY_TYPE, this.playerEntity, this.world);
-            ArrowLightningEntity arrowLightningEntity1 = (ArrowLightningEntity) shootArrow(arrowLightningEntity, "entity.illusioner.cast_spell", 0.6f, 3, 0);
-            arrowLightningEntity1.pickup = AbstractArrow.Pickup.DISALLOWED;
+            AbstractSpellArrow arrowLightning = new AbstractSpellArrow(SpellInit.LIGHTNING.get(), this.playerEntity, this.world);
+            AbstractSpellArrow arrowLightning1 = shootArrow(arrowLightning, "entity.illusioner.cast_spell", 0.6f, 3, 0);
+            arrowLightning1.pickup = AbstractArrow.Pickup.DISALLOWED;
             flag = true;
 
         } else if (wandObject == WandInit.PULL.get()) {
@@ -122,7 +122,7 @@ public class CastSpell {
         }
     }
 
-    public AbstractArrow shootArrow(AbstractArrow arrow, String sound, float power, double damage, int knockback) {
+    public AbstractSpellArrow shootArrow(AbstractSpellArrow arrow, String sound, float power, double damage, int knockback) {
         arrow.shoot(this.playerEntity.getLookAngle().x, this.playerEntity.getLookAngle().y, this.playerEntity.getLookAngle().z, power * 2, 0);
         arrow.setSilent(true);
         arrow.setCritArrow(false);
