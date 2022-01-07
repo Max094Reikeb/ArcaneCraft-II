@@ -97,10 +97,10 @@ public class AbstractSpellArrow extends AbstractArrow implements ItemSupplier {
                         6, 1, 1);
             } else if (this.spell == SpellInit.LIFE_DRAIN.get()) {
                 this.level.addParticle(ParticleTypes.DAMAGE_INDICATOR, this.getX(), this.getY(), this.getZ(),
-                        1, 1, 1);
+                        5, 1, 1);
             } else if (this.spell == SpellInit.LIGHTNING.get()) {
                 this.level.addParticle(ParticleTypes.SWEEP_ATTACK, this.getX(), this.getY(), this.getZ(),
-                        1, 1, 1);
+                        5, 1, 1);
             }
         }
         if (this.inGround) {
