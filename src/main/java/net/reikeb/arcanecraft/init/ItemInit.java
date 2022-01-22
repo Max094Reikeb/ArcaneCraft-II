@@ -43,6 +43,8 @@ public class ItemInit {
 
     public static final RegistryObject<Item> GOLD_RING = ITEMS.register("gold_ring", GoldRing::new);
 
+    public static final RegistryObject<Item> ARCANE_RING = ITEMS.register("arcane_ring", ArcaneRing::new);
+
     public static final RegistryObject<Item> SPELL_BOOK = ITEMS.register("spell_book", SpellBook::new);
 
     public static final RegistryObject<Item> CASTING_TABLE_ITEM = ITEMS.register("casting_table", () ->
@@ -75,6 +77,11 @@ public class ItemInit {
             new ItemNameBlockItem(BlockInit.MANA_BERRY.get(), new Item.Properties().tab(ItemGroups.ARCANECRAFT)));
 
     public static final RegistryObject<Item> AMETHYST_ARROW = ITEMS.register("amethyst_arrow", AmethystArrowItem::new);
+
+    public static final RegistryObject<Item> AMETHYST_FADED_CLUSTER_ITEM = ITEMS.register("amethyst_faded_cluster", () ->
+            new BlockItem(BlockInit.AMETHYST_FADED_CLUSTER.get(), new Item.Properties().tab(ItemGroups.ARCANECRAFT)));
+
+    public static final RegistryObject<Item> ARCANE_ESSENCE = ITEMS.register("arcane_essence", ArcaneEssence::new);
 
     public static final RegistryObject<Item> SPELL_BOOK_BANNER_PATTERN = ITEMS.register("spell_book_banner_pattern", SpellBookBannerPattern::new);
 

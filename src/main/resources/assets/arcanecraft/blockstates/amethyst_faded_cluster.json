@@ -1,0 +1,30 @@
+{
+  "variants": {
+    "facing=down": {
+      "model": "arcanecraft:block/amethyst_faded_cluster",
+      "x": 180
+    },
+    "facing=east": {
+      "model": "arcanecraft:block/amethyst_faded_cluster",
+      "x": 90,
+      "y": 90
+    },
+    "facing=north": {
+      "model": "arcanecraft:block/amethyst_faded_cluster",
+      "x": 90
+    },
+    "facing=south": {
+      "model": "arcanecraft:block/amethyst_faded_cluster",
+      "x": 90,
+      "y": 180
+    },
+    "facing=up": {
+      "model": "arcanecraft:block/amethyst_faded_cluster"
+    },
+    "facing=west": {
+      "model": "arcanecraft:block/amethyst_faded_cluster",
+      "x": 90,
+      "y": 270
+    }
+  }
+}
