@@ -14,8 +14,8 @@ import net.minecraft.world.entity.projectile.ItemSupplier;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
-
 import net.minecraft.world.phys.Vec3;
+
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fmllegacy.network.FMLPlayMessages;
@@ -74,6 +74,7 @@ public class AbstractSpellArrow extends AbstractArrow implements ItemSupplier {
         if (this.spell == SpellInit.LIFE_DRAIN.get()) ((LivingEntity) shooter).addEffect(new MobEffectInstance(MobEffects.REGENERATION, 30, 3));
         if (this.spell == SpellInit.LIGHTNING.get()) {
             LightningBolt lightningBolt = EntityType.LIGHTNING_BOLT.create(this.level);
+            if (lightningBolt == null) return;
             lightningBolt.moveTo(Vec3.atBottomCenterOf(this.blockPosition()));
             lightningBolt.setVisualOnly(false);
             this.level.addFreshEntity(lightningBolt);
