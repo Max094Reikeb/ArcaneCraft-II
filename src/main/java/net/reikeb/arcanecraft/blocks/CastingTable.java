@@ -13,6 +13,8 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.storage.loot.LootContext;
@@ -22,9 +24,11 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 
 import net.minecraftforge.fmllegacy.network.NetworkHooks;
 
+import net.reikeb.arcanecraft.init.TileEntityInit;
 import net.reikeb.arcanecraft.misc.CustomShapes;
 import net.reikeb.arcanecraft.tileentities.TileCastingTable;
 
+import javax.annotation.Nullable;
 import java.util.Collections;
 import java.util.List;
 
@@ -96,5 +100,11 @@ public class CastingTable extends Block implements EntityBlock {
         super.triggerEvent(state, world, pos, eventID, eventParam);
         BlockEntity tileentity = world.getBlockEntity(pos);
         return tileentity != null && tileentity.triggerEvent(eventID, eventParam);
+    }
+
+    @Nullable
+    @Override
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state, BlockEntityType<T> blockEntityType) {
+        return blockEntityType == TileEntityInit.TILE_CASTING_TABLE.get() ? (BlockEntityTicker<T>) TileCastingTable.TICKER : null;
     }
 }

@@ -23,12 +23,12 @@ public class BlockRightClicked {
         Level level = event.getWorld();
         BlockPos pos = event.getPos();
         Player player = event.getPlayer();
-        ItemStack glassBottleStack = new ItemStack(Items.GLASS_BOTTLE);
 
         if (level.getBlockState(pos) != Blocks.AMETHYST_CLUSTER.defaultBlockState()) return;
-        if ((player.getMainHandItem() != glassBottleStack) && (player.getOffhandItem() != glassBottleStack)) return;
+        if ((!player.getMainHandItem().getItem().equals(Items.GLASS_BOTTLE))
+                && (!player.getOffhandItem().getItem().equals(Items.GLASS_BOTTLE))) return;
 
         level.setBlockAndUpdate(pos, BlockInit.AMETHYST_FADED_CLUSTER.get().defaultBlockState());
-        player.addItem(new ItemStack(ItemInit.ARCANE_ESSENCE.get()));
+        player.setItemInHand(event.getHand(), new ItemStack(ItemInit.ARCANE_ESSENCE.get()));
     }
 }
