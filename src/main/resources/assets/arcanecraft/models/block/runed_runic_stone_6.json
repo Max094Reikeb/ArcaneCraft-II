@@ -1,0 +1,12 @@
+{
+  "parent": "block/cube",
+  "textures": {
+    "down": "arcanecraft:blocks/runes/rune_5",
+    "up": "arcanecraft:blocks/runes/rune_5",
+    "north": "arcanecraft:blocks/runes/rune_5",
+    "east": "arcanecraft:blocks/runes/rune_5",
+    "south": "arcanecraft:blocks/runes/rune_5",
+    "west": "arcanecraft:blocks/runes/rune_5",
+    "particle": "arcanecraft:blocks/rune_stone"
+  }
+}

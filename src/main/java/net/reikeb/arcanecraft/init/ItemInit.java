@@ -59,6 +59,30 @@ public class ItemInit {
     public static final RegistryObject<Item> RUNIC_STONE_ITEM = ITEMS.register("runic_stone", () ->
             new BlockItem(BlockInit.RUNIC_STONE.get(), new Item.Properties().tab(ItemGroups.ARCANECRAFT)));
 
+    public static final RegistryObject<Item> RUNED_RUNIC_STONE_1_ITEM = ITEMS.register("runed_runic_stone_1", () ->
+            new BlockItem(BlockInit.RUNED_RUNIC_STONE_1.get(), new Item.Properties().tab(ItemGroups.ARCANECRAFT)));
+
+    public static final RegistryObject<Item> RUNED_RUNIC_STONE_2_ITEM = ITEMS.register("runed_runic_stone_2", () ->
+            new BlockItem(BlockInit.RUNED_RUNIC_STONE_2.get(), new Item.Properties().tab(ItemGroups.ARCANECRAFT)));
+
+    public static final RegistryObject<Item> RUNED_RUNIC_STONE_3_ITEM = ITEMS.register("runed_runic_stone_3", () ->
+            new BlockItem(BlockInit.RUNED_RUNIC_STONE_3.get(), new Item.Properties().tab(ItemGroups.ARCANECRAFT)));
+
+    public static final RegistryObject<Item> RUNED_RUNIC_STONE_4_ITEM = ITEMS.register("runed_runic_stone_4", () ->
+            new BlockItem(BlockInit.RUNED_RUNIC_STONE_4.get(), new Item.Properties().tab(ItemGroups.ARCANECRAFT)));
+
+    public static final RegistryObject<Item> RUNED_RUNIC_STONE_5_ITEM = ITEMS.register("runed_runic_stone_5", () ->
+            new BlockItem(BlockInit.RUNED_RUNIC_STONE_5.get(), new Item.Properties().tab(ItemGroups.ARCANECRAFT)));
+
+    public static final RegistryObject<Item> RUNED_RUNIC_STONE_6_ITEM = ITEMS.register("runed_runic_stone_6", () ->
+            new BlockItem(BlockInit.RUNED_RUNIC_STONE_6.get(), new Item.Properties().tab(ItemGroups.ARCANECRAFT)));
+
+    public static final RegistryObject<Item> RUNED_RUNIC_STONE_7_ITEM = ITEMS.register("runed_runic_stone_7", () ->
+            new BlockItem(BlockInit.RUNED_RUNIC_STONE_7.get(), new Item.Properties().tab(ItemGroups.ARCANECRAFT)));
+
+    public static final RegistryObject<Item> RUNED_RUNIC_STONE_8_ITEM = ITEMS.register("runed_runic_stone_8", () ->
+            new BlockItem(BlockInit.RUNED_RUNIC_STONE_8.get(), new Item.Properties().tab(ItemGroups.ARCANECRAFT)));
+
     public static final RegistryObject<Item> RUNIC_STONE_SLAB_ITEM = ITEMS.register("runic_stone_slab", () ->
             new BlockItem(BlockInit.RUNIC_STONE_SLAB.get(), new Item.Properties().tab(ItemGroups.ARCANECRAFT)));
 
