@@ -2,9 +2,9 @@ package net.reikeb.arcanecraft.blocks;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -31,7 +31,6 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fmllegacy.network.NetworkHooks;
-import net.minecraftforge.registries.ForgeRegistries;
 
 import net.reikeb.arcanecraft.init.ItemInit;
 import net.reikeb.arcanecraft.misc.CustomShapes;
@@ -123,7 +122,7 @@ public class WandWorkbench extends Block implements EntityBlock {
                     && (player.getItemInHand(handIn).getOrCreateTag().getString("Wand").equals(""))) {
                 player.setItemInHand(handIn, new ItemStack(Blocks.AIR));
                 worldIn.setBlockAndUpdate(pos, state.setValue(USED, true));
-                SoundEvent fillSound = ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("block.end_portal_frame.fill"));
+                SoundEvent fillSound = SoundEvents.END_PORTAL_FRAME_FILL;
                 if (fillSound == null) return InteractionResult.FAIL;
                 worldIn.playSound(null, pos, fillSound, SoundSource.NEUTRAL, (float) 1, (float) 1);
 

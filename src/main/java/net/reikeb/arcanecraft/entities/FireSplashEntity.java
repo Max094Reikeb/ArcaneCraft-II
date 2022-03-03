@@ -1,7 +1,6 @@
 package net.reikeb.arcanecraft.entities;
 
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobType;
@@ -17,6 +16,7 @@ import net.minecraftforge.fmllegacy.network.FMLPlayMessages;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import net.reikeb.arcanecraft.init.EntityInit;
+import net.reikeb.arcanecraft.misc.Keys;
 
 import java.util.Random;
 
@@ -49,17 +49,17 @@ public class FireSplashEntity extends PathfinderMob {
 
     @Override
     public net.minecraft.sounds.SoundEvent getAmbientSound() {
-        return ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation(""));
+        return ForgeRegistries.SOUND_EVENTS.getValue(Keys.DEFAULT_NULL);
     }
 
     @Override
     public net.minecraft.sounds.SoundEvent getHurtSound(DamageSource ds) {
-        return ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation(""));
+        return ForgeRegistries.SOUND_EVENTS.getValue(Keys.DEFAULT_NULL);
     }
 
     @Override
     public net.minecraft.sounds.SoundEvent getDeathSound() {
-        return ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation(""));
+        return ForgeRegistries.SOUND_EVENTS.getValue(Keys.DEFAULT_NULL);
     }
 
     @Override

@@ -1,13 +1,12 @@
 package net.reikeb.arcanecraft.network.packets;
 
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 
 import net.minecraftforge.fmllegacy.network.NetworkEvent;
-import net.minecraftforge.registries.ForgeRegistries;
 
 import net.reikeb.arcanecraft.blocks.WandWorkbench;
 import net.reikeb.arcanecraft.containers.WandWorkbenchContainer;
@@ -38,8 +37,7 @@ public class WandWorkbenchingPacket {
             if (stackInSlot0.getItem() != ItemInit.ARCANE_SCROLL.get()) return;
 
             playerEntity.level.playSound(null, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(),
-                    ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("block.enchantment_table.use")),
-                    SoundSource.NEUTRAL, 10, 10);
+                    SoundEvents.ENCHANTMENT_TABLE_USE, SoundSource.NEUTRAL, 10, 10);
 
             ItemStack newScroll = new ItemStack(ItemInit.WAND.get());
             newScroll.getOrCreateTag().putString("Wand", stackInSlot0.getOrCreateTag().getString("Scroll"));

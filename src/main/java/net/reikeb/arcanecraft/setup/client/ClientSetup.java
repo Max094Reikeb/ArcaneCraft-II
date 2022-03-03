@@ -5,7 +5,7 @@ import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.client.renderer.texture.TextureAtlas;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
 
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
@@ -23,6 +23,7 @@ import net.reikeb.arcanecraft.guis.WandWorkbenchWindow;
 import net.reikeb.arcanecraft.init.BlockInit;
 import net.reikeb.arcanecraft.init.ItemInit;
 import net.reikeb.arcanecraft.init.SpellInit;
+import net.reikeb.arcanecraft.misc.Keys;
 import net.reikeb.arcanecraft.spell.SpellInstance;
 import net.reikeb.arcanecraft.spell.SpellUtils;
 
@@ -47,28 +48,10 @@ public class ClientSetup {
             ItemBlockRenderTypes.setRenderLayer(BlockInit.AMETHYST_FADED_CLUSTER.get(), RenderType.cutout());
 
             // Item Properties
-            ItemProperties.register(ItemInit.ARCANE_SCROLL.get(), new ResourceLocation("spell"), (stack, p_239426_1_, player, p_239426_2_) -> {
-                for (SpellInstance spellInstance : SpellUtils.getSpell(stack)) {
-                    if (spellInstance.getSpell() == SpellInit.EVOKER.get()) {
-                        return 1.0F;
-                    } else if (spellInstance.getSpell() == SpellInit.FIRE.get()) {
-                        return 2.0F;
-                    } else if (spellInstance.getSpell() == SpellInit.ICE.get()) {
-                        return 3.0F;
-                    } else if (spellInstance.getSpell() == SpellInit.LIFE_DRAIN.get()) {
-                        return 4.0F;
-                    } else if (spellInstance.getSpell() == SpellInit.LIGHTNING.get()) {
-                        return 5.0F;
-                    } else if (spellInstance.getSpell() == SpellInit.PULL.get()) {
-                        return 6.0F;
-                    } else if (spellInstance.getSpell() == SpellInit.PROTECTION_CIRCLE.get()) {
-                        return 7.0F;
-                    }
-                }
-                return 0.0F;
-            });
+            ItemProperties.register(ItemInit.ARCANE_SCROLL.get(), Keys.SPELL,
+                    (stack, p_239426_1_, player, p_239426_2_) -> getSpellFloat(stack));
 
-            ItemProperties.register(ItemInit.ARCANE_SCROLL_FOCUS.get(), new ResourceLocation("spell"), (stack, p_239426_1_, player, p_239426_2_) -> {
+            ItemProperties.register(ItemInit.ARCANE_SCROLL_FOCUS.get(), Keys.SPELL, (stack, p_239426_1_, player, p_239426_2_) -> {
                 for (SpellInstance spellInstance : SpellUtils.getSpell(stack)) {
                     if (spellInstance.getSpell() == SpellInit.FIRE.get()) {
                         return 1.0F;
@@ -87,27 +70,30 @@ public class ClientSetup {
                 return 0.0F;
             });
 
-            ItemProperties.register(ItemInit.WAND.get(), new ResourceLocation("spell"), (stack, p_239426_1_, player, p_239426_2_) -> {
-                for (SpellInstance spellInstance : SpellUtils.getSpell(stack)) {
-                    if (spellInstance.getSpell() == SpellInit.EVOKER.get()) {
-                        return 1.0F;
-                    } else if (spellInstance.getSpell() == SpellInit.FIRE.get()) {
-                        return 2.0F;
-                    } else if (spellInstance.getSpell() == SpellInit.ICE.get()) {
-                        return 3.0F;
-                    } else if (spellInstance.getSpell() == SpellInit.LIFE_DRAIN.get()) {
-                        return 4.0F;
-                    } else if (spellInstance.getSpell() == SpellInit.LIGHTNING.get()) {
-                        return 5.0F;
-                    } else if (spellInstance.getSpell() == SpellInit.PULL.get()) {
-                        return 6.0F;
-                    } else if (spellInstance.getSpell() == SpellInit.PROTECTION_CIRCLE.get()) {
-                        return 7.0F;
-                    }
-                }
-                return 0.0F;
-            });
+            ItemProperties.register(ItemInit.WAND.get(), Keys.SPELL,
+                    (stack, p_239426_1_, player, p_239426_2_) -> getSpellFloat(stack));
         });
+    }
+
+    public static float getSpellFloat(ItemStack stack) {
+        for (SpellInstance spellInstance : SpellUtils.getSpell(stack)) {
+            if (spellInstance.getSpell() == SpellInit.EVOKER.get()) {
+                return 1.0F;
+            } else if (spellInstance.getSpell() == SpellInit.FIRE.get()) {
+                return 2.0F;
+            } else if (spellInstance.getSpell() == SpellInit.ICE.get()) {
+                return 3.0F;
+            } else if (spellInstance.getSpell() == SpellInit.LIFE_DRAIN.get()) {
+                return 4.0F;
+            } else if (spellInstance.getSpell() == SpellInit.LIGHTNING.get()) {
+                return 5.0F;
+            } else if (spellInstance.getSpell() == SpellInit.PULL.get()) {
+                return 6.0F;
+            } else if (spellInstance.getSpell() == SpellInit.PROTECTION_CIRCLE.get()) {
+                return 7.0F;
+            }
+        }
+        return 0.0F;
     }
 
     @SubscribeEvent

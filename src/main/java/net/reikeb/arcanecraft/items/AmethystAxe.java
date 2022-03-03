@@ -1,15 +1,11 @@
 package net.reikeb.arcanecraft.items;
 
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.crafting.Ingredient;
 
-import net.minecraftforge.registries.ForgeRegistries;
-
 import net.reikeb.arcanecraft.setup.ItemGroups;
+import net.reikeb.arcanecraft.utils.Util;
 
 public class AmethystAxe extends AxeItem {
 
@@ -49,11 +45,6 @@ public class AmethystAxe extends AxeItem {
 
     @Override
     public boolean hurtEnemy(ItemStack itemstack, LivingEntity entity, LivingEntity sourceentity) {
-        boolean action = super.hurtEnemy(itemstack, entity, sourceentity);
-        SoundEvent grassSound = ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("block.grass.break"));
-        if (grassSound == null) return false;
-        entity.level.playSound(null, entity.getX(), entity.getY(), entity.getZ(),
-                grassSound, SoundSource.NEUTRAL, (float) 100, (float) 100);
-        return action;
+        return Util.amethystToolHurtEnemy(super.hurtEnemy(itemstack, entity, sourceentity), entity);
     }
 }

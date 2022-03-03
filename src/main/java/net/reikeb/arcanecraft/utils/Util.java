@@ -3,6 +3,9 @@ package net.reikeb.arcanecraft.utils;
 import com.mojang.blaze3d.systems.RenderSystem;
 
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntitySelector;
 import net.minecraft.world.entity.LivingEntity;
@@ -19,6 +22,14 @@ import net.reikeb.arcanecraft.IntegrationHelper;
 import java.util.function.Predicate;
 
 public class Util {
+
+    public static boolean amethystToolHurtEnemy(boolean action, LivingEntity entity) {
+        SoundEvent grassSound = SoundEvents.GRASS_BREAK;
+        if (grassSound == null) return false;
+        entity.level.playSound(null, entity.getX(), entity.getY(), entity.getZ(), grassSound,
+                SoundSource.NEUTRAL, (float) 100, (float) 100);
+        return action;
+    }
 
     public static BlockHitResult rayTrace(Level world, Player player, ClipContext.Fluid fluidHandling) {
         float f = player.xRot;
