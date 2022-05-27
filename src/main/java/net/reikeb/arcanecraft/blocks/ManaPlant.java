@@ -12,9 +12,7 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.storage.loot.LootContext;
-
 import net.minecraftforge.common.PlantType;
-
 import net.reikeb.arcanecraft.init.ItemInit;
 
 import java.util.Collections;

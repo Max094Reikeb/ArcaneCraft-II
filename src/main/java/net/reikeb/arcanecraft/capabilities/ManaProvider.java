@@ -1,13 +1,16 @@
 package net.reikeb.arcanecraft.capabilities;
 
+import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
-import net.minecraft.core.Direction;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.ICapabilityProvider;
+import net.minecraftforge.common.util.INBTSerializable;
+import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.common.util.NonNullSupplier;
 
-import net.minecraftforge.common.capabilities.*;
-import net.minecraftforge.common.util.*;
-
-import javax.annotation.*;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 public class ManaProvider<C extends ManaStorage, S extends Tag> implements ICapabilityProvider, INBTSerializable<S> {
 

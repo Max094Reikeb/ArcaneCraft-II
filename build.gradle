@@ -5,13 +5,20 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true
+        classpath (group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true) { exclude group: 'org.apache.logging.log4j' }
+        classpath 'org.apache.logging.log4j:log4j-api:2.11.2'
+        classpath 'org.apache.logging.log4j:log4j-core:2.11.2'
     }
 }
 
 repositories {
     jcenter()
     mavenLocal()
+
+    // MaxiLib
+    maven {
+        url = "https://jitpack.io"
+    }
 
     // JEI
     maven {
@@ -30,12 +37,6 @@ repositories {
         // Location of the maven that hosts Curios files
         url = "https://maven.theillusivec4.top/"
     }
-
-    // Patchouli Book
-    maven {
-        // Location of the maven that hosts Patchouli files
-        url = "https://maven.blamejared.com/"
-    }
 }
 
 apply plugin: 'net.minecraftforge.gradle'
@@ -47,11 +48,11 @@ version = "${mod_version}"
 group = 'net.reikeb'
 archivesBaseName = mod_id
 
-java.toolchain.languageVersion = JavaLanguageVersion.of(16)
+java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 
 println('Java: ' + System.getProperty('java.version') + ' JVM: ' + System.getProperty('java.vm.version') + '(' + System.getProperty('java.vendor') + ') Arch: ' + System.getProperty('os.arch'))
 minecraft {
-    mappings channel: 'official', version: '1.17.1'
+    mappings channel: 'official', version: '1.18.2'
     
     accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
 
@@ -100,6 +101,9 @@ sourceSets.main.resources { srcDir 'src/generated/resources' }
 dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
 
+    // MaxiLib
+    implementation fg.deobf("com.github.Max094Reikeb:MaxiLib:${maxilib_version}")
+
     // Compile against the JEI API but do not include it at runtime
     compileOnly fg.deobf("mezz.jei:jei-${jei_mc_version}:${jei_version}:api")
     // At runtime, use the full JEI jar
@@ -109,11 +113,6 @@ dependencies {
     compileOnly fg.deobf("top.theillusivec4.curios:curios-forge:${curios_version}:api")
     // At runtime, use the full Curios jar
     runtimeOnly fg.deobf("top.theillusivec4.curios:curios-forge:${curios_version}")
-
-    // Compile against the Patchouli API but do not include it at runtime
-    // compileOnly fg.deobf("vazkii.patchouli:Patchouli:${patchouli_version}:api")
-    // At runtime, use the full Patchouli jar
-    // runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:${patchouli_version}")
 }
 
 jar {
@@ -141,24 +140,11 @@ publishing {
     }
     repositories {
         maven {
-            url "file:///${project.projectDir}/mcmodsrepo"
+            url "file://${project.projectDir}/mcmodsrepo"
         }
     }
 }
 
-// Jar signing
-import net.minecraftforge.gradle.common.tasks.SignJar
-
-task signJar(type: SignJar, dependsOn: jar) {
-    onlyIf {
-        project.hasProperty('keyStore')
-    }
-    keyStore = project.findProperty('keyStore')
-    alias = project.findProperty('keyStoreAlias')
-    storePass = project.findProperty('keyStorePass')
-    keyPass = project.findProperty('keyStoreKeyPass')
-    inputFile = jar.archivePath
-    outputFile = jar.archivePath
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8' // Use the UTF-8 charset for Java compilation
 }
-
-build.dependsOn signJar

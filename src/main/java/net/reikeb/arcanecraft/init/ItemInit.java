@@ -4,10 +4,10 @@ import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemNameBlockItem;
 
-import net.minecraftforge.fmllegacy.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
+import net.minecraftforge.registries.RegistryObject;
 import net.reikeb.arcanecraft.ArcaneCraft;
 import net.reikeb.arcanecraft.items.*;
 import net.reikeb.arcanecraft.setup.ItemGroups;

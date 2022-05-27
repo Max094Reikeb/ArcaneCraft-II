@@ -26,6 +26,7 @@ import net.reikeb.arcanecraft.ArcaneCraft;
 import net.reikeb.arcanecraft.misc.Tiers;
 import net.reikeb.arcanecraft.setup.ItemGroups;
 import net.reikeb.arcanecraft.utils.Util;
+import net.reikeb.maxilib.utils.Utils;
 
 import java.util.Set;
 
@@ -57,7 +58,7 @@ public class AmethystHammer extends DiggerItem {
 
     public static void attemptBreakNeighbors(Level world, BlockPos pos, Player player, Set<Block> notEffectiveOn, boolean checkHarvestLevel, int radioImpar) {
         world.setBlockAndUpdate(pos, Blocks.GLASS.defaultBlockState());
-        BlockHitResult trace = Util.rayTrace(world, player, ClipContext.Fluid.ANY);
+        BlockHitResult trace = Utils.rayTrace(world, player, ClipContext.Fluid.ANY);
         world.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
 
         if (trace.getType() == BlockHitResult.Type.BLOCK) {
@@ -85,7 +86,7 @@ public class AmethystHammer extends DiggerItem {
 
         boolean validHarvest = !checkHarvestLevel || player.getMainHandItem().isCorrectToolForDrops(state);
         boolean isEffective = !notEffectiveOn.contains(state.getBlock());
-        boolean witherImmune = BlockTags.WITHER_IMMUNE.contains(state.getBlock());
+        boolean witherImmune = state.is(BlockTags.WITHER_IMMUNE);
 
         if (validHarvest && isEffective && !witherImmune) {
             Block.dropResources(state, world, pos, null, player, player.getMainHandItem());

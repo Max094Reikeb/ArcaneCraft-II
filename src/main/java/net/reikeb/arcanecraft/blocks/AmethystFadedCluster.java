@@ -15,9 +15,8 @@ import java.util.List;
 public class AmethystFadedCluster extends AmethystClusterBlock {
 
     public AmethystFadedCluster() {
-        super(7, 3, BlockBehaviour.Properties.of(Material.AMETHYST).noOcclusion().randomTicks().sound(SoundType.AMETHYST_CLUSTER).strength(1.5F).lightLevel((p_152651_) -> {
-            return 5;
-        }));
+        super(7, 3, BlockBehaviour.Properties.of(Material.AMETHYST).noOcclusion().randomTicks()
+                .sound(SoundType.AMETHYST_CLUSTER).strength(1.5F).lightLevel((p_152651_) -> 5));
     }
 
     @Override

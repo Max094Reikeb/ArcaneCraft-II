@@ -27,11 +27,9 @@ import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fmllegacy.network.NetworkHooks;
-
 import net.reikeb.arcanecraft.init.ItemInit;
 import net.reikeb.arcanecraft.misc.CustomShapes;
 import net.reikeb.arcanecraft.tileentities.TileWandWorkbench;

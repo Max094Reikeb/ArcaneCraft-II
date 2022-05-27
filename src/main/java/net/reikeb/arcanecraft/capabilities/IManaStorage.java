@@ -19,18 +19,21 @@ public interface IManaStorage {
 
     /**
      * Sets the amount of current mana to a specific number.
+     *
      * @param mana The amount of current mana to set.
      */
     void setMana(int mana);
 
     /**
      * Sets the amount of manimum mana to a specific number.
+     *
      * @param maxMana The amount of maximum mana to set.
      */
     void setMaxMana(double maxMana);
 
     /**
      * Sets the amount of mana progress to a specific number.
+     *
      * @param manaProgress the amount of mana progress to set.
      */
     void setManaProgress(float manaProgress);

@@ -9,7 +9,7 @@ public interface IBaubleItem {
 
     void onWornTick(ItemStack stack, LivingEntity player);
 
-    default void onEquipped(String identifier, LivingEntity player) { }
+    default void onEquipped(String identifier, LivingEntity player) {}
 
     enum Type {
         CURIO("curio"),
