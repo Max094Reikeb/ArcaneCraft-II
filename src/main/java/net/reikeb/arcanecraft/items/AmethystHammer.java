@@ -1,7 +1,6 @@
 package net.reikeb.arcanecraft.items;
 
 import com.google.common.collect.ImmutableSet;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.tags.BlockTags;
@@ -17,15 +16,12 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
-
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.ToolAction;
 import net.minecraftforge.common.ToolActions;
-
 import net.reikeb.arcanecraft.ArcaneCraft;
 import net.reikeb.arcanecraft.misc.Tiers;
 import net.reikeb.arcanecraft.setup.ItemGroups;
-import net.reikeb.arcanecraft.utils.Util;
 import net.reikeb.maxilib.utils.Utils;
 
 import java.util.Set;

@@ -2,17 +2,14 @@ package net.reikeb.arcanecraft.events;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
-
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-
 import net.reikeb.arcanecraft.ArcaneCraft;
-import net.reikeb.arcanecraft.utils.Util;
+import net.reikeb.maxilib.utils.Utils;
 
 @Mod.EventBusSubscriber(modid = ArcaneCraft.MODID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class OverlayEvent {
@@ -36,7 +33,7 @@ public class OverlayEvent {
         if (!event.isCancelable() && event.getType() == RenderGameOverlayEvent.ElementType.TEXT) {
             if (Minecraft.getInstance().player == null) return;
             if (!Minecraft.getInstance().player.isSpectator() && !Minecraft.getInstance().player.isCreative()) {
-                Util.bind(MANA_BARS);
+                Utils.bind(MANA_BARS);
                 RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
                 RenderSystem.disableBlend();
 
@@ -50,7 +47,7 @@ public class OverlayEvent {
     private static void renderManaBar(PoseStack mStack, int widthWindow, int heightWindow) {
         int x = (widthWindow / 2) - 91;
         Minecraft.getInstance().getProfiler().push("manaBar");
-        Util.bind(MANA_BARS);
+        Utils.bind(MANA_BARS);
         int i = maxManaValue - currentManaValue;
         if (i >= 0) {
             int k = (int) (manaProgress * 183.0F);

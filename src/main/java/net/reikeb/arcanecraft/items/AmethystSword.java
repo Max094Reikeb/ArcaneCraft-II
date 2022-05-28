@@ -3,9 +3,8 @@ package net.reikeb.arcanecraft.items;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.crafting.Ingredient;
-
+import net.reikeb.arcanecraft.Util;
 import net.reikeb.arcanecraft.setup.ItemGroups;
-import net.reikeb.arcanecraft.utils.Util;
 
 public class AmethystSword extends SwordItem {
 

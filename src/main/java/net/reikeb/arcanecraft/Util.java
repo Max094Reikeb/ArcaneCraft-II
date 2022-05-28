@@ -1,7 +1,5 @@
-package net.reikeb.arcanecraft.utils;
+package net.reikeb.arcanecraft;
 
-import com.mojang.blaze3d.systems.RenderSystem;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Entity;
@@ -15,7 +13,6 @@ import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.items.IItemHandler;
-import net.reikeb.arcanecraft.IntegrationHelper;
 
 import java.util.function.Predicate;
 
@@ -121,9 +118,5 @@ public class Util {
             }
         }
         return false;
-    }
-
-    public static void bind(ResourceLocation res) {
-        RenderSystem.setShaderTexture(0, res);
     }
 }
