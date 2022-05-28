@@ -4,9 +4,7 @@ import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementProgress;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
-
-import net.minecraftforge.fmllegacy.network.NetworkEvent;
-
+import net.minecraftforge.network.NetworkEvent;
 import net.reikeb.arcanecraft.misc.Keys;
 
 import java.util.function.Supplier;

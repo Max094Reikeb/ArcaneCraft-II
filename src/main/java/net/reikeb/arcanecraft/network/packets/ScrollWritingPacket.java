@@ -5,12 +5,10 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-
-import net.minecraftforge.fmllegacy.network.NetworkEvent;
-
+import net.minecraftforge.network.NetworkEvent;
+import net.reikeb.arcanecraft.blockentities.ScrollTableBlockEntity;
 import net.reikeb.arcanecraft.containers.ScrollTableContainer;
 import net.reikeb.arcanecraft.init.ItemInit;
-import net.reikeb.arcanecraft.tileentities.TileScrollTable;
 
 import java.util.function.Supplier;
 
@@ -30,9 +28,9 @@ public class ScrollWritingPacket {
         context.get().enqueueWork(() -> {
             Player playerEntity = context.get().getSender();
             if ((playerEntity == null) || (!(playerEntity.containerMenu instanceof ScrollTableContainer))) return;
-            TileScrollTable tileEntity = ((ScrollTableContainer) playerEntity.containerMenu).getTileEntity();
-            ItemStack stackInSlot0 = tileEntity.getInventory().getStackInSlot(0);
-            ItemStack stackInSlot1 = tileEntity.getInventory().getStackInSlot(1);
+            ScrollTableBlockEntity blockEntity = ((ScrollTableContainer) playerEntity.containerMenu).getBlockEntity();
+            ItemStack stackInSlot0 = blockEntity.getInventory().getStackInSlot(0);
+            ItemStack stackInSlot1 = blockEntity.getInventory().getStackInSlot(1);
 
             if (stackInSlot0.getItem() != ItemInit.BLANK_SCROLL.get()) return;
             if (stackInSlot1.getItem() != ItemInit.ARCANE_SCROLL_FOCUS.get()) return;
@@ -43,10 +41,10 @@ public class ScrollWritingPacket {
             ItemStack newScroll = new ItemStack(ItemInit.ARCANE_SCROLL.get());
             newScroll.getOrCreateTag().putString("Scroll", stackInSlot1.getOrCreateTag().getString("ScrollFocus"));
 
-            tileEntity.removeItemIndexCount(0, 1);
-            tileEntity.removeItemIndexCount(1, 1);
-            tileEntity.setStackIndex(0, newScroll);
-            tileEntity.setItemIndexCount(1, 1, ItemInit.INK_VIAL.get());
+            blockEntity.removeItemIndexCount(0, 1);
+            blockEntity.removeItemIndexCount(1, 1);
+            blockEntity.setStackIndex(0, newScroll);
+            blockEntity.setItemIndexCount(1, 1, ItemInit.INK_VIAL.get());
         });
         context.get().setPacketHandled(true);
     }

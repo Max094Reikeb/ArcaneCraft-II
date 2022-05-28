@@ -6,7 +6,6 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.world.item.ItemStack;
-
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.TextureStitchEvent;
@@ -14,7 +13,6 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
-
 import net.reikeb.arcanecraft.ArcaneCraft;
 import net.reikeb.arcanecraft.IntegrationHelper;
 import net.reikeb.arcanecraft.guis.CastingTableWindow;
@@ -103,7 +101,7 @@ public class ClientSetup {
 
     @SubscribeEvent
     public static void textureSwitchEvent(TextureStitchEvent.Pre event) {
-        if (event.getMap().location().equals(TextureAtlas.LOCATION_BLOCKS)) {
+        if (event.getAtlas().location().equals(TextureAtlas.LOCATION_BLOCKS)) {
             if (ModList.get().isLoaded(IntegrationHelper.CURIOS_MODID)) {
                 event.addSprite(IntegrationHelper.CURIOS_EMPTY_RING);
             }

@@ -5,13 +5,11 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-
-import net.minecraftforge.fmllegacy.network.NetworkEvent;
-
+import net.minecraftforge.network.NetworkEvent;
+import net.reikeb.arcanecraft.blockentities.WandWorkbenchBlockEntity;
 import net.reikeb.arcanecraft.blocks.WandWorkbench;
 import net.reikeb.arcanecraft.containers.WandWorkbenchContainer;
 import net.reikeb.arcanecraft.init.ItemInit;
-import net.reikeb.arcanecraft.tileentities.TileWandWorkbench;
 
 import java.util.function.Supplier;
 
@@ -31,8 +29,8 @@ public class WandWorkbenchingPacket {
         context.get().enqueueWork(() -> {
             Player playerEntity = context.get().getSender();
             if ((playerEntity == null) || (!(playerEntity.containerMenu instanceof WandWorkbenchContainer))) return;
-            TileWandWorkbench tileEntity = ((WandWorkbenchContainer) playerEntity.containerMenu).getTileEntity();
-            ItemStack stackInSlot0 = tileEntity.getInventory().getStackInSlot(0);
+            WandWorkbenchBlockEntity blockEntity = ((WandWorkbenchContainer) playerEntity.containerMenu).getBlockEntity();
+            ItemStack stackInSlot0 = blockEntity.getInventory().getStackInSlot(0);
 
             if (stackInSlot0.getItem() != ItemInit.ARCANE_SCROLL.get()) return;
 
@@ -42,10 +40,10 @@ public class WandWorkbenchingPacket {
             ItemStack newScroll = new ItemStack(ItemInit.WAND.get());
             newScroll.getOrCreateTag().putString("Wand", stackInSlot0.getOrCreateTag().getString("Scroll"));
 
-            tileEntity.removeItemIndexCount(0, 1);
+            blockEntity.removeItemIndexCount(0, 1);
             playerEntity.addItem(newScroll);
 
-            playerEntity.level.setBlockAndUpdate(tileEntity.getBlockPos(), tileEntity.getBlockState()
+            playerEntity.level.setBlockAndUpdate(blockEntity.getBlockPos(), blockEntity.getBlockState()
                     .setValue(WandWorkbench.USED, false));
         });
         context.get().setPacketHandled(true);

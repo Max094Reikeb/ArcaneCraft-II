@@ -1,13 +1,11 @@
 package net.reikeb.arcanecraft.network;
 
 import net.minecraft.resources.ResourceLocation;
-
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.minecraftforge.fmllegacy.network.NetworkRegistry;
-import net.minecraftforge.fmllegacy.network.simple.SimpleChannel;
-
+import net.minecraftforge.network.NetworkRegistry;
+import net.minecraftforge.network.simple.SimpleChannel;
 import net.reikeb.arcanecraft.ArcaneCraft;
 import net.reikeb.arcanecraft.network.packets.*;
 

@@ -1,16 +1,13 @@
 package net.reikeb.arcanecraft.setup;
 
 import com.mojang.brigadier.CommandDispatcher;
-
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
-
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-
 import net.reikeb.arcanecraft.ArcaneCraft;
 import net.reikeb.arcanecraft.capabilities.CapabilityMana;
 import net.reikeb.arcanecraft.capabilities.ManaProvider;

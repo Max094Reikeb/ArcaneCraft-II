@@ -6,9 +6,7 @@ import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
-
 import net.minecraftforge.client.event.EntityRenderersEvent;
-
 import net.reikeb.arcanecraft.ArcaneCraft;
 import net.reikeb.arcanecraft.init.EntityInit;
 import net.reikeb.arcanecraft.setup.client.renderer.AmethystArrowRenderer;

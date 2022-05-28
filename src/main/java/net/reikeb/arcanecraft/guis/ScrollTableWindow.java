@@ -5,21 +5,18 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
-
 import net.reikeb.arcanecraft.ArcaneCraft;
 import net.reikeb.arcanecraft.containers.ScrollTableContainer;
 import net.reikeb.arcanecraft.network.NetworkManager;
 import net.reikeb.arcanecraft.network.packets.ScrollWritingPacket;
-import net.reikeb.arcanecraft.tileentities.TileScrollTable;
+import net.reikeb.maxilib.abs.AbstractWindow;
 
 public class ScrollTableWindow extends AbstractWindow<ScrollTableContainer> {
 
     private static final ResourceLocation SCROLL_TABLE_GUI = ArcaneCraft.RL("textures/guis/scroll_table_gui.png");
-    public TileScrollTable tileEntity;
 
     public ScrollTableWindow(ScrollTableContainer container, Inventory inv, Component title) {
         super(container, inv, title, SCROLL_TABLE_GUI);
-        this.tileEntity = container.getTileEntity();
     }
 
     @Override
