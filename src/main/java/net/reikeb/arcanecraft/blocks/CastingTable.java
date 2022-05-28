@@ -21,10 +21,10 @@ import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.fmllegacy.network.NetworkHooks;
-import net.reikeb.arcanecraft.init.TileEntityInit;
+import net.minecraftforge.network.NetworkHooks;
+import net.reikeb.arcanecraft.blockentities.CastingTableBlockEntity;
+import net.reikeb.arcanecraft.init.BlockEntityInit;
 import net.reikeb.arcanecraft.misc.CustomShapes;
-import net.reikeb.arcanecraft.tileentities.TileCastingTable;
 
 import javax.annotation.Nullable;
 import java.util.Collections;
@@ -46,19 +46,19 @@ public class CastingTable extends Block implements EntityBlock {
     }
 
     @Override
-    public VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
+    public VoxelShape getShape(BlockState state, BlockGetter getter, BlockPos pos, CollisionContext context) {
         return CustomShapes.CastingTable;
     }
 
     @Override
-    public void onRemove(BlockState state, Level world, BlockPos pos, BlockState newState, boolean isMoving) {
+    public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean isMoving) {
         if (state.getBlock() != newState.getBlock()) {
-            BlockEntity tileEntity = world.getBlockEntity(pos);
-            if (tileEntity instanceof TileCastingTable) {
-                ((TileCastingTable) tileEntity).dropItems(world, pos);
-                world.updateNeighbourForOutputSignal(pos, this);
+            BlockEntity blockEntity = level.getBlockEntity(pos);
+            if (blockEntity instanceof CastingTableBlockEntity castingTableBlockEntity) {
+                castingTableBlockEntity.dropItems(level, pos);
+                level.updateNeighbourForOutputSignal(pos, this);
             }
-            super.onRemove(state, world, pos, newState, isMoving);
+            super.onRemove(state, level, pos, newState, isMoving);
         }
     }
 
@@ -71,26 +71,27 @@ public class CastingTable extends Block implements EntityBlock {
     }
 
     @Override
-    public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
-        if (!worldIn.isClientSide) {
-            BlockEntity tile = worldIn.getBlockEntity(pos);
-            if (tile instanceof TileCastingTable) {
-                NetworkHooks.openGui((ServerPlayer) player, (MenuProvider) tile, pos);
-                return InteractionResult.SUCCESS;
+    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+        if (!level.isClientSide) {
+            BlockEntity blockEntity = level.getBlockEntity(pos);
+            if (blockEntity instanceof CastingTableBlockEntity) {
+                NetworkHooks.openGui((ServerPlayer) player, (MenuProvider) blockEntity, pos);
+            } else {
+                throw new IllegalStateException("Our named container provider is missing!");
             }
         }
         return InteractionResult.SUCCESS;
     }
 
     @Override
-    public MenuProvider getMenuProvider(BlockState state, Level worldIn, BlockPos pos) {
-        BlockEntity tileEntity = worldIn.getBlockEntity(pos);
-        return tileEntity instanceof MenuProvider ? (MenuProvider) tileEntity : null;
+    public MenuProvider getMenuProvider(BlockState state, Level level, BlockPos pos) {
+        BlockEntity blockEntity = level.getBlockEntity(pos);
+        return blockEntity instanceof MenuProvider ? (MenuProvider) blockEntity : null;
     }
 
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return new TileCastingTable(pos, state);
+        return new CastingTableBlockEntity(pos, state);
     }
 
     @Override
@@ -102,7 +103,7 @@ public class CastingTable extends Block implements EntityBlock {
 
     @Nullable
     @Override
-    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state, BlockEntityType<T> blockEntityType) {
-        return blockEntityType == TileEntityInit.TILE_CASTING_TABLE.get() ? (BlockEntityTicker<T>) TileCastingTable.TICKER : null;
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> blockEntityType) {
+        return blockEntityType == BlockEntityInit.CASTING_TABLE_BLOCK_ENTITY.get() ? (BlockEntityTicker<T>) CastingTableBlockEntity.TICKER : null;
     }
 }

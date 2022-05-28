@@ -2,13 +2,7 @@ package net.reikeb.arcanecraft.init;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.resources.ResourceLocation;
-
-import net.minecraftforge.fmllegacy.RegistryObject;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.IForgeRegistry;
-import net.minecraftforge.registries.IForgeRegistryEntry;
-import net.minecraftforge.registries.RegistryBuilder;
-
+import net.minecraftforge.registries.*;
 import net.reikeb.arcanecraft.ArcaneCraft;
 import net.reikeb.arcanecraft.spell.Spell;
 

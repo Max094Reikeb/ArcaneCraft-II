@@ -2,12 +2,10 @@ package net.reikeb.arcanecraft.init;
 
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.MenuType;
-
-import net.minecraftforge.fmllegacy.RegistryObject;
-import net.minecraftforge.fmllegacy.network.IContainerFactory;
+import net.minecraftforge.network.IContainerFactory;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
-
+import net.minecraftforge.registries.RegistryObject;
 import net.reikeb.arcanecraft.ArcaneCraft;
 import net.reikeb.arcanecraft.containers.CastingTableContainer;
 import net.reikeb.arcanecraft.containers.ScrollTableContainer;

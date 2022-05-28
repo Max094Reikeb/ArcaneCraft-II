@@ -2,13 +2,14 @@ package net.reikeb.arcanecraft.init;
 
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
-
-import net.minecraftforge.fmllegacy.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
-
+import net.minecraftforge.registries.RegistryObject;
 import net.reikeb.arcanecraft.ArcaneCraft;
-import net.reikeb.arcanecraft.entities.*;
+import net.reikeb.arcanecraft.entities.AbstractSpellArrow;
+import net.reikeb.arcanecraft.entities.AmethystArrow;
+import net.reikeb.arcanecraft.entities.FireSplashEntity;
+import net.reikeb.arcanecraft.entities.ManaOrb;
 
 public class EntityInit {
 

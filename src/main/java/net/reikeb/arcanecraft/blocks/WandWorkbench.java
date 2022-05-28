@@ -3,7 +3,6 @@ package net.reikeb.arcanecraft.blocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
@@ -29,10 +28,10 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.fmllegacy.network.NetworkHooks;
+import net.minecraftforge.network.NetworkHooks;
+import net.reikeb.arcanecraft.blockentities.WandWorkbenchBlockEntity;
 import net.reikeb.arcanecraft.init.ItemInit;
 import net.reikeb.arcanecraft.misc.CustomShapes;
-import net.reikeb.arcanecraft.tileentities.TileWandWorkbench;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -64,19 +63,19 @@ public class WandWorkbench extends Block implements EntityBlock {
     }
 
     @Override
-    public VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
+    public VoxelShape getShape(BlockState state, BlockGetter getter, BlockPos pos, CollisionContext context) {
         return CustomShapes.WandWorkbench;
     }
 
     @Override
-    public void onRemove(BlockState state, Level world, BlockPos pos, BlockState newState, boolean isMoving) {
+    public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean isMoving) {
         if (state.getBlock() != newState.getBlock()) {
-            BlockEntity tileEntity = world.getBlockEntity(pos);
-            if (tileEntity instanceof TileWandWorkbench) {
-                ((TileWandWorkbench) tileEntity).dropItems(world, pos);
-                world.updateNeighbourForOutputSignal(pos, this);
+            BlockEntity blockEntity = level.getBlockEntity(pos);
+            if (blockEntity instanceof WandWorkbenchBlockEntity wandWorkbenchBlockEntity) {
+                wandWorkbenchBlockEntity.dropItems(level, pos);
+                level.updateNeighbourForOutputSignal(pos, this);
             }
-            super.onRemove(state, world, pos, newState, isMoving);
+            super.onRemove(state, level, pos, newState, isMoving);
         }
     }
 
@@ -110,31 +109,30 @@ public class WandWorkbench extends Block implements EntityBlock {
     }
 
     @Override
-    public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
+    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         int x = pos.getX();
         int y = pos.getY();
         int z = pos.getZ();
 
-        if (!worldIn.isClientSide) {
-            if ((!state.getValue(USED)) && (player.getItemInHand(handIn).getItem() == ItemInit.WAND.get())
-                    && (player.getItemInHand(handIn).getOrCreateTag().getString("Wand").equals(""))) {
-                player.setItemInHand(handIn, new ItemStack(Blocks.AIR));
-                worldIn.setBlockAndUpdate(pos, state.setValue(USED, true));
-                SoundEvent fillSound = SoundEvents.END_PORTAL_FRAME_FILL;
-                if (fillSound == null) return InteractionResult.FAIL;
-                worldIn.playSound(null, pos, fillSound, SoundSource.NEUTRAL, (float) 1, (float) 1);
+        if (!level.isClientSide) {
+            if ((!state.getValue(USED)) && (player.getItemInHand(hand).getItem() == ItemInit.WAND.get())
+                    && (player.getItemInHand(hand).getOrCreateTag().getString("Wand").equals(""))) {
+                player.setItemInHand(hand, new ItemStack(Blocks.AIR));
+                level.setBlockAndUpdate(pos, state.setValue(USED, true));
+                level.playSound(null, pos, SoundEvents.END_PORTAL_FRAME_FILL, SoundSource.NEUTRAL, (float) 1, (float) 1);
 
             } else if (state.getValue(USED) && player.isShiftKeyDown()) {
-                ItemEntity wandItem = new ItemEntity(worldIn, x, (y + 2), z, new ItemStack(ItemInit.WAND.get(), 1));
+                ItemEntity wandItem = new ItemEntity(level, x, (y + 2), z, new ItemStack(ItemInit.WAND.get(), 1));
                 wandItem.setPickUpDelay(10);
-                worldIn.addFreshEntity(wandItem);
-                worldIn.setBlockAndUpdate(pos, state.setValue(USED, false));
+                level.addFreshEntity(wandItem);
+                level.setBlockAndUpdate(pos, state.setValue(USED, false));
 
             } else if (state.getValue(USED)) {
-                BlockEntity tile = worldIn.getBlockEntity(pos);
-                if (tile instanceof TileWandWorkbench) {
-                    NetworkHooks.openGui((ServerPlayer) player, (MenuProvider) tile, pos);
-                    return InteractionResult.SUCCESS;
+                BlockEntity blockEntity = level.getBlockEntity(pos);
+                if (blockEntity instanceof WandWorkbenchBlockEntity) {
+                    NetworkHooks.openGui((ServerPlayer) player, (MenuProvider) blockEntity, pos);
+                } else {
+                    throw new IllegalStateException("Our named container provider is missing!");
                 }
             }
         }
@@ -142,20 +140,20 @@ public class WandWorkbench extends Block implements EntityBlock {
     }
 
     @Override
-    public MenuProvider getMenuProvider(BlockState state, Level worldIn, BlockPos pos) {
-        BlockEntity tileEntity = worldIn.getBlockEntity(pos);
-        return tileEntity instanceof MenuProvider ? (MenuProvider) tileEntity : null;
+    public MenuProvider getMenuProvider(BlockState state, Level level, BlockPos pos) {
+        BlockEntity blockEntity = level.getBlockEntity(pos);
+        return blockEntity instanceof MenuProvider ? (MenuProvider) blockEntity : null;
     }
 
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return new TileWandWorkbench(pos, state);
+        return new WandWorkbenchBlockEntity(pos, state);
     }
 
     @Override
-    public boolean triggerEvent(BlockState state, Level world, BlockPos pos, int eventID, int eventParam) {
-        super.triggerEvent(state, world, pos, eventID, eventParam);
-        BlockEntity tileentity = world.getBlockEntity(pos);
-        return tileentity != null && tileentity.triggerEvent(eventID, eventParam);
+    public boolean triggerEvent(BlockState state, Level level, BlockPos pos, int eventID, int eventParam) {
+        super.triggerEvent(state, level, pos, eventID, eventParam);
+        BlockEntity blockEntity = level.getBlockEntity(pos);
+        return blockEntity != null && blockEntity.triggerEvent(eventID, eventParam);
     }
 }
