@@ -1,7 +1,6 @@
 package net.reikeb.arcanecraft.spell;
 
 import com.google.common.collect.Lists;
-
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
@@ -10,10 +9,8 @@ import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
-
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-
 import net.reikeb.arcanecraft.init.ScrollFocusInit;
 import net.reikeb.arcanecraft.init.ScrollInit;
 import net.reikeb.arcanecraft.init.WandInit;

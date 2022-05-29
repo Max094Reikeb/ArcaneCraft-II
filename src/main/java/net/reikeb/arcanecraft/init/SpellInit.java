@@ -4,6 +4,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.registries.*;
 import net.reikeb.arcanecraft.ArcaneCraft;
+import net.reikeb.arcanecraft.misc.Keys;
 import net.reikeb.arcanecraft.spell.Spell;
 
 import java.util.Objects;
@@ -16,7 +17,7 @@ public class SpellInit {
     public static Supplier<IForgeRegistry<Spell>> SPELLS_REGISTRY = SPELLS_DEFERRED_REGISTER.makeRegistry("spell", () ->
             new RegistryBuilder<Spell>().setMaxID(Integer.MAX_VALUE - 1).onAdd((owner, stage, id, obj, oldObj) ->
                     ArcaneCraft.LOGGER.info("Spell added: " + getName(obj).toString() + " ")
-            ).setDefaultKey(ArcaneCraft.RL("empty"))
+            ).setDefaultKey(Keys.EMPTY)
     );
 
     public static final RegistryObject<Spell> EMPTY = SPELLS_DEFERRED_REGISTER.register("empty", () -> new Spell(ChatFormatting.DARK_GRAY));

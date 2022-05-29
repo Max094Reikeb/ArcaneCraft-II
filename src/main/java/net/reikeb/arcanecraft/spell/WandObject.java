@@ -1,12 +1,8 @@
 package net.reikeb.arcanecraft.spell;
 
 import com.google.common.collect.ImmutableList;
-
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.tags.Tag;
-
 import net.minecraftforge.registries.ForgeRegistryEntry;
-
 import net.reikeb.arcanecraft.init.WandInit;
 
 import javax.annotation.Nullable;
@@ -31,10 +27,6 @@ public class WandObject extends ForgeRegistryEntry<WandObject> {
 
     public static WandObject byName(String name) {
         return WandInit.WAND_REGISTRY.get().getValue(ResourceLocation.tryParse(name));
-    }
-
-    public boolean isIn(Tag<WandObject> tag) {
-        return tag.contains(this);
     }
 
     public String getName(String name) {

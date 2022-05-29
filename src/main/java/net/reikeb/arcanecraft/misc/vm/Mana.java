@@ -2,10 +2,8 @@ package net.reikeb.arcanecraft.misc.vm;
 
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
-
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fmllegacy.network.PacketDistributor;
-
+import net.minecraftforge.network.PacketDistributor;
 import net.reikeb.arcanecraft.capabilities.ManaStorage;
 import net.reikeb.arcanecraft.events.local.PlayerManaEvent;
 import net.reikeb.arcanecraft.network.NetworkManager;

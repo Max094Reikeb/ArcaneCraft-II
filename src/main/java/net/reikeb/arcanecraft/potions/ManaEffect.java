@@ -5,7 +5,6 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.entity.LivingEntity;
-
 import net.reikeb.arcanecraft.ArcaneCraft;
 import net.reikeb.arcanecraft.capabilities.CapabilityMana;
 import net.reikeb.arcanecraft.capabilities.ManaStorage;
@@ -43,7 +42,7 @@ public class ManaEffect extends MobEffect {
         if (!(entity instanceof ServerPlayer)) return;
 
         ManaStorage manaStorage = entity.getCapability(CapabilityMana.MANA_CAPABILITY, null).orElseThrow(() ->
-                        new IllegalStateException("Tried to get my capability but it wasn't there wtf"));
+                new IllegalStateException("Tried to get my capability but it wasn't there wtf"));
         Mana.addMaxMana(manaStorage, (ServerPlayer) entity, 0.05);
     }
 }

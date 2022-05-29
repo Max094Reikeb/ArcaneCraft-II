@@ -13,12 +13,11 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
-import net.reikeb.arcanecraft.ArcaneCraft;
 import net.reikeb.arcanecraft.entities.ManaOrb;
+import net.reikeb.arcanecraft.misc.Keys;
 
 public class ManaOrbRenderer extends EntityRenderer<ManaOrb> {
 
-    private static final ResourceLocation MANA_ORB_LOCATION = ArcaneCraft.RL("textures/entity/mana_orb.png");
     private static final RenderType RENDER_TYPE;
 
     public ManaOrbRenderer(Context context) {
@@ -62,10 +61,10 @@ public class ManaOrbRenderer extends EntityRenderer<ManaOrb> {
     }
 
     public ResourceLocation getTextureLocation(ManaOrb manaOrb) {
-        return MANA_ORB_LOCATION;
+        return Keys.MANA_ORB;
     }
 
     static {
-        RENDER_TYPE = RenderType.itemEntityTranslucentCull(MANA_ORB_LOCATION);
+        RENDER_TYPE = RenderType.itemEntityTranslucentCull(Keys.MANA_ORB);
     }
 }

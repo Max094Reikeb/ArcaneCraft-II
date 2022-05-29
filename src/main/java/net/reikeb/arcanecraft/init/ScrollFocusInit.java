@@ -4,6 +4,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.util.Lazy;
 import net.minecraftforge.registries.*;
 import net.reikeb.arcanecraft.ArcaneCraft;
+import net.reikeb.arcanecraft.misc.Keys;
 import net.reikeb.arcanecraft.spell.ScrollFocusObject;
 import net.reikeb.arcanecraft.spell.SpellInstance;
 
@@ -17,7 +18,7 @@ public class ScrollFocusInit {
     public static Supplier<IForgeRegistry<ScrollFocusObject>> SCOLL_FOCUS_REGISTRY = SCROLL_FOCUS_DEFERRED_REGISTER.makeRegistry("arcane_scroll_focus", () ->
             new RegistryBuilder<ScrollFocusObject>().setMaxID(Integer.MAX_VALUE - 1).onAdd((owner, stage, id, obj, oldObj) ->
                     ArcaneCraft.LOGGER.info("Scroll Focus added: " + getName(obj).toString() + " ")
-            ).setDefaultKey(ArcaneCraft.RL("empty"))
+            ).setDefaultKey(Keys.EMPTY)
     );
 
     public static final RegistryObject<ScrollFocusObject> EMPTY = SCROLL_FOCUS_DEFERRED_REGISTER.register("empty", ScrollFocusObject::new);

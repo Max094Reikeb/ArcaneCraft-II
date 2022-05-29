@@ -4,6 +4,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.util.Lazy;
 import net.minecraftforge.registries.*;
 import net.reikeb.arcanecraft.ArcaneCraft;
+import net.reikeb.arcanecraft.misc.Keys;
 import net.reikeb.arcanecraft.spell.SpellInstance;
 import net.reikeb.arcanecraft.spell.WandObject;
 
@@ -17,7 +18,7 @@ public class WandInit {
     public static Supplier<IForgeRegistry<WandObject>> WAND_REGISTRY = WAND_DEFERRED_REGISTER.makeRegistry("wand", () ->
             new RegistryBuilder<WandObject>().setMaxID(Integer.MAX_VALUE - 1).onAdd((owner, stage, id, obj, oldObj) ->
                     ArcaneCraft.LOGGER.info("Wand added: " + getName(obj).toString() + " ")
-            ).setDefaultKey(ArcaneCraft.RL("empty"))
+            ).setDefaultKey(Keys.EMPTY)
     );
 
     public static final RegistryObject<WandObject> EMPTY = WAND_DEFERRED_REGISTER.register("empty", WandObject::new);

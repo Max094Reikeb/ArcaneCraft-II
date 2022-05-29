@@ -4,7 +4,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraftforge.fml.InterModComms;
 import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 import net.minecraftforge.items.IItemHandler;
-import net.reikeb.arcanecraft.IntegrationHelper;
+import net.reikeb.arcanecraft.misc.Keys;
 import top.theillusivec4.curios.api.CuriosApi;
 import top.theillusivec4.curios.api.SlotTypeMessage;
 
@@ -20,7 +20,7 @@ public class CuriosCompat {
     public static void registerCuriosSlots(InterModEnqueueEvent event) {
         InterModComms.sendTo("curios", SlotTypeMessage.REGISTER_TYPE, () ->
                 new SlotTypeMessage.Builder(IBaubleItem.Type.RING.getIdentifier())
-                        .icon(IntegrationHelper.CURIOS_EMPTY_RING)
+                        .icon(Keys.CURIOS_EMPTY_RING)
                         .priority(100)
                         .build());
     }

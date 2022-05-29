@@ -4,7 +4,6 @@ import com.google.common.collect.ImmutableSet;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -19,7 +18,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.common.ToolAction;
 import net.minecraftforge.common.ToolActions;
-import net.reikeb.arcanecraft.ArcaneCraft;
+import net.reikeb.arcanecraft.misc.Tags;
 import net.reikeb.arcanecraft.misc.Tiers;
 import net.reikeb.arcanecraft.setup.ItemGroups;
 import net.reikeb.maxilib.utils.Utils;
@@ -29,10 +28,9 @@ import java.util.Set;
 public class AmethystHammer extends DiggerItem {
 
     private static final Set<Block> NOT_EFFECTIVE_BLOCKS = ImmutableSet.of(Blocks.BEDROCK, Blocks.LAVA, Blocks.WATER);
-    private static final TagKey<Block> MINEABLE_WITH_HAMMER = BlockTags.create(ArcaneCraft.RL("mineable/hammer"));
 
     public AmethystHammer() {
-        super(1F, -2.8F, Tiers.AMETHYST_TIER, MINEABLE_WITH_HAMMER,
+        super(1F, -2.8F, Tiers.AMETHYST_TIER, Tags.MINEABLE_WITH_HAMMER,
                 new Item.Properties().tab(ItemGroups.ARCANECRAFT));
     }
 

@@ -4,6 +4,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.util.Lazy;
 import net.minecraftforge.registries.*;
 import net.reikeb.arcanecraft.ArcaneCraft;
+import net.reikeb.arcanecraft.misc.Keys;
 import net.reikeb.arcanecraft.spell.ScrollObject;
 import net.reikeb.arcanecraft.spell.SpellInstance;
 
@@ -17,7 +18,7 @@ public class ScrollInit {
     public static Supplier<IForgeRegistry<ScrollObject>> SCROLL_REGISTRY = SCROLL_DEFERRED_REGISTER.makeRegistry("arcane_scroll", () ->
             new RegistryBuilder<ScrollObject>().setMaxID(Integer.MAX_VALUE - 1).onAdd((owner, stage, id, obj, oldObj) ->
                     ArcaneCraft.LOGGER.info("Scroll added: " + getName(obj).toString() + " ")
-            ).setDefaultKey(ArcaneCraft.RL("empty"))
+            ).setDefaultKey(Keys.EMPTY)
     );
 
     public static final RegistryObject<ScrollObject> EMPTY = SCROLL_DEFERRED_REGISTER.register("empty", ScrollObject::new);

@@ -1,12 +1,8 @@
 package net.reikeb.arcanecraft.spell;
 
 import com.google.common.collect.ImmutableList;
-
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.tags.Tag;
-
 import net.minecraftforge.registries.ForgeRegistryEntry;
-
 import net.reikeb.arcanecraft.init.ScrollInit;
 
 import javax.annotation.Nullable;
@@ -31,10 +27,6 @@ public class ScrollObject extends ForgeRegistryEntry<ScrollObject> {
 
     public static ScrollObject byName(String name) {
         return ScrollInit.SCROLL_REGISTRY.get().getValue(ResourceLocation.tryParse(name));
-    }
-
-    public boolean isIn(Tag<ScrollObject> tag) {
-        return tag.contains(this);
     }
 
     public String getName(String name) {

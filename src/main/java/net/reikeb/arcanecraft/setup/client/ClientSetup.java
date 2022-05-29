@@ -103,7 +103,7 @@ public class ClientSetup {
     public static void textureSwitchEvent(TextureStitchEvent.Pre event) {
         if (event.getAtlas().location().equals(TextureAtlas.LOCATION_BLOCKS)) {
             if (ModList.get().isLoaded(IntegrationHelper.CURIOS_MODID)) {
-                event.addSprite(IntegrationHelper.CURIOS_EMPTY_RING);
+                event.addSprite(Keys.CURIOS_EMPTY_RING);
             }
         }
     }

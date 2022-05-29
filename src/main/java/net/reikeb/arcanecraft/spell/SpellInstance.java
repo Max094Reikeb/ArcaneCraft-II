@@ -1,7 +1,6 @@
 package net.reikeb.arcanecraft.spell;
 
 import net.minecraft.nbt.CompoundTag;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

@@ -1,15 +1,12 @@
 package net.reikeb.arcanecraft.spell;
 
 import com.google.common.collect.Maps;
-
 import net.minecraft.ChatFormatting;
 import net.minecraft.Util;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
-
 import net.minecraftforge.registries.ForgeRegistryEntry;
-
 import net.reikeb.arcanecraft.ArcaneCraft;
 import net.reikeb.arcanecraft.init.SpellInit;
 

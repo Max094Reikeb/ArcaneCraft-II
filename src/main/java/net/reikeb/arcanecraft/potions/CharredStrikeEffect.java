@@ -3,7 +3,6 @@ package net.reikeb.arcanecraft.potions;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
-
 import net.reikeb.arcanecraft.ArcaneCraft;
 
 public class CharredStrikeEffect extends MobEffect {
