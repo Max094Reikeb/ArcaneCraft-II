@@ -13,6 +13,7 @@ import net.reikeb.arcanecraft.capabilities.CapabilityMana;
 import net.reikeb.arcanecraft.capabilities.ManaProvider;
 import net.reikeb.arcanecraft.capabilities.ManaStorage;
 import net.reikeb.arcanecraft.commands.ManaCommand;
+import net.reikeb.arcanecraft.misc.Keys;
 
 import javax.annotation.Nonnull;
 
@@ -35,7 +36,7 @@ public class ForgeSetup {
     public static void onPlayerAttachCapabilities(@Nonnull final AttachCapabilitiesEvent<Entity> event) {
         if (!(event.getObject() instanceof Player)) return;
         if (event.getObject().getCapability(CapabilityMana.MANA_CAPABILITY).isPresent()) return;
-        event.addCapability(CapabilityMana.MANA_CAPABILITY_NAME,
+        event.addCapability(Keys.MANA_CAPABILITY,
                 ManaProvider.from(CapabilityMana.MANA_CAPABILITY, ManaStorage::new));
     }
 }

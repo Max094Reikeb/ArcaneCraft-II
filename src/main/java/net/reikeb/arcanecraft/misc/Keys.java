@@ -10,6 +10,8 @@ public class Keys {
 
     public static final ResourceLocation SPELL = new ResourceLocation("spell");
 
+    public static final ResourceLocation MANA_CAPABILITY = ArcaneCraft.RL("mana_capability");
+
     // Advancement tags
     public static final ResourceLocation WOO_MAGIC_ADVANCEMENT = new ResourceLocation("arcanecraft:woo_magic");
 
