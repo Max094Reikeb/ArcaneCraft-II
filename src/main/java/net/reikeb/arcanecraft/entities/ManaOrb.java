@@ -16,10 +16,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.entity.EntityTypeTest;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fmllegacy.network.NetworkHooks;
-
+import net.minecraftforge.network.NetworkHooks;
 import net.reikeb.arcanecraft.capabilities.CapabilityMana;
 import net.reikeb.arcanecraft.capabilities.ManaStorage;
 import net.reikeb.arcanecraft.events.local.PlayerManaEvent;
@@ -41,7 +39,7 @@ public class ManaOrb extends Entity {
     private Player followingPlayer;
 
     public ManaOrb(Level level, double posX, double posY, double posZ, int value) {
-        this(EntityInit.MANA_ORB_ENTITY_TYPE, level);
+        this(EntityInit.MANA_ORB.get(), level);
         this.setPos(posX, posY, posZ);
         this.setYRot((float) (this.random.nextDouble() * 360.0D));
         this.setDeltaMovement((this.random.nextDouble() * (double) 0.2F - (double) 0.1F) * 2.0D, this.random.nextDouble() * 0.2D * 2.0D, (this.random.nextDouble() * (double) 0.2F - (double) 0.1F) * 2.0D);

@@ -1,5 +1,6 @@
 package net.reikeb.arcanecraft.init;
 
+import net.minecraft.world.item.BannerPatternItem;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemNameBlockItem;
@@ -8,6 +9,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import net.reikeb.arcanecraft.ArcaneCraft;
 import net.reikeb.arcanecraft.items.*;
+import net.reikeb.arcanecraft.misc.BannerPatterns;
 import net.reikeb.arcanecraft.setup.ItemGroups;
 
 public class ItemInit {
@@ -15,7 +17,7 @@ public class ItemInit {
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS,
             ArcaneCraft.MODID);
 
-    public static final RegistryObject<Item> AMETHYST_DUST = ITEMS.register("amethyst_dust", AmethystDust::new);
+    public static final RegistryObject<Item> AMETHYST_DUST = ITEMS.register("amethyst_dust", () -> new Item(new Item.Properties().tab(ItemGroups.ARCANECRAFT)));
 
     public static final RegistryObject<Item> AMETHYST_SWORD = ITEMS.register("amethyst_sword", AmethystSword::new);
 
@@ -29,7 +31,7 @@ public class ItemInit {
 
     public static final RegistryObject<Item> AMETHYST_HAMMER = ITEMS.register("amethyst_hammer", AmethystHammer::new);
 
-    public static final RegistryObject<Item> INK_VIAL = ITEMS.register("ink_vial", InkVial::new);
+    public static final RegistryObject<Item> INK_VIAL = ITEMS.register("ink_vial", () -> new Item(new Item.Properties().stacksTo(16).tab(ItemGroups.ARCANECRAFT)));
 
     public static final RegistryObject<Item> ARCANE_SCROLL_FOCUS = ITEMS.register("arcane_scroll_focus", ArcaneScrollFocus::new);
 
@@ -39,11 +41,11 @@ public class ItemInit {
 
     public static final RegistryObject<Item> WAND = ITEMS.register("wand", Wand::new);
 
-    public static final RegistryObject<Item> GOLD_RING = ITEMS.register("gold_ring", GoldRing::new);
+    public static final RegistryObject<Item> GOLD_RING = ITEMS.register("gold_ring", () -> new Item(new Item.Properties().stacksTo(16).tab(ItemGroups.ARCANECRAFT)));
 
-    public static final RegistryObject<Item> ARCANE_RING = ITEMS.register("arcane_ring", ArcaneRing::new);
+    public static final RegistryObject<Item> ARCANE_RING = ITEMS.register("arcane_ring", () -> new Item(new Item.Properties().stacksTo(1).tab(ItemGroups.ARCANECRAFT)));
 
-    public static final RegistryObject<Item> SPELL_BOOK = ITEMS.register("spell_book", SpellBook::new);
+    public static final RegistryObject<Item> SPELL_BOOK = ITEMS.register("spell_book", () -> new Item(new Item.Properties().stacksTo(1).tab(ItemGroups.ARCANECRAFT)));
 
     public static final RegistryObject<Item> CASTING_TABLE_ITEM = ITEMS.register("casting_table", () ->
             new BlockItem(BlockInit.CASTING_TABLE.get(), new Item.Properties().tab(ItemGroups.ARCANECRAFT)));
@@ -103,9 +105,9 @@ public class ItemInit {
     public static final RegistryObject<Item> AMETHYST_FADED_CLUSTER_ITEM = ITEMS.register("amethyst_faded_cluster", () ->
             new BlockItem(BlockInit.AMETHYST_FADED_CLUSTER.get(), new Item.Properties().tab(ItemGroups.ARCANECRAFT)));
 
-    public static final RegistryObject<Item> ARCANE_ESSENCE = ITEMS.register("arcane_essence", ArcaneEssence::new);
+    public static final RegistryObject<Item> ARCANE_ESSENCE = ITEMS.register("arcane_essence", () -> new Item(new Item.Properties().stacksTo(1).tab(ItemGroups.ARCANECRAFT)));
 
-    public static final RegistryObject<Item> SPELL_BOOK_BANNER_PATTERN = ITEMS.register("spell_book_banner_pattern", SpellBookBannerPattern::new);
+    public static final RegistryObject<Item> SPELL_BOOK_BANNER_PATTERN = ITEMS.register("spell_book_banner_pattern", () -> new BannerPatternItem(BannerPatterns.SPELL_BOOK_PATTERN, new Item.Properties().stacksTo(1).tab(ItemGroups.ARCANECRAFT)));
 
-    public static final RegistryObject<Item> WAND_BANNER_PATTERN = ITEMS.register("wand_banner_pattern", WandBannerPattern::new);
+    public static final RegistryObject<Item> WAND_BANNER_PATTERN = ITEMS.register("wand_banner_pattern", () -> new BannerPatternItem(BannerPatterns.WAND_PATTERN, new Item.Properties().stacksTo(1).tab(ItemGroups.ARCANECRAFT)));
 }

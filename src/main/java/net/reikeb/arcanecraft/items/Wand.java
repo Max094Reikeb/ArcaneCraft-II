@@ -9,7 +9,6 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
-
 import net.reikeb.arcanecraft.init.WandInit;
 import net.reikeb.arcanecraft.setup.ItemGroups;
 import net.reikeb.arcanecraft.spell.CastSpell;
@@ -33,7 +32,7 @@ public class Wand extends ProjectileWeaponItem {
         return SpellUtils.setWand(super.getDefaultInstance(), WandInit.EMPTY.get());
     }
 
-    public void appendHoverText(ItemStack stack, @Nullable Level world, List<Component> text, TooltipFlag flag) {
+    public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> text, TooltipFlag flag) {
         SpellUtils.addWandTooltip(stack, text);
     }
 
@@ -58,17 +57,17 @@ public class Wand extends ProjectileWeaponItem {
     }
 
     @Override
-    public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
-        ItemStack itemstack = playerIn.getItemInHand(handIn);
-        playerIn.startUsingItem(handIn);
+    public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
+        ItemStack itemstack = player.getItemInHand(hand);
+        player.startUsingItem(hand);
         return InteractionResultHolder.success(itemstack);
     }
 
-    public void onUseTick(Level world, LivingEntity entity, ItemStack stack, int power) {
-        if (!world.isClientSide && entity instanceof ServerPlayer) {
+    public void onUseTick(Level level, LivingEntity entity, ItemStack stack, int power) {
+        if (!level.isClientSide && entity instanceof ServerPlayer) {
             ServerPlayer playerEntity = (ServerPlayer) entity;
             stack.hurtAndBreak(1, entity, e -> e.broadcastBreakEvent(playerEntity.getUsedItemHand()));
-            new CastSpell(world, (Player) entity, stack);
+            new CastSpell(level, (Player) entity, stack);
             playerEntity.stopUsingItem();
         }
     }

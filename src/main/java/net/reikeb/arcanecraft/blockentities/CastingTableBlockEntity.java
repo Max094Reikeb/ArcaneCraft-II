@@ -43,10 +43,7 @@ public class CastingTableBlockEntity extends AbstractBlockEntity {
             inventory.setStackInSlot(1, new ItemStack(Items.GLASS_BOTTLE));
         }
 
-        /*
         t.setChanged();
-        world.sendBlockUpdated(blockPos, t.getBlockState(), t.getBlockState(),
-                Constants.BlockFlags.NOTIFY_NEIGHBORS);
-         */
+        level.sendBlockUpdated(blockPos, state, state, 3);
     }
 }

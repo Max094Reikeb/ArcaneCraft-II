@@ -15,12 +15,9 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.Vec3;
-
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.fmllegacy.network.FMLPlayMessages;
-import net.minecraftforge.fmllegacy.network.NetworkHooks;
-
+import net.minecraftforge.network.NetworkHooks;
 import net.reikeb.arcanecraft.init.EntityInit;
 import net.reikeb.arcanecraft.init.SpellInit;
 import net.reikeb.arcanecraft.spell.Spell;
@@ -30,20 +27,16 @@ public class AbstractSpellArrow extends AbstractArrow implements ItemSupplier {
 
     private Spell spell;
 
-    public AbstractSpellArrow(FMLPlayMessages.SpawnEntity packet, Level world) {
-        super(EntityInit.ABSTRACT_SPELL_ARROW_TYPE, world);
+    public AbstractSpellArrow(EntityType<? extends AbstractArrow> entityType, Level level) {
+        super(entityType, level);
     }
 
-    public AbstractSpellArrow(EntityType<? extends AbstractSpellArrow> type, Level world) {
-        super(type, world);
+    public AbstractSpellArrow(EntityType<? extends AbstractArrow> entityType, double x, double y, double z, Level level) {
+        super(entityType, x, y, z, level);
     }
 
-    public AbstractSpellArrow(EntityType<? extends AbstractSpellArrow> type, double x, double y, double z, Level world) {
-        super(type, x, y, z, world);
-    }
-
-    public AbstractSpellArrow(Spell spell, LivingEntity entity, Level world) {
-        super(EntityInit.ABSTRACT_SPELL_ARROW_TYPE, entity, world);
+    public AbstractSpellArrow(Spell spell, LivingEntity livingEntity, Level level) {
+        super(EntityInit.SPELL_ARROW.get(), livingEntity, level);
         this.spell = spell;
     }
 
@@ -70,8 +63,10 @@ public class AbstractSpellArrow extends AbstractArrow implements ItemSupplier {
         Entity shooter = this.getOwner();
         if (!(shooter instanceof LivingEntity)) return;
         if (this.spell == SpellInit.FIRE.get()) entity.setSecondsOnFire(15);
-        if (this.spell == SpellInit.ICE.get()) entity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 190, 2));
-        if (this.spell == SpellInit.LIFE_DRAIN.get()) ((LivingEntity) shooter).addEffect(new MobEffectInstance(MobEffects.REGENERATION, 30, 3));
+        if (this.spell == SpellInit.ICE.get())
+            entity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 190, 2));
+        if (this.spell == SpellInit.LIFE_DRAIN.get())
+            ((LivingEntity) shooter).addEffect(new MobEffectInstance(MobEffects.REGENERATION, 30, 3));
         if (this.spell == SpellInit.LIGHTNING.get()) {
             LightningBolt lightningBolt = EntityType.LIGHTNING_BOLT.create(this.level);
             if (lightningBolt == null) return;
@@ -86,7 +81,7 @@ public class AbstractSpellArrow extends AbstractArrow implements ItemSupplier {
         super.tick();
         if (!this.level.isClientSide) {
             if (this.spell == SpellInit.FIRE.get()) {
-                Entity fireSplashEntity = new FireSplashEntity(EntityInit.FIRE_SPLASH_ENTITY_ENTITY_TYPE, this.level);
+                Entity fireSplashEntity = new FireSplashEntity(EntityInit.FIRE_SPLASH.get(), this.level);
                 fireSplashEntity.moveTo(this.getX(), this.getY(), this.getZ(), this.level.random.nextFloat() * 360F, 0);
                 this.level.addFreshEntity(fireSplashEntity);
             } else if (this.spell == SpellInit.EVOKER.get()) {

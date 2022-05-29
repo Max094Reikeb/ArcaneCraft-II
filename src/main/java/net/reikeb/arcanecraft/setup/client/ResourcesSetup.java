@@ -18,7 +18,7 @@ public class ResourcesSetup {
      * Setup entity's renderers
      */
     public static void setupRenderers(EntityRenderersEvent.RegisterRenderers event) {
-        event.registerEntityRenderer(EntityInit.FIRE_SPLASH_ENTITY_ENTITY_TYPE,
+        event.registerEntityRenderer(EntityInit.FIRE_SPLASH.get(),
                 rendererProvider -> new MobRenderer(rendererProvider, new SlimeModel<>(rendererProvider.bakeLayer(ModelLayers.SLIME)), 0f) {
                     @Override
                     public ResourceLocation getTextureLocation(Entity entity) {
@@ -27,9 +27,9 @@ public class ResourcesSetup {
                 });
 
         // Setup arrows renderers
-        event.registerEntityRenderer(EntityInit.AMETHYST_ARROW_ENTITY_TYPE, AmethystArrowRenderer::new);
-        event.registerEntityRenderer(EntityInit.MANA_ORB_ENTITY_TYPE, ManaOrbRenderer::new);
-        event.registerEntityRenderer(EntityInit.ABSTRACT_SPELL_ARROW_TYPE,
+        event.registerEntityRenderer(EntityInit.AMETHYST_ARROW.get(), AmethystArrowRenderer::new);
+        event.registerEntityRenderer(EntityInit.MANA_ORB.get(), ManaOrbRenderer::new);
+        event.registerEntityRenderer(EntityInit.SPELL_ARROW.get(),
                 renderManager -> new ThrownItemRenderer<>(renderManager, 1.0F, false));
     }
 }

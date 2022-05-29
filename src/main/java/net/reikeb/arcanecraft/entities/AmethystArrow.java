@@ -7,22 +7,21 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-
 import net.reikeb.arcanecraft.init.EntityInit;
 import net.reikeb.arcanecraft.init.ItemInit;
 
 public class AmethystArrow extends AbstractArrow {
 
-    public AmethystArrow(EntityType<? extends AmethystArrow> type, Level world) {
-        super(type, world);
+    public AmethystArrow(EntityType<? extends AmethystArrow> entityType, Level level) {
+        super(entityType, level);
     }
 
-    public AmethystArrow(Level world, LivingEntity entity) {
-        super(EntityInit.AMETHYST_ARROW_ENTITY_TYPE, entity, world);
+    public AmethystArrow(Level level, LivingEntity livingEntity) {
+        super(EntityInit.AMETHYST_ARROW.get(), livingEntity, level);
     }
 
-    public AmethystArrow(Level world, double x, double y, double z) {
-        super(EntityInit.AMETHYST_ARROW_ENTITY_TYPE, x, y, z, world);
+    public AmethystArrow(Level level, double x, double y, double z) {
+        super(EntityInit.AMETHYST_ARROW.get(), x, y, z, level);
     }
 
     public void tick() {
@@ -36,8 +35,8 @@ public class AmethystArrow extends AbstractArrow {
         return new ItemStack(ItemInit.AMETHYST_ARROW.get());
     }
 
-    protected void doPostHurtEffects(LivingEntity entity) {
-        super.doPostHurtEffects(entity);
-        entity.hurt(DamageSource.MAGIC, 5.0F);
+    protected void doPostHurtEffects(LivingEntity livingEntity) {
+        super.doPostHurtEffects(livingEntity);
+        livingEntity.hurt(DamageSource.MAGIC, 5.0F);
     }
 }

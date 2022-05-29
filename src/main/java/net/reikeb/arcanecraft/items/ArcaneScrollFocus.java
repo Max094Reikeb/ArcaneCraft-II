@@ -7,10 +7,8 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
-
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-
 import net.reikeb.arcanecraft.init.ScrollFocusInit;
 import net.reikeb.arcanecraft.setup.ItemGroups;
 import net.reikeb.arcanecraft.spell.ScrollFocusObject;
@@ -36,7 +34,7 @@ public class ArcaneScrollFocus extends Item {
     }
 
     @OnlyIn(Dist.CLIENT)
-    public void appendHoverText(ItemStack stack, @Nullable Level world, List<Component> text, TooltipFlag flag) {
+    public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> text, TooltipFlag flag) {
         SpellUtils.addSpellItemTooltip(stack, text);
     }
 

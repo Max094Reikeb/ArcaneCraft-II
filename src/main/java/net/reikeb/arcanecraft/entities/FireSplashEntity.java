@@ -11,23 +11,15 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Arrow;
 import net.minecraft.world.entity.projectile.ThrownPotion;
 import net.minecraft.world.level.Level;
-
-import net.minecraftforge.fmllegacy.network.FMLPlayMessages;
 import net.minecraftforge.registries.ForgeRegistries;
-
-import net.reikeb.arcanecraft.init.EntityInit;
 import net.reikeb.arcanecraft.misc.Keys;
 
 import java.util.Random;
 
 public class FireSplashEntity extends PathfinderMob {
 
-    public FireSplashEntity(FMLPlayMessages.SpawnEntity packet, Level world) {
-        this(EntityInit.FIRE_SPLASH_ENTITY_ENTITY_TYPE, world);
-    }
-
-    public FireSplashEntity(EntityType<FireSplashEntity> type, Level world) {
-        super(type, world);
+    public FireSplashEntity(EntityType<? extends PathfinderMob> entityType, Level level) {
+        super(entityType, level);
         xpReward = 0;
         setNoAi(true);
         setPersistenceRequired();

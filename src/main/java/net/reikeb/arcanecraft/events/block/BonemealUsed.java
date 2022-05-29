@@ -1,11 +1,9 @@
 package net.reikeb.arcanecraft.events.block;
 
 import net.minecraft.world.level.block.Blocks;
-
 import net.minecraftforge.event.entity.player.BonemealEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-
 import net.reikeb.arcanecraft.ArcaneCraft;
 import net.reikeb.arcanecraft.init.BlockInit;
 

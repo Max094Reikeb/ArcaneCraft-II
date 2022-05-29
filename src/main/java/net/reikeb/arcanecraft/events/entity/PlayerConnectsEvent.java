@@ -2,12 +2,10 @@ package net.reikeb.arcanecraft.events.entity;
 
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
-
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fmllegacy.network.PacketDistributor;
-
+import net.minecraftforge.network.PacketDistributor;
 import net.reikeb.arcanecraft.ArcaneCraft;
 import net.reikeb.arcanecraft.capabilities.CapabilityMana;
 import net.reikeb.arcanecraft.capabilities.ManaStorage;

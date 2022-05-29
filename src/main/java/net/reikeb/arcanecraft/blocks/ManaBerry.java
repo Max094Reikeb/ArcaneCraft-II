@@ -84,10 +84,10 @@ public class ManaBerry extends BushBlock implements BonemealableBlock {
     }
 
     @Override
-    public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
-        if ((!worldIn.isClientSide) && (state.getValue(AGE_4) == MAX_AGE)) {
-            worldIn.setBlockAndUpdate(pos, state.setValue(AGE_4, (state.getValue(AGE_4) - 1)));
-            ManaOrb.award((ServerLevel) worldIn, Vec3.atCenterOf(pos), (worldIn.random.nextInt(4) + 1));
+    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+        if ((!level.isClientSide) && (state.getValue(AGE_4) == MAX_AGE)) {
+            level.setBlockAndUpdate(pos, state.setValue(AGE_4, (state.getValue(AGE_4) - 1)));
+            ManaOrb.award((ServerLevel) level, Vec3.atCenterOf(pos), (level.random.nextInt(4) + 1));
             return InteractionResult.SUCCESS;
         }
         return InteractionResult.PASS;

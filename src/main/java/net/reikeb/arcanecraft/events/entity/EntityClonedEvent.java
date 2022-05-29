@@ -3,7 +3,6 @@ package net.reikeb.arcanecraft.events.entity;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-
 import net.reikeb.arcanecraft.ArcaneCraft;
 import net.reikeb.arcanecraft.capabilities.CapabilityMana;
 import net.reikeb.arcanecraft.capabilities.ManaStorage;

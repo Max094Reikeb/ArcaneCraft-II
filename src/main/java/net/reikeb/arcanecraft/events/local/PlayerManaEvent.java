@@ -2,11 +2,9 @@ package net.reikeb.arcanecraft.events.local;
 
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
-
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.Cancelable;
-
 import net.reikeb.arcanecraft.entities.ManaOrb;
 import net.reikeb.arcanecraft.misc.vm.Mana;
 
