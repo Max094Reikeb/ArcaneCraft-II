@@ -19,7 +19,7 @@ public class BlockInit {
     public static final RegistryObject<WandWorkbench> WAND_WORKBENCH = BLOCKS.register("wand_workbench", WandWorkbench::new);
     public static final RegistryObject<Block> RUNIC_STONE = BLOCKS.register("runic_stone", () -> new Block(BlockBehaviour.Properties.of(Material.STONE).sound(SoundType.STONE).strength(1.1f, 17.5f).lightLevel(s -> 0)));
     public static final RegistryObject<SlabBlock> RUNIC_STONE_SLAB = BLOCKS.register("runic_stone_slab", () -> new SlabBlock(BlockBehaviour.Properties.copy(RUNIC_STONE.get())));
-    public static final RegistryObject<StairBlock> RUNIC_STONE_STAIRS = BLOCKS.register("runic_stone_stairs", () -> new StairBlock(new Block(BlockBehaviour.Properties.of(Material.STONE)).defaultBlockState(), BlockBehaviour.Properties.copy(RUNIC_STONE.get())));
+    public static final RegistryObject<StairBlock> RUNIC_STONE_STAIRS = BLOCKS.register("runic_stone_stairs", () -> new StairBlock(RUNIC_STONE.get().defaultBlockState(), BlockBehaviour.Properties.copy(RUNIC_STONE.get())));
     public static final RegistryObject<WallBlock> RUNIC_STONE_WALL = BLOCKS.register("runic_stone_wall", () -> new WallBlock(BlockBehaviour.Properties.copy(RUNIC_STONE.get())));
     public static final RegistryObject<ManaPlant> MANA_PLANT = BLOCKS.register("mana_plant", ManaPlant::new);
     public static final RegistryObject<ManaBerry> MANA_BERRY = BLOCKS.register("mana_berry", ManaBerry::new);
