@@ -3,6 +3,7 @@ package net.reikeb.arcanecraft.entities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientboundTakeItemEntityPacket;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
@@ -136,9 +137,8 @@ public class ManaOrb extends Entity {
     private static boolean tryMergeToExisting(ServerLevel level, Vec3 vec3, int value) {
         AABB aabb = AABB.ofSize(vec3, 1.0D, 1.0D, 1.0D);
         int i = level.getRandom().nextInt(ORB_GROUPS_PER_AREA);
-        List<ManaOrb> list = level.getEntities(EntityTypeTest.forClass(ManaOrb.class), aabb, (predicate) -> {
-            return canMerge(predicate, i, value);
-        });
+        List<ManaOrb> list = level.getEntities(EntityTypeTest.forClass(ManaOrb.class), aabb, (predicate)
+                -> canMerge(predicate, i, value));
         if (!list.isEmpty()) {
             ManaOrb manaOrb = list.get(0);
             ++manaOrb.count;
@@ -202,10 +202,9 @@ public class ManaOrb extends Entity {
     public void playerTouch(Player player) {
         if (!this.level.isClientSide) {
             if (player.takeXpDelay == 0) {
-                player.takeXpDelay = 2;
-                player.take(this, 1);
-
                 if (MinecraftForge.EVENT_BUS.post(new PlayerManaEvent.PickupMana(player, this))) return;
+                player.takeXpDelay = 2;
+                take(player, this, 1);
 
                 ServerPlayer serverPlayer = (ServerPlayer) player;
                 ManaStorage.get(serverPlayer).ifPresent(data -> {
@@ -219,6 +218,12 @@ public class ManaOrb extends Entity {
                     }
                 });
             }
+        }
+    }
+
+    public void take(Player player, Entity entity, int i) {
+        if (!entity.isRemoved() && !player.level.isClientSide && (entity instanceof ManaOrb)) {
+            ((ServerLevel) player.level).getChunkSource().broadcast(entity, new ClientboundTakeItemEntityPacket(entity.getId(), player.getId(), i));
         }
     }
 
