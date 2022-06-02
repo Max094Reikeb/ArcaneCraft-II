@@ -1,8 +1,0 @@
-{
-  "name": "BOOK NAME",
-  "landing_text": "LANDING TEXT",
-  "model": "arcanecraft:arcane_book",
-  "show_progress": false,
-  "creative_tab": "arcanecraft:arcanecraft",
-  "version": 1
-}
