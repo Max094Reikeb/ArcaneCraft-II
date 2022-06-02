@@ -1,7 +1,9 @@
 package net.reikeb.arcanecraft.capabilities;
 
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.common.util.INBTSerializable;
+import net.minecraftforge.common.util.LazyOptional;
 
 import javax.annotation.Nonnull;
 
@@ -23,6 +25,10 @@ public class ManaStorage implements IManaStorage, INBTSerializable<CompoundTag> 
         this.mana = mana;
         this.maxMana = maxMana;
         this.manaProgress = manaProgress;
+    }
+
+    public static LazyOptional<ManaStorage> get(Player player) {
+        return player.getCapability(CapabilityMana.MANA_CAPABILITY, null);
     }
 
     @Override

@@ -46,7 +46,7 @@ public class CastSpell {
         boolean flag = false;
         int spellMana = 0;
 
-        ManaStorage manaStorage = playerEntity.getCapability(CapabilityMana.MANA_CAPABILITY, null).orElseThrow(() ->
+        ManaStorage manaStorage = playerEntity.getCapability(CapabilityMana.MANA_CAPABILITY).orElseThrow(() ->
                 new IllegalStateException("Tried to get my capability but it wasn't there wtf"));
 
         List<SpellInstance> spells = SpellUtils.getSpell(wand);

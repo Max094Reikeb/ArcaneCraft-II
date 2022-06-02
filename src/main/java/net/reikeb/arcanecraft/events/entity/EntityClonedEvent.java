@@ -4,7 +4,6 @@ import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.reikeb.arcanecraft.ArcaneCraft;
-import net.reikeb.arcanecraft.capabilities.CapabilityMana;
 import net.reikeb.arcanecraft.capabilities.ManaStorage;
 
 @Mod.EventBusSubscriber(modid = ArcaneCraft.MODID)
@@ -14,15 +13,14 @@ public class EntityClonedEvent {
     public static void onEntityCloned(PlayerEvent.Clone event) {
         if (event == null) return;
 
-        ManaStorage oldManaStorage = event.getOriginal().getCapability(CapabilityMana.MANA_CAPABILITY, null).orElseThrow(() ->
-                new IllegalStateException("Tried to get my capability but it wasn't there wtf"));
-        ManaStorage newManaStorage = event.getPlayer().getCapability(CapabilityMana.MANA_CAPABILITY, null).orElseThrow(() ->
-                new IllegalStateException("Tried to get my capability but it wasn't there wtf"));
+        if (event.getPlayer().level.isClientSide || event.getOriginal().level.isClientSide) return;
 
-        newManaStorage.setMaxMana(oldManaStorage.getMaxMana());
-        newManaStorage.setManaProgress(oldManaStorage.getManaProgress());
-        if (!event.isWasDeath()) {
-            newManaStorage.setMana(oldManaStorage.getMana());
-        }
+        event.getOriginal().reviveCaps();
+        ManaStorage.get(event.getOriginal()).ifPresent(dataOriginal -> {
+            ManaStorage.get(event.getPlayer()).ifPresent(dataNew -> {
+                dataNew.deserializeNBT(dataOriginal.serializeNBT());
+            });
+        });
+        event.getOriginal().invalidateCaps();
     }
 }

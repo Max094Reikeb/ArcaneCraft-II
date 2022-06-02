@@ -18,7 +18,6 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.network.NetworkHooks;
-import net.reikeb.arcanecraft.capabilities.CapabilityMana;
 import net.reikeb.arcanecraft.capabilities.ManaStorage;
 import net.reikeb.arcanecraft.events.local.PlayerManaEvent;
 import net.reikeb.arcanecraft.init.EntityInit;
@@ -209,16 +208,16 @@ public class ManaOrb extends Entity {
                 if (MinecraftForge.EVENT_BUS.post(new PlayerManaEvent.PickupMana(player, this))) return;
 
                 ServerPlayer serverPlayer = (ServerPlayer) player;
-                ManaStorage manaStorage = serverPlayer.getCapability(CapabilityMana.MANA_CAPABILITY, null).orElseThrow(() ->
-                        new IllegalStateException("Tried to get my capability but it wasn't there wtf"));
-                if ((manaStorage.getMana() + this.count) <= manaStorage.getMaxMana()) {
-                    Mana.addCurrentMana(manaStorage, serverPlayer, this.count);
+                ManaStorage.get(serverPlayer).ifPresent(data -> {
+                    if ((data.getMana() + this.count) <= data.getMaxMana()) {
+                        Mana.addCurrentMana(data, serverPlayer, this.count);
 
-                    --this.count;
-                    if (this.count == 0) {
-                        this.discard();
+                        --this.count;
+                        if (this.count == 0) {
+                            this.discard();
+                        }
                     }
-                }
+                });
             }
         }
     }

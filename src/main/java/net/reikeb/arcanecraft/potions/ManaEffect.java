@@ -6,7 +6,6 @@ import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.entity.LivingEntity;
 import net.reikeb.arcanecraft.ArcaneCraft;
-import net.reikeb.arcanecraft.capabilities.CapabilityMana;
 import net.reikeb.arcanecraft.capabilities.ManaStorage;
 import net.reikeb.arcanecraft.misc.vm.Mana;
 
@@ -39,10 +38,10 @@ public class ManaEffect extends MobEffect {
 
     @Override
     public void applyEffectTick(LivingEntity entity, int level) {
-        if (!(entity instanceof ServerPlayer)) return;
+        if (!(entity instanceof ServerPlayer serverPlayer)) return;
 
-        ManaStorage manaStorage = entity.getCapability(CapabilityMana.MANA_CAPABILITY, null).orElseThrow(() ->
-                new IllegalStateException("Tried to get my capability but it wasn't there wtf"));
-        Mana.addMaxMana(manaStorage, (ServerPlayer) entity, 0.05);
+        ManaStorage.get(serverPlayer).ifPresent(data -> {
+            Mana.addMaxMana(data, serverPlayer, 0.05);
+        });
     }
 }

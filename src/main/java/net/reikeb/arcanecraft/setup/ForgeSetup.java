@@ -21,8 +21,8 @@ public class ForgeSetup {
      */
     @SubscribeEvent
     public static void onPlayerAttachCapabilities(@Nonnull final AttachCapabilitiesEvent<Entity> event) {
-        if (!(event.getObject() instanceof Player)) return;
-        if (event.getObject().getCapability(CapabilityMana.MANA_CAPABILITY).isPresent()) return;
+        if (!(event.getObject() instanceof Player player)) return;
+        if (ManaStorage.get(player).isPresent()) return;
         event.addCapability(Keys.MANA_CAPABILITY,
                 ManaProvider.from(CapabilityMana.MANA_CAPABILITY, ManaStorage::new));
     }
